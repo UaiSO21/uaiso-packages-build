@@ -30,6 +30,8 @@ jobs:
             fi
           done
           
+          ls -lh
+          
       # # Tmate ##
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v3
