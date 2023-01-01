@@ -4,8 +4,8 @@ name: Package Build
 on:
   repository_dispatch:
     types:
-      # - UaiSO/*
-      - *
+      - UaiSO/*
+      # - */*
       
   workflow_dispatch:
 
