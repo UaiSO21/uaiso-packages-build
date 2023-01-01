@@ -23,15 +23,11 @@ jobs:
       - name: Download
         shell: bash -O extglob {0}
         run: |
-          
           # curl -s https://api.github.com/repos/Frogging-Family/linux-tkg/releases/latest | grep "x86_64.pkg.tar.zst" | cut -d : -f 2,3 | tr -d \" | grep "https" | wget -ci -
-          
-          sed -i "s|CacheDir.*|CacheDir = ${PWD}/|" /etc/pacman.conf
-          #--cachedir
           
           for i in $(cat lista-packages-arch); do
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
-                pacman -Sw --noconfirm $i
+                pacman -Sw --noconfirm $i --cachedir $PWD
             fi
           done
           
