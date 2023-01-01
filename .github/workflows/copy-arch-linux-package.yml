@@ -40,11 +40,16 @@ jobs:
       - name: sign package
         shell: bash -O extglob {0}
         run: |
+          #remover chaves
+          rm *.sig
+        
           # "Assinar Pacote"
           cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
           for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
             gpg --pinentry-mode loopback --passphrase "${{ secrets.PASSPHRASE }}" --detach-sign ${p}
           done
+          
+          ls -lh
           
       - name: CheckSum
         shell: bash -O extglob {0}
