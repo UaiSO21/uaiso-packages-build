@@ -4,7 +4,8 @@ name: Package Build
 on:
   repository_dispatch:
     types:
-      - UaiSO/*
+      # - UaiSO/*
+      *
       
   workflow_dispatch:
 
@@ -28,117 +29,76 @@ jobs:
         with:
           package: pkgbuild
           branch: stable
-          # gitbranch: ${{ github.event.client_payload.branch }}
-          # gpg-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          # gpg-passphrase: ${{ secrets.PASSPHRASE }}
-          # extrarepo: ${{ github.event.client_payload.extrarepo }}
+          gitbranch: ${{ github.event.client_payload.branch }}
+          gpg-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: ${{ secrets.PASSPHRASE }}
+          extrarepo: ${{ github.event.client_payload.extrarepo }}
+            
+      - name: Publish Package on GitHub
+        shell: bash
+        run: |
+          gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+          cd $gitfolder
+          ls -lh
           
-#       - name: Makepkg Build    
-#         shell: bash
-#         run: |
-#           useradd builduser -m 
-#           passwd -d builduser 
-#           printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
-#           
-#           #if [ -n "$(echo ${{ github.event.client_payload.url }} | grep pamac)" ]; then
-#             #exit 1
-#           #fi
-#           git clone ${{ github.event.client_payload.url }}.git
-#           gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
-#           chmod 777 $gitfolder
-#           cd $gitfolder
-#           
-#           sudo -u builduser bash -c 'makepkg -sc --noconfirm --skippgpcheck'
-#           
-#           ls -lh
-#           
-#       - name: Rename Package
-#         shell: bash -O extglob {0}
-#         run: | 
-#           # "Rename Package"
-#           gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
-#           cd $gitfolder
-#           for i in *.zst; do if [ -n "$(ls $i | grep :)" ]; then mv $i $(echo $i | sed 's/:/-/'); fi; done
-# 
-#           
-#       - name: sign package
-#         shell: bash -O extglob {0}
-#         run: |
-#           # "Assinar Pacote"
-#           cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
-#           gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
-#           cd $gitfolder
-#           for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
-#             gpg --pinentry-mode loopback --passphrase "${{ secrets.PASSPHRASE }}" --detach-sign ${p}
-#           done
-#       
-#       - name: CheckSum
-#         shell: bash -O extglob {0}
-#         run: |
-#           # "Checksum"
-#           gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
-#           cd $gitfolder
-#           echo '#!/bin/bash
-#           for i in $(ls *.zst); do md5sum $i >> $i.md5; done
-#           for i in $(ls *.sig | sed 's/.sig//'); do md5sum $i.sig >> $i.md5; done
-#           exit 0' > md5.sh
-#           bash md5.sh
-#             
-#       - name: Publish Package on GitHub
-#         shell: bash
-#         run: |
-#           gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
-#           cd $gitfolder
-#           ls -lh
-#           
-#           #Release#
-#           source PKGBUILD
-#           release=${pkgname}-${pkgver}-${pkgrel}
-#           
-#           echo ${{ github.token }} | gh auth login --with-token
-#           repo=${{ github.repository }}
-#           
-#           gh release create ${release} --title ${release} --repo ${repo} --notes "automated release from ${{ github.event.client_payload.url }}" || echo "release already exists"
-#           GITHUB_LINK=https://github.com/${repo}/releases/download/${release}
-#           for i in .zst .sig .tar .md5; do
-#             find -iname "*$i" -exec gh release upload ${release} --repo ${repo} --clobber {} \;
-#           done
-#        
-#       - name: Push to Repo
-#         shell: bash
-#         run: |
-#           gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
-#           cd $gitfolder
-#           ls -lh
-#           
-#           echo "## ssh setup"
-#           mkdir -p /home/runner/.ssh
-#           touch /home/runner/.ssh/id_rsa
-#           chmod 600 /home/runner/.ssh/id_rsa
-#           ssh-agent -a /tmp/ssh_agent.sock > /dev/null
-#           echo "${{ secrets.PKGBUILD_KEY }}" >> /home/runner/.ssh/id_rsa
-#           eval `ssh-agent -s`
-#           ssh-add /home/runner/.ssh/id_rsa
-#           ssh-keyscan -t rsa -p ${{ secrets.PKGBUILD_PORT }} ${{ secrets.PKGBUILD_HOST }} >> /home/runner/.ssh/known_hosts
-#           
-#           ls -lh
-#           branch=testing
-#           for i in *.zst *.sig *.md5; do
-#           test -e $i && rsync -vapz -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.PKGBUILD_PORT }}" $i ${{ secrets.PKGBUILD_USER }}@${{ secrets.PKGBUILD_HOST }}:${{ secrets.PKGBUILD_ARCHLINUX_DIR }}
-#           sleep 10
-#           done
-#           
-#       #- name: Telegram Alert End
-#         #shell: bash
-#         #run: |
-#           #curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.CHAT_ID_ARCHLINUX }}", "text": "Pacote: ${{ github.event.action }} criado e enviado a partir do branch ${{ github.ref_name }}", "disable_notification": true}' ${{ secrets.MESSAGE_BOT_KEY }}
-#           
-#       - name: Telegram Alert Fail
-#         if: ${{ failure() || cancelled() }}
-#         run: |
-#           curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.CHAT_ID_ARCHLINUX }}", "text": "FALHA ao criar Pacote: ${{ github.event.action }} a partir do repo archinux, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false}' ${{ secrets.MESSAGE_BOT_KEY }}
-#           
-#         ## Tmate ##
-#       #- name: Setup tmate session
-#       #  uses: mxschmitt/action-tmate@v3 
+          #Release#
+          source PKGBUILD
+          release=${pkgname}-${pkgver}-${pkgrel}
+          
+          echo ${{ github.token }} | gh auth login --with-token
+          repo=${{ github.repository }}
+          
+          gh release create ${release} --title ${release} --repo ${repo} --notes "automated release from ${{ github.event.client_payload.url }}" || echo "release already exists"
+          GITHUB_LINK=https://github.com/${repo}/releases/download/${release}
+          for i in .zst .sig .tar .md5; do
+            find -iname "*$i" -exec gh release upload ${release} --repo ${repo} --clobber {} \;
+          done
+       
+      - name: Push to Repo
+        shell: bash
+        run: |
+          gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+          cd $gitfolder
+          ls -lh
+          
+          echo "## ssh setup ##"
+          mkdir -p /home/runner/.ssh
+          touch /home/runner/.ssh/id_rsa
+          chmod 600 /home/runner/.ssh/id_rsa
+          ssh-agent -a /tmp/ssh_agent.sock > /dev/null
+          echo "${{ secrets.REPO_SSH_KEY }}" >> /home/runner/.ssh/id_rsa
+          eval `ssh-agent -s`
+          ssh-add /home/runner/.ssh/id_rsa
+          ssh-keyscan -t rsa -p ${{ secrets.REPO_PORT }} ${{ secrets.REPO_HOST }} >> /home/runner/.ssh/known_hosts
+          
+          ls -lh
+          
+          ## select branch
+          if [ -n "$(echo ${{ github.event.client_payload.branch }} | grep stable )" ];then
+            branch=stable
+          elif [ -n "$(echo ${{ github.event.client_payload.branch }} | grep testing )" ];then
+            branch=testing
+          else
+            branch=dev
+          fi
+          
+          #send to Repo
+          for i in *.zst *.sig *.md5; do
+          test -e $i && rsync -vapz -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" $i ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}/$branch
+          sleep 10
+          done
+          
+      #- name: Telegram Alert End
+        #shell: bash
+        #run: |
+          #curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.CHAT_ID_ARCHLINUX }}", "text": "Pacote: ${{ github.event.action }} criado e enviado a partir do branch ${{ github.ref_name }}", "disable_notification": true}' ${{ secrets.MESSAGE_BOT_KEY }}
+          
+      # - name: Telegram Alert Fail
+      #   if: ${{ failure() || cancelled() }}
+      #   run: |
+      #     curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.CHAT_ID_ARCHLINUX }}", "text": "FALHA ao criar Pacote: ${{ github.event.action }} a partir do repo archinux, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false}' ${{ secrets.MESSAGE_BOT_KEY }}
+          
+        ## Tmate ##
+      #- name: Setup tmate session
+      #  uses: mxschmitt/action-tmate@v3 
           

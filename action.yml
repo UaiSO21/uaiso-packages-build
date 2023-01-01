@@ -196,7 +196,50 @@ runs:
 #         
 #         pacman -Sy
       
-    - name: Teste
+    - name: Makepkg Build    
       shell: bash
+      run: |
+        useradd builduser -m 
+        passwd -d builduser 
+        printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
+        
+        git clone ${{ github.event.client_payload.url }}.git
+        gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+        chmod 777 $gitfolder
+        cd $gitfolder
+        
+        sudo -u builduser bash -c 'makepkg -sc --noconfirm --skippgpcheck'
+        
+        ls -lh
+        
+    - name: Rename Package
+      shell: bash -O extglob {0}
       run: | 
-        echo "funcionou"
+        # "Rename Package"
+        gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+        cd $gitfolder
+        for i in *.zst; do if [ -n "$(ls $i | grep :)" ]; then mv $i $(echo $i | sed 's/:/-/'); fi; done
+      
+        
+    - name: sign package
+      shell: bash -O extglob {0}
+      run: |
+        # "Assinar Pacote"
+        cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
+        gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+        cd $gitfolder
+        for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
+          gpg --pinentry-mode loopback --passphrase "${{ secrets.PASSPHRASE }}" --detach-sign ${p}
+        done
+    
+    - name: CheckSum
+      shell: bash -O extglob {0}
+      run: |
+        # "Checksum"
+        gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+        cd $gitfolder
+        echo '#!/bin/bash
+        for i in $(ls *.zst); do md5sum $i >> $i.md5; done
+        for i in $(ls *.sig | sed 's/.sig//'); do md5sum $i.sig >> $i.md5; done
+        exit 0' > md5.sh
+        bash md5.sh
