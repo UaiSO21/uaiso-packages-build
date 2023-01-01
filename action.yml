@@ -45,7 +45,22 @@ runs:
       shell: bash
       run: |
         echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
-        pacman -Syu --noconfirm pacman sudo git github-cli openssh gnupg coreutils rsync wget fakeroot binutils cmake extra-cmakemodules gcc make devtools \
+        pacman -Syu --noconfirm --needed \
+        pacman \
+        sudo \
+        git \
+        github-cli \
+        openssh \
+        gnupg \
+        coreutils \
+        rsync \
+        wget \
+        fakeroot \
+        binutils \
+        cmake \
+        gcc \
+        make \
+        devtools \
         acl \
         archlinux-keyring \
         autoconf \
@@ -143,6 +158,7 @@ runs:
         zlib \
         zram-generator \
         zstd
+        #extra-cmakemodules \
     
 #     - name: Add UaiSO21 Repo and Key
 #       shell: bash
