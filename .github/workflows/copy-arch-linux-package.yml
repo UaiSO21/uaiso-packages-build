@@ -1,0 +1,88 @@
+name: Copy ArchLinux Package
+
+on:
+  # repository_dispatch:
+    # types:
+    #   - '*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download
+        shell: bash -O extglob {0}
+        run: |
+          echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+          pacman -Syu --noconfirm sudo git github-cli openssh gnupg coreutils rsync wget
+          
+          # curl -s https://api.github.com/repos/Frogging-Family/linux-tkg/releases/latest | grep "x86_64.pkg.tar.zst" | cut -d : -f 2,3 | tr -d \" | grep "https" | wget -ci -
+          
+          sed -i "s|CacheDir.*|CacheDir = ${PWD}/|" /etc/pacman.conf
+          
+          for i in $(cat lista-packages-arch); do
+            if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
+                pacman -Sw $i
+            fi
+          done
+          
+      # # Tmate ##
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
+          
+      - name: sign package
+        shell: bash -O extglob {0}
+        run: |
+          # "Assinar Pacote"
+          cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
+          for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
+            gpg --pinentry-mode loopback --passphrase "${{ secrets.PASSPHRASE }}" --detach-sign ${p}
+          done
+          
+      - name: CheckSum
+        shell: bash -O extglob {0}
+        run: |
+          # "Checksum"
+          echo '#!/bin/bash
+          for i in $(ls *.zst); do md5sum $i >> $i.md5; done
+          for i in $(ls *.sig | sed 's/.sig//'); do md5sum $i.sig >> $i.md5; done
+          exit 0' > md5.sh
+          bash md5.sh
+          
+      - name: Push to Repo
+        shell: bash
+        run: |
+          echo "## ssh setup ##"
+          mkdir -p /home/runner/.ssh
+          touch /home/runner/.ssh/id_rsa
+          chmod 600 /home/runner/.ssh/id_rsa
+          ssh-agent -a /tmp/ssh_agent.sock > /dev/null
+          echo "${{ secrets.PKGBUILD_KEY }}" >> /home/runner/.ssh/id_rsa
+          eval `ssh-agent -s`
+          ssh-add /home/runner/.ssh/id_rsa
+          ssh-keyscan -t rsa -p ${{ secrets.REPO_PORT }} ${{ secrets.REPO_HOST }} >> /home/runner/.ssh/known_hosts
+          
+          ls -lh
+          
+          #select branch
+          if [ -n "$(echo ${{ github.event.client_payload.branch }} | grep stable )" ];then
+            branch=stable
+          elif [ -n "$(echo ${{ github.event.client_payload.branch }} | grep testing )" ];then
+            branch=testing
+          else
+            branch=dev
+          fi
+          
+          for i in *.zst *.sig *.md5; do
+          test -e $i && rsync -vapz -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" $i ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}/$branch
+          sleep 10
+          done
+          exit 0
+          
+      # - name: Telegram Alert Fail
+      #   if: ${{ failure() || cancelled() }}
+      #   run: |
+      #     curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.CHAT_ID }}", "text": "FALHA ao criar Pacote: ${{ github.event.action }} a partir do branch ${{ github.ref_name }}, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false}' ${{ secrets.MESSAGE_BOT_KEY }}
