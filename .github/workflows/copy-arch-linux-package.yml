@@ -18,7 +18,7 @@ jobs:
         run: |
           echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
           pacman -Syu --noconfirm --needed sudo git github-cli openssh gnupg coreutils rsync wget
-          pacman -Scc --noconfirm
+          # pacman -Scc --noconfirm
       
       - name: Download
         shell: bash -O extglob {0}
@@ -37,11 +37,11 @@ jobs:
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v3
           
-      # - name: sign package
-      #   shell: bash -O extglob {0}
-      #   run: |
-      #     #remover chaves
-      #     rm *.sig
+      - name: sign package
+        shell: bash -O extglob {0}
+        run: |
+          #remover chaves
+          rm *.sig
         
           # # "Assinar Pacote"
           # cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
