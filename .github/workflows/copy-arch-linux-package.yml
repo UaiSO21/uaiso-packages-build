@@ -27,7 +27,7 @@ jobs:
           
           for i in $(cat lista-packages-arch); do
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
-                pacman -Sw --noconfirm $i --cachedir $PWD
+                pacman -Sw --noconfirm --needed $i --cachedir $PWD
             fi
           done
           
@@ -37,7 +37,7 @@ jobs:
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v3
           
-      - name: sign package
+      - name: Sign Package
         shell: bash -O extglob {0}
         run: |
           #remover chaves
