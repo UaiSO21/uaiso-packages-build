@@ -37,19 +37,19 @@ jobs:
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v3
           
-      - name: sign package
-        shell: bash -O extglob {0}
-        run: |
-          #remover chaves
-          rm *.sig
+      # - name: sign package
+      #   shell: bash -O extglob {0}
+      #   run: |
+      #     #remover chaves
+      #     rm *.sig
         
-          # "Assinar Pacote"
-          cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
-          for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
-            gpg --pinentry-mode loopback --passphrase "${{ secrets.PASSPHRASE }}" --detach-sign ${p}
-          done
+          # # "Assinar Pacote"
+          # cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
+          # for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
+          #   gpg --pinentry-mode loopback --passphrase "${{ secrets.PASSPHRASE }}" --detach-sign ${p}
+          # done
           
-          ls -lh
+          # ls -lh
           
       - name: CheckSum
         shell: bash -O extglob {0}
@@ -69,7 +69,7 @@ jobs:
           touch /home/runner/.ssh/id_rsa
           chmod 600 /home/runner/.ssh/id_rsa
           ssh-agent -a /tmp/ssh_agent.sock > /dev/null
-          echo "${{ secrets.PKGBUILD_KEY }}" >> /home/runner/.ssh/id_rsa
+          echo "${{ secrets.REPO_SSH_KEY }}" >> /home/runner/.ssh/id_rsa
           eval `ssh-agent -s`
           ssh-add /home/runner/.ssh/id_rsa
           ssh-keyscan -t rsa -p ${{ secrets.REPO_PORT }} ${{ secrets.REPO_HOST }} >> /home/runner/.ssh/known_hosts
