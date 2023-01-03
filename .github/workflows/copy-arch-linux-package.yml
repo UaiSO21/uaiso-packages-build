@@ -87,13 +87,9 @@ jobs:
             branch=dev
           fi
           
-          # for i in *.zst *.sig *.md5; do
-            # test -e $i && 
-          rsync -vapzO -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64/ ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}/$branch
-          #--exclude . --exclude ..
-            sleep 2
-          # done
-          # exit 0
+          mv x86_64 $branch
+          rsync -vapzO -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" $branch ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}
+
           
       # # Tmate ##
       # - name: Setup tmate session
