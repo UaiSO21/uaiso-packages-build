@@ -50,10 +50,6 @@ jobs:
           
           ls -lh
           
-      # # Tmate ##
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
-      
       - name: CheckSum
         shell: bash -O extglob {0}
         run: |
@@ -91,11 +87,15 @@ jobs:
           
           # for i in *.zst *.sig *.md5; do
           #test -e $i &&
-          rsync -vapz -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64/ ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}/$branch
+          # rsync -vapz -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64/ ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}/$branch
           sleep 10
           # done
           # exit 0
           
+      # Tmate ##
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+      
       # - name: Telegram Alert Fail
       #   if: ${{ failure() || cancelled() }}
       #   run: |
