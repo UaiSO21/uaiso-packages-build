@@ -38,7 +38,10 @@ jobs:
         run: |
           #remover chaves
           rm *.sig
-        
+            
+          echo ${{ secrets.GPG_PRIVATE_KEY }} > key
+          echo ${{ secrets.PASSPHRASE }} > passphrase
+            
           # "Assinar Pacote"
           cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
           for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
