@@ -25,6 +25,9 @@ jobs:
         run: |
           # curl -s https://api.github.com/repos/Frogging-Family/linux-tkg/releases/latest | grep "x86_64.pkg.tar.zst" | cut -d : -f 2,3 | tr -d \" | grep "https" | wget -ci -
           
+          mkdir x86_64
+          cd x86_64
+          
           for i in $(cat lista-packages-arch); do
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
                 pacman -Sw --noconfirm --needed $i --cachedir $PWD
@@ -38,9 +41,6 @@ jobs:
         run: |
           #remover chaves
           rm *.sig
-            
-          echo ${{ secrets.GPG_PRIVATE_KEY }} > key
-          echo ${{ secrets.PASSPHRASE }} > passphrase
             
           # "Assinar Pacote"
           cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
