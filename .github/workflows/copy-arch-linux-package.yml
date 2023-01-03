@@ -50,9 +50,9 @@ jobs:
           
           ls -lh
           
-      # Tmate ##
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      # # Tmate ##
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
       
       - name: CheckSum
         shell: bash -O extglob {0}
