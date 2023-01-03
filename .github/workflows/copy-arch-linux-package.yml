@@ -18,7 +18,7 @@ jobs:
         run: |
           echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
           pacman -Syu --noconfirm --needed sudo git github-cli openssh gnupg coreutils rsync wget
-          # pacman -Scc --noconfirm
+          pacman -Scc --noconfirm
       
       - name: Download
         shell: bash -O extglob {0}
