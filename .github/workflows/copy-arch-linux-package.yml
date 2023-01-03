@@ -33,17 +33,11 @@ jobs:
           
           ls -lh
           
-      # # Tmate ##
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
-          
       - name: Sign Package
         shell: bash -O extglob {0}
         run: |
           #remover chaves
           rm *.sig
-          
-          ls -lh
         
           # "Assinar Pacote"
           cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
@@ -53,6 +47,10 @@ jobs:
           
           ls -lh
           
+      # Tmate ##
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+      
       - name: CheckSum
         shell: bash -O extglob {0}
         run: |
