@@ -88,7 +88,7 @@ jobs:
           fi
           
           for i in *.zst *.sig *.md5; do
-            test -e $i && rsync -vapzO -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64/ ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}/$branch
+            test -e $i && rsync -vapzO -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" $i ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}/$branch
             sleep 2
           done
           # exit 0
