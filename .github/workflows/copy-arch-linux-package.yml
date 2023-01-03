@@ -40,6 +40,7 @@ jobs:
         shell: bash -O extglob {0}
         run: |
           #remover chaves
+          cd x86_64
           rm *.sig
             
           # "Assinar Pacote"
@@ -58,6 +59,7 @@ jobs:
         shell: bash -O extglob {0}
         run: |
           # "Checksum"
+          cd x86_64
           echo '#!/bin/bash
           for i in $(ls *.zst); do md5sum $i >> $i.md5; done
           for i in $(ls *.sig | sed 's/.sig//'); do md5sum $i.sig >> $i.md5; done
@@ -77,7 +79,7 @@ jobs:
           ssh-add /home/runner/.ssh/id_rsa
           ssh-keyscan -t rsa -p ${{ secrets.REPO_PORT }} ${{ secrets.REPO_HOST }} >> /home/runner/.ssh/known_hosts
           
-          ls -lh
+          ls -lh x86_64
           
           #select branch
           if [ -n "$(echo ${{ github.event.client_payload.branch }} | grep stable )" ];then
@@ -88,11 +90,11 @@ jobs:
             branch=dev
           fi
           
-          for i in *.zst *.sig *.md5; do
-          test -e $i && rsync -vapz -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" $i ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}/$branch
+          # for i in *.zst *.sig *.md5; do
+          test -e $i && rsync -vapz -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64/ ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}/$branch
           sleep 10
-          done
-          exit 0
+          # done
+          # exit 0
           
       # - name: Telegram Alert Fail
       #   if: ${{ failure() || cancelled() }}
