@@ -26,11 +26,10 @@ jobs:
           # curl -s https://api.github.com/repos/Frogging-Family/linux-tkg/releases/latest | grep "x86_64.pkg.tar.zst" | cut -d : -f 2,3 | tr -d \" | grep "https" | wget -ci -
           
           mkdir x86_64
-          cd x86_64
           
           for i in $(cat lista-packages-arch); do
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
-                pacman -Sw --noconfirm --needed $i --cachedir $PWD
+                pacman -Sw --noconfirm --needed $i --cachedir $PWD/x86_64
             fi
           done
           
@@ -91,7 +90,8 @@ jobs:
           fi
           
           # for i in *.zst *.sig *.md5; do
-          test -e $i && rsync -vapz -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64/ ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}/$branch
+          #test -e $i &&
+          rsync -vapz -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64/ ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}/$branch
           sleep 10
           # done
           # exit 0
