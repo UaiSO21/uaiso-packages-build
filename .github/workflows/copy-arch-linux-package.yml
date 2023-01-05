@@ -1,4 +1,4 @@
-name: Copy ArchLinux Package
+name: Copy ArchLinux & ChaoticAUR Package
 
 on:
   # repository_dispatch:
@@ -16,6 +16,14 @@ jobs:
       - name: Install Dependencies
         shell: bash -O extglob {0}
         run: |
+          #add ChaoticAUR
+          pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
+          pacman-key --lsign-key FBA220DFC880C036
+          pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+          echo "
+          [chaotic-aur]
+          Include = /etc/pacman.d/chaotic-mirrorlist" | tee -a /etc/pacman.conf
+          
           echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
           pacman -Syu --noconfirm --needed sudo git github-cli openssh gnupg coreutils rsync wget
           pacman -Scc --noconfirm
@@ -23,11 +31,9 @@ jobs:
       - name: Download
         shell: bash -O extglob {0}
         run: |
-          # curl -s https://api.github.com/repos/Frogging-Family/linux-tkg/releases/latest | grep "x86_64.pkg.tar.zst" | cut -d : -f 2,3 | tr -d \" | grep "https" | wget -ci -
-          
           mkdir x86_64
           
-          for i in $(cat lista-packages-arch); do
+          for i in $(cat lista-packages-arch-chaotic-aur); do
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
                 pacman -Sw --noconfirm --needed $i --cachedir $PWD/x86_64
             fi
