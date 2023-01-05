@@ -25,6 +25,7 @@ jobs:
           Include = /etc/pacman.d/chaotic-mirrorlist" | tee -a /etc/pacman.conf
           
           echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+          pacman-key --init
           pacman -Syu --noconfirm --needed sudo git github-cli openssh gnupg coreutils rsync wget
           pacman -Scc --noconfirm
       
