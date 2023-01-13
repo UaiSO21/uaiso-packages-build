@@ -1,4 +1,5 @@
-#ARCH-RELENG
+#ARCHISO-RELENG
+#=======================
 alsa-utils
 amd-ucode
 arch-install-scripts
@@ -112,7 +113,7 @@ udftools
 usb_modeswitch
 usbmuxd
 usbutils
-vim
+#vim
 virtualbox-guest-utils-nox
 vpnc
 wireless-regdb
@@ -125,12 +126,9 @@ wireless-regdb
 wireless_tools
 wpa_supplicant
 zsh
-scrcpy
 
 #CUSTOMIZAÇÃO
 #=======================
-
-archiso
 
 #COMPLEMENTO
 neofetch
@@ -172,16 +170,31 @@ packagekit-qt5
 packagekit-qt6
 kscreen
 kfind
+kate
 mlocate
 kcalc
 simplescreenrecorder
 lib32-simplescreenrecorder
 okular
+vivaldi
+vivaldi-ffmpeg-codecs
+visual-studio-code-bin
+dbeaver
+dbeaver-plugin-svg-format
+dbeaver-plugin-office
+devhelp
+onlyoffice-bin
+dropbox
+telegram-desktop
+discord
+qbittorrent
+
 
 ##FONTES
 ttf-lato
 noto-fonts-emoji
 noto-fonts-cjk
+ttf-ms-fonts
 
 ##REDE
 networkmanager
@@ -189,11 +202,16 @@ network-manager-applet
 networkmanager-pptp
 mtr
 speedtest-cli
+remmina
 
 #REPOSITORIOS
 chaotic-mirrorlist
 chaotic-keyring
 biglinux-key
+pamac-aur
+flatpak
+yay
+trizen
 
 #BIGLINUX
 biglinux-apps-rename
