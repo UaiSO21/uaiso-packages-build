@@ -58,7 +58,9 @@ jobs:
             fi
           done
           
-          pacman -Sw --noconfirm $(cat packages.txt | sed ':a;$!N;s/\n/ /;ta;') --cachedir $PWD/x86_64
+          mkdir -p /tmp/pacmandb
+          
+          pacman -Sw --noconfirm $(cat packages.txt | sed ':a;$!N;s/\n/ /;ta;') --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
           
           ls -lh
           
