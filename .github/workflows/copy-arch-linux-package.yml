@@ -47,7 +47,7 @@ jobs:
           
           for i in $(cat lista-packages-arch-chaotic-aur); do
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
-                pacman -Sw --noconfirm --needed $i --cachedir $PWD/x86_64
+                pacman -Sw --noconfirm $i --cachedir $PWD/x86_64
             fi
           done
           
