@@ -127,6 +127,12 @@ wireless_tools
 wpa_supplicant
 zsh
 
+#BOOTSTRAP
+arch-install-scripts
+base
+base-devel
+git
+
 #CUSTOMIZAÇÃO
 #=======================
 
