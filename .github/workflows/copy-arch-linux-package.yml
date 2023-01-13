@@ -35,6 +35,12 @@ jobs:
           SigLevel = PackageRequired
           Server = https://repo.biglinux.com.br/stable/$arch' | tee -a /etc/pacman.conf
           
+          #add ALCI
+          echo '
+          [alci_repo]
+          SigLevel = Optional TrustAll
+          Server = https://arch-linux-calamares-installer.github.io/$repo/$arch | tee -a /etc/pacman.conf
+          
           #add multilib
           echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
           pacman -Syu --noconfirm --needed sudo git github-cli openssh gnupg coreutils rsync wget
