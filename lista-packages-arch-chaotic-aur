@@ -168,6 +168,7 @@ qt6-wayland
 ##DESKTOP
 sddm
 plasma-meta
+plasma-wayland-session
 dolphin
 konsole
 yakuake
