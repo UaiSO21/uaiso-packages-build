@@ -225,11 +225,11 @@ runs:
       shell: bash -O extglob {0}
       run: |
         # "Assinar Pacote"
-        cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
+        cat <(echo -e "${{ inputs.gpg-key }}") | gpg --batch --import &>/dev/null
         gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
         cd $gitfolder
         for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
-          gpg --pinentry-mode loopback --passphrase "${{ secrets.PASSPHRASE }}" --detach-sign ${p}
+          gpg --pinentry-mode loopback --passphrase "${{ inputs.gpg-passphrase }}" --detach-sign ${p}
         done
     
     - name: CheckSum
