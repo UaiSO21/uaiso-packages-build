@@ -153,6 +153,7 @@ rxvt-unicode
 wmctrl
 python-gobject
 force-upgrade
+xsetprop
 
 #KERNEL
 linux
