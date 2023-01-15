@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install Dependencies
-        shell: bash -O extglob {0}
+        shell: bash
         run: |
           pacman-key --init
           
@@ -48,7 +48,7 @@ jobs:
           pacman -Scc --noconfirm
       
       - name: Download
-        shell: bash -O extglob {0}
+        shell: bash
         run: |
           mkdir x86_64
           
@@ -65,7 +65,7 @@ jobs:
           ls -lh
           
       - name: Sign Package
-        shell: bash -O extglob {0}
+        shell: bash
         run: |
           #remover chaves
           cd x86_64
