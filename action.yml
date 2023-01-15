@@ -160,16 +160,21 @@ runs:
         zstd
         #extra-cmakemodules \
         
-    # Tmate ##
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
+    # # Tmate ##
+    # - name: Setup tmate session
+    #   uses: mxschmitt/action-tmate@v3
     
     - name: Add UaiSO21 Repo and Key
       shell: bash
       run: |
         #add UaiSO21 archlinux repository
-        
-        
+        sed -i '/Include = \/etc\/pacman.d\/mirrorlist/d' /etc/pacman.conf
+        sed -i '/\[testing\]/d' /etc/pacman.conf
+        sed -i '/\[core\]/d' /etc/pacman.conf
+        sed -i '/\[extra\]/d' /etc/pacman.conf
+        sed -i '/\[community-testing\]/d' /etc/pacman.conf
+        sed -i '/\[community\]/d' /etc/pacman.conf
+        sed -i '/\[multilib\]/d' /etc/pacman.conf
         
         echo '
         [uaiso21-stable]
