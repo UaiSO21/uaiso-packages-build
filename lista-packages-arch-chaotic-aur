@@ -241,7 +241,7 @@ trizen
 biglinux-apps-rename
 biglinux-webapps
 bigbashview
-big-store
+#big-store
 
 #SERVIDORES
 apache
