@@ -247,3 +247,8 @@ big-store
 apache
 mariadb
 php
+docker
+nginx
+wordpress
+distrobox
+podman
