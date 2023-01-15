@@ -127,12 +127,6 @@ wireless_tools
 wpa_supplicant
 zsh
 
-#BOOTSTRAP
-arch-install-scripts
-base
-base-devel
-git
-
 #CUSTOMIZAÇÃO
 #=======================
 
@@ -147,6 +141,11 @@ mkinitcpio-openswap
 curl
 wget
 fakeroot
+jq
+rxvt-unicode
+wmctrl
+python-gobject
+force-upgrade
 
 #KERNEL
 linux
@@ -165,11 +164,11 @@ xorg-xrdb
 
 #WAYLAND
 qt6-wayland
+plasma-wayland-session
 
 ##DESKTOP
 sddm
 plasma-meta
-plasma-wayland-session
 dolphin
 konsole
 yakuake
@@ -201,13 +200,13 @@ smplayer-themes
 mystiq
 ksystemlog
 
-
-
 ##FONTES
 ttf-lato
 noto-fonts-emoji
 noto-fonts-cjk
 ttf-ms-fonts
+ttf-comfortaa
+ttf-ubuntu-font-family
 
 ##REDE
 networkmanager
@@ -218,9 +217,10 @@ speedtest-cli
 remmina
 
 #REPOSITORIOS
-chaotic-mirrorlist
-chaotic-keyring
+#chaotic-mirrorlist
+#chaotic-keyring
 biglinux-keyring
+uaiso21-keyring
 pamac-aur
 flatpak
 yay
