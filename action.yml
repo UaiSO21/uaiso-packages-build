@@ -159,12 +159,32 @@ runs:
         zram-generator \
         zstd
         #extra-cmakemodules \
+        
+    # Tmate ##
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
     
     - name: Add UaiSO21 Repo and Key
       shell: bash
       run: |
         #add UaiSO21 archlinux repository
-        cp pacman.conf /etc/pacman.conf
+        
+        
+        
+        echo '
+        [uaiso21-stable]
+        SigLevel = PackageRequired
+        Server = http://repo-uaiso.uai21.com/stable/$arch' | tee -a /etc/pacman.conf
+        
+        echo '
+        [uaiso21-testing]
+        SigLevel = PackageRequired
+        Server = http://repo-uaiso.uai21.com/testing/$arch' | tee -a /etc/pacman.conf
+        
+        echo '
+        [uaiso21-dev]
+        SigLevel = PackageRequired
+        Server = http://repo-uaiso.uai21.com/dev/$arch' | tee -a /etc/pacman.conf
         
         #add UaiSO21 key
         pacman-key --init
