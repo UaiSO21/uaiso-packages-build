@@ -177,6 +177,11 @@ runs:
         sed -i '/\[multilib\]/d' /etc/pacman.conf
         
         echo '
+        [uaiso21-stable-update]
+        SigLevel = PackageRequired
+        Server = http://repo-uaiso.uai21.com/stable/$arch' | tee -a /etc/pacman.conf
+        
+        echo '
         [uaiso21-stable]
         SigLevel = PackageRequired
         Server = http://repo-uaiso.uai21.com/stable/$arch' | tee -a /etc/pacman.conf
