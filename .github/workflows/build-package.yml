@@ -76,6 +76,8 @@ jobs:
           ## select branch
           if [ -n "$(echo ${{ github.event.client_payload.branch }} | grep stable )" ];then
             branch=stable
+          elif [ -n "$(echo ${{ github.event.client_payload.branch }} | grep stable-update )" ];then
+            branch=stable-update
           elif [ -n "$(echo ${{ github.event.client_payload.branch }} | grep testing )" ];then
             branch=testing
           else
