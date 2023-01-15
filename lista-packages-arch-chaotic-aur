@@ -154,6 +154,7 @@ wmctrl
 python-gobject
 force-upgrade
 xsetprop
+xtermset
 
 #KERNEL
 linux
