@@ -160,41 +160,18 @@ runs:
         zstd
         #extra-cmakemodules \
     
-#     - name: Add UaiSO21 Repo and Key
-#       shell: bash
-#       run: |
-#         #add UaiSO21 archlinux repository
-#         echo '
-#         [uaiso-dev]
-#         SigLevel = PackageRequired
-#         Server = https://repo..com.br/archlinux/$arch' | tee -a /etc/pacman.conf
-#         
-#         echo '
-#         [uaiso-testing]
-#         SigLevel = PackageRequired
-#         Server = https://repo..com.br/stable/$arch' | tee -a /etc/pacman.conf
-#         
-#         echo '
-#         [uaiso-stable]
-#         SigLevel = PackageRequired
-#         Server = https://repo..com.br/stable/$arch' | tee -a /etc/pacman.conf
-#         
-#         sed -i '/PACKAGER=/s/#PACKAGER=.*/\PACKAGER="BigLinux Package Build <bigbruno@gmail.com>\"/' /etc/makepkg.conf
-#         
-#         
-#         #add UaiSO21 Keyring
-#         git clone --depth 1 https://github.com/UaiSO21/xxx-keyring.git
-#         pushd xxx-keyring
-#           install -m0644 xxx.gpg /usr/share/pacman/keyrings/
-#           install -m0644 xxx-trusted /usr/share/pacman/keyrings/
-#           install -m0644 xxx-trusted /usr/share/pacman/keyrings/
-#         popd
-#         rm -rf xxx-keyring
-#         
-#         pacman-key --init
-#         pacman-key --populate archlinux UaiSO21
-#         
-#         pacman -Sy
+    - name: Add UaiSO21 Repo and Key
+      shell: bash
+      run: |
+        #add UaiSO21 archlinux repository
+        cp pacman.conf /etc/pacman.conf
+        
+        #add UaiSO21 key
+        pacman-key --init
+        pacman-key -r FB39C5D54771F074
+        pacman-key --lsign-key FB39C5D54771F074
+        
+        pacman -Sy
       
     - name: Makepkg Build    
       shell: bash
