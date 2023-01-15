@@ -128,7 +128,6 @@ wpa_supplicant
 zsh
 
 #BOOTSTRAP
-
 arch-install-scripts
 base
 base-devel
@@ -172,8 +171,12 @@ xterm
 xorg-xrdb
 
 #WAYLAND
+wayland
+xorg-server-xwayland
 qt6-wayland
+qt5-wayland
 plasma-wayland-session
+sddm-kcm 
 
 ##DESKTOP
 sddm
@@ -237,3 +240,9 @@ trizen
 biglinux-apps-rename
 biglinux-webapps
 bigbashview
+big-store
+
+#SERVIDORES
+apache
+mariadb
+php
