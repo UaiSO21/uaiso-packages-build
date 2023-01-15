@@ -195,8 +195,6 @@ kcalc
 simplescreenrecorder
 lib32-simplescreenrecorder
 okular
-vivaldi
-vivaldi-ffmpeg-codecs
 visual-studio-code-bin
 dbeaver
 dbeaver-plugin-svg-format
@@ -212,6 +210,14 @@ smplayer-themes
 mystiq
 ksystemlog
 gparted
+
+#NAVEGADORES
+google-chrome
+vivaldi
+vivaldi-ffmpeg-codecs
+brave-bin
+chromium
+microsoft-edge-stable-bin
 
 ##FONTES
 noto-fonts-emoji
