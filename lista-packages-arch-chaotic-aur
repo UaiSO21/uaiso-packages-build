@@ -146,6 +146,7 @@ make
 mkinitcpio-openswap
 curl
 wget
+fakeroot
 
 #KERNEL
 linux
