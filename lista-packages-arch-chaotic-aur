@@ -258,9 +258,9 @@ apache
 mariadb
 php
 php-apache
+php-imagick
 docker
 nginx
-#wordpress-movido-para-empacotamento
 distrobox
 podman
 
