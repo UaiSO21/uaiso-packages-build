@@ -259,6 +259,7 @@ mariadb
 php
 php-apache
 php-imagick
+php-gd
 docker
 nginx
 distrobox
