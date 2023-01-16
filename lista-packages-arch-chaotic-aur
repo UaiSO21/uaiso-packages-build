@@ -210,6 +210,8 @@ smplayer-themes
 mystiq
 ksystemlog
 gparted
+ventoy-bin
+jre
 
 #NAVEGADORES
 google-chrome
@@ -233,6 +235,7 @@ networkmanager-pptp
 mtr
 speedtest-cli
 remmina
+net-tools
 
 #REPOSITORIOS
 #chaotic-mirrorlist
@@ -258,3 +261,8 @@ nginx
 wordpress
 distrobox
 podman
+
+#JOGOS
+steam
+lutris
+supertuxkart
