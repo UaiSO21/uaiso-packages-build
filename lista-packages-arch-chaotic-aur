@@ -126,6 +126,7 @@ wireless-regdb
 wireless_tools
 wpa_supplicant
 zsh
+zsh-completions
 
 #BOOTSTRAP
 arch-install-scripts
@@ -267,3 +268,6 @@ steam
 lutris
 supertuxkart
 wine
+
+#VIRTUALIZAÇÃO
+virtualbox
