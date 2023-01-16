@@ -257,9 +257,10 @@ bigbashview
 apache
 mariadb
 php
+php-apache
 docker
 nginx
-wordpress
+#wordpress-movido-para-empacotamento
 distrobox
 podman
 
