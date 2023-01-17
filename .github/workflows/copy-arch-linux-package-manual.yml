@@ -1,0 +1,135 @@
+name: Copy Arch, Chaotic, BigLinux HOUR
+
+on:
+  # repository_dispatch:
+    # types:
+    #   - '*'
+    
+  # schedule:
+  #   - cron:  '0 */1 * * *'
+  
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          pacman-key --init
+          
+          #add ChaoticAUR
+          pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
+          pacman-key --lsign-key FBA220DFC880C036
+          
+          pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
+          echo "
+          [chaotic-aur]
+          Include = /etc/pacman.d/chaotic-mirrorlist" | tee -a /etc/pacman.conf
+          
+          #add BigLinux
+          pacman-key -r 45EC44879815E2A6
+          pacman-key --lsign-key 45EC44879815E2A6
+          
+          echo '
+          [biglinux-stable]
+          SigLevel = PackageRequired
+          Server = https://repo.biglinux.com.br/stable/$arch' | tee -a /etc/pacman.conf
+          
+          #add ALCI
+          echo '
+          [alci_repo]
+          SigLevel = Optional TrustAll
+          Server = https://arch-linux-calamares-installer.github.io/$repo/$arch' | tee -a /etc/pacman.conf
+          
+          #add multilib
+          echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+          pacman -Syu --noconfirm --needed sudo git github-cli openssh gnupg coreutils rsync wget
+          pacman -Scc --noconfirm
+      
+      - name: Download
+        shell: bash
+        run: |
+          mkdir x86_64
+          
+          for i in $(cat manual); do
+            if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
+              echo $i >> packages.txt
+            fi
+          done
+          
+          mkdir -p /tmp/pacmandb
+          
+          pacman -Syw --noconfirm $(cat packages.txt | sed ':a;$!N;s/\n/ /;ta;') --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
+          
+          ls -lh
+          
+      - name: Sign Package
+        shell: bash
+        run: |
+          #remover chaves
+          cd x86_64
+          rm *.sig
+            
+          # "Assinar Pacote"
+          cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
+          for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
+            gpg --pinentry-mode loopback --passphrase "${{ secrets.PASSPHRASE }}" --detach-sign ${p}
+          done
+          
+          ls -lh
+          
+      # - name: CheckSum
+      #   shell: bash -O extglob {0}
+      #   run: |
+      #     # "Checksum"
+      #     cd x86_64
+      #     echo '#!/bin/bash
+      #     for i in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do md5sum $i >> $i.md5; done
+      #     for i in $(ls *.sig | sed 's/.sig//'); do md5sum $i.sig >> $i.md5; done
+      #     exit 0' > md5.sh
+      #     bash md5.sh
+      #     rm md5.sh
+          
+      - name: Push to Repo
+        shell: bash
+        run: |
+          echo "## ssh setup ##"
+          mkdir -p /home/runner/.ssh
+          touch /home/runner/.ssh/id_rsa
+          chmod 600 /home/runner/.ssh/id_rsa
+          ssh-agent -a /tmp/ssh_agent.sock > /dev/null
+          echo "${{ secrets.REPO_SSH_KEY }}" >> /home/runner/.ssh/id_rsa
+          eval `ssh-agent -s`
+          ssh-add /home/runner/.ssh/id_rsa
+          ssh-keyscan -t rsa -p ${{ secrets.REPO_PORT }} ${{ secrets.REPO_HOST }} >> /home/runner/.ssh/known_hosts
+          
+          # cd x86_64
+          # ls -lh x86_64
+          
+          # #select branch
+          # if [ -n "$(echo ${{ github.event.client_payload.branch }} | grep stable )" ];then
+          #   branch=stable
+          # elif [ -n "$(echo ${{ github.event.client_payload.branch }} | grep testing )" ];then
+          #   branch=testing
+          # else
+          #   branch=dev
+          # fi
+          
+          # mv x86_64 $branch
+          touch x86_64/zzz.txt
+          rsync -vapzO --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db --exclude=*.files
+
+          
+      # # Tmate ##
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
+      
+      # - name: Telegram Alert Fail
+      #   if: ${{ failure() || cancelled() }}
+      #   run: |
+      #     curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.CHAT_ID }}", "text": "FALHA ao criar Pacote: ${{ github.event.action }} a partir do branch ${{ github.ref_name }}, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false}' ${{ secrets.MESSAGE_BOT_KEY }}
