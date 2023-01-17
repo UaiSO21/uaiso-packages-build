@@ -1,6 +1,6 @@
 name: Copy Arch, Chaotic, BigLinux HOUR
 
-on:
+# on:
   # repository_dispatch:
     # types:
     #   - '*'
