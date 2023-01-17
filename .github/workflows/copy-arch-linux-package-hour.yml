@@ -1,4 +1,4 @@
-name: Copy Arch, Chaotic, BigLinux HORA
+name: Copy Arch, Chaotic, BigLinux HOUR
 
 on:
   # repository_dispatch:
@@ -56,7 +56,7 @@ jobs:
         run: |
           mkdir x86_64
           
-          for i in $(cat lista-pacote-hora); do
+          for i in $(cat lista-pacote-hour); do
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
               echo $i >> packages.txt
             fi
