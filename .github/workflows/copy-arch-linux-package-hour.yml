@@ -26,7 +26,8 @@ jobs:
           pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
           pacman-key --lsign-key FBA220DFC880C036
           
-          pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
+          pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
+                    'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
           echo "
           [chaotic-aur]
           Include = /etc/pacman.d/chaotic-mirrorlist" | tee -a /etc/pacman.conf
@@ -122,7 +123,8 @@ jobs:
           
           # mv x86_64 $branch
           touch x86_64/zzz.txt
-          rsync -vapzO --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db --exclude=*.files
+          rsync -vapzO --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 \
+          ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db --exclude=*.files
 
           
       # # Tmate ##
@@ -132,4 +134,7 @@ jobs:
       # - name: Telegram Alert Fail
       #   if: ${{ failure() || cancelled() }}
       #   run: |
-      #     curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.CHAT_ID }}", "text": "FALHA ao criar Pacote: ${{ github.event.action }} a partir do branch ${{ github.ref_name }}, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false}' ${{ secrets.MESSAGE_BOT_KEY }}
+      #     curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.CHAT_ID }}", \
+      # "text": "FALHA ao criar Pacote: ${{ github.event.action }} a partir do branch ${{ github.ref_name }}, \
+      # link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",\
+      # "disable_notification": false}' ${{ secrets.MESSAGE_BOT_KEY }}
