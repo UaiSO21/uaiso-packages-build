@@ -1,9 +1,13 @@
-name: Copy ArchLinux & ChaoticAUR Package
+name: Copy Arch, Chaotic, BigLinux Daily
 
 on:
   # repository_dispatch:
     # types:
     #   - '*'
+    
+  schedule:
+    - cron:  '00 21 * * *'
+    
   workflow_dispatch:
 
 jobs:
@@ -52,7 +56,7 @@ jobs:
         run: |
           mkdir x86_64
           
-          for i in $(cat lista-packages-arch-chaotic-aur); do
+          for i in $(cat lista-packages-daily); do
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
               echo $i >> packages.txt
             fi
