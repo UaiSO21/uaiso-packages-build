@@ -56,7 +56,7 @@ jobs:
         run: |
           mkdir x86_64
           
-          for i in $(cat lista-pacote-hour); do
+          for i in $(cat list-package-hour); do
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
               echo $i >> packages.txt
             fi
