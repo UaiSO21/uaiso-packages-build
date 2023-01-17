@@ -56,7 +56,7 @@ jobs:
         run: |
           mkdir x86_64
           
-          for i in $(cat manual); do
+          for i in $(cat list-packages-manual); do
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
               echo $i >> packages.txt
             fi
