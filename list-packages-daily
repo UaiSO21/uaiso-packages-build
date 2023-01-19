@@ -114,7 +114,6 @@ usb_modeswitch
 usbmuxd
 usbutils
 #vim
-virtualbox-guest-utils-nox
 vpnc
 wireless-regdb
 wireless_tools
@@ -213,6 +212,8 @@ ksystemlog
 gparted
 ventoy-bin
 jre
+ark
+clementine
 
 #NAVEGADORES
 google-chrome
@@ -237,6 +238,7 @@ mtr
 speedtest-cli
 remmina
 net-tools
+wireguard-tools
 
 #REPOSITORIOS
 #chaotic-mirrorlist
@@ -274,3 +276,5 @@ wine
 #VIRTUALIZAÇÃO
 virtualbox
 virtualbox-ext-oracle
+virtualbox-guest-utils-nox
+
