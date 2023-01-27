@@ -237,9 +237,19 @@ network-manager-applet
 networkmanager-pptp
 mtr
 speedtest-cli
-remmina
 net-tools
 wireguard-tools
+
+#REMOTO
+remmina
+remmina-plugin-rdesktop
+remmina-plugin-rustdesk
+remmina-plugin-anydesk-git
+remmina-plugin-teamviewer
+remmina-plugin-folder
+
+freerdp
+myrdp
 
 #REPOSITORIOS
 #chaotic-mirrorlist
@@ -278,4 +288,3 @@ wine
 virtualbox
 virtualbox-ext-oracle
 virtualbox-guest-utils-nox
-
