@@ -242,6 +242,7 @@ wireguard-tools
 
 #REMOTO
 remmina
+remmina-git
 remmina-plugin-rdesktop
 remmina-plugin-rustdesk
 remmina-plugin-anydesk-git
