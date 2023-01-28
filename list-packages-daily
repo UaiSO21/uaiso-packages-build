@@ -248,9 +248,9 @@ remmina-plugin-rustdesk
 remmina-plugin-anydesk-git
 remmina-plugin-teamviewer
 remmina-plugin-folder
-
 freerdp
 myrdp
+anydesk-bin
 
 #REPOSITORIOS
 #chaotic-mirrorlist
