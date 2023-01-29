@@ -133,6 +133,13 @@ base
 base-devel
 git
 
+#KERNEL BUILD
+cpio
+xmlto
+python-sphinx
+python-sphinx_rtd_theme
+texlive-latexextra
+
 #CUSTOMIZAÇÃO
 #=======================
 
