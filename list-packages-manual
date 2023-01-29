@@ -4,8 +4,4 @@ gst-libav
 gst-plugins-bad-libs
 gst-plugins-good
 archiso
-cpio
-xmlto
-python-sphinx
-python-sphinx_rtd_theme
-texlive-latexextra
+
