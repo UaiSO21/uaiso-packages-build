@@ -150,6 +150,10 @@ unzip
 traceroute
 net-tools
 mariadb
+php-apache
+php-gd
+php-imagick
+apache
 
 #PLASMA
 
