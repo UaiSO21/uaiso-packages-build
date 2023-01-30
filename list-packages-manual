@@ -184,7 +184,7 @@ ttf-ubuntu-font-family
 
 #REPO
 
-uaiso-keyring
+#uaiso-keyring
 pamac-aur
 flatpak
 yay
@@ -200,10 +200,10 @@ bigbashview
 
 remmina-git
 remmina-plugin-rdesktop
-remmina-plugin-rustdesk
-remmina-plugin-anydesk-git
-remmina-plugin-teamviewer
-remmina-plugin-folder
+#remmina-plugin-rustdesk
+#remmina-plugin-anydesk-git
+#remmina-plugin-teamviewer
+#remmina-plugin-folder
 freerdp
 anydesk-bin
 
