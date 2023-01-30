@@ -154,6 +154,7 @@ php-apache
 php-gd
 php-imagick
 apache
+wireguard-tools
 
 #PLASMA
 
