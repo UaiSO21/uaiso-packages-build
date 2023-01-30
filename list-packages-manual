@@ -144,6 +144,12 @@ rxvt-unicode
 speedtest-cli
 wget
 wmctrl
+fping
+unrar
+unzip
+traceroute
+net-tools
+mariadb
 
 #PLASMA
 
@@ -172,6 +178,8 @@ yakuake
 network-manager-applet
 networkmanager
 networkmanager-pptp
+breeze-extended
+kvantum
 
 #FONTES
 
@@ -181,6 +189,7 @@ noto-fonts-cjk
 ttf-ms-fonts
 ttf-comfortaa
 ttf-ubuntu-font-family
+ttf-font-awesome
 
 #REPO
 
@@ -195,6 +204,9 @@ trizen
 biglinux-apps-rename
 biglinux-webapps
 bigbashview
+big-store
+biglinux-noise-reduction-pipewire
+
 
 #REMOTO
 
@@ -224,6 +236,13 @@ virtualbox-ext-oracle
 visual-studio-code-bin
 vivaldi
 vivaldi-ffmpeg-codecs
+brave-bin
+google-chrome
+ventoy-bin
+wine
+virt-manager
+rclone
+rclone-browser
 
 #INSTALADOR
 
