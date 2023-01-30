@@ -56,7 +56,7 @@ jobs:
         run: |
           mkdir x86_64
           
-          for i in $(cat list-packages-daily); do
+          for i in $(cat list-packages-daily list-packages-hour list-packages-manual); do
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
               echo $i >> packages.txt
             fi
@@ -120,9 +120,13 @@ jobs:
           #   branch=dev
           # fi
           
+          for i in $(cat list-packages-local); do echo "--exclude=$i* \\" >> listaExclude ; done
+          sed -i ':a;$!{N;ba;};s/\(.*\)\\/\1/' listaExclude
+          listaExclude=$(cat listaExclude)
+          
           # mv x86_64 $branch
           touch x86_64/zzz.txt
-          rsync -vapzO --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db --exclude=*.files
+          rsync -vapzO --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db --exclude=*.files $listaExclude
 
           
       # # Tmate ##
