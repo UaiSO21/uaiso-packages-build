@@ -133,7 +133,7 @@ base
 base-devel
 git
 
-#KERNEL BUILD
+#KERNEL-BUILD
 cpio
 xmlto
 python-sphinx
