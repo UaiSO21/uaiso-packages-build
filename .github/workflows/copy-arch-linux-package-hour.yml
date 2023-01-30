@@ -22,10 +22,10 @@ jobs:
         run: |
           pacman-key --init
           
-          sudo sed -i '/\[core\]/{h;s/.*/\[uaiso21-dev\]/;p;x;}' /etc/pacman.conf
-          sudo sed -i '/\[core\]/{h;s/.*/SigLevel = PackageRequired/;p;x;}' /etc/pacman.conf
-          sudo sed -i '/\[core\]/{h;s/.*/Server = http:\/\/repo-uaiso.uai21.com\/dev\/$arch/;p;x;}' /etc/pacman.conf
-          sudo sed -i '/\[core\]/{h;s/.*//;p;x;}' /etc/pacman.conf
+          sed -i '/\[core\]/{h;s/.*/\[uaiso21-dev\]/;p;x;}' /etc/pacman.conf
+          sed -i '/\[core\]/{h;s/.*/SigLevel = PackageRequired/;p;x;}' /etc/pacman.conf
+          sed -i '/\[core\]/{h;s/.*/Server = http:\/\/repo-uaiso.uai21.com\/dev\/$arch/;p;x;}' /etc/pacman.conf
+          sed -i '/\[core\]/{h;s/.*//;p;x;}' /etc/pacman.conf
                     
           #add ChaoticAUR
           pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
