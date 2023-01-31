@@ -54,9 +54,9 @@ jobs:
           pacman -Scc --noconfirm
           
                 
-      # Tmate ##
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      # # Tmate ##
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
       
       - name: Download
         shell: bash
