@@ -182,9 +182,9 @@ runs:
         Server = http://repo-uaiso.uai21.com/stable-update/$arch' | tee -a /etc/pacman.conf
         
         echo '
-        [uaiso21-stable]
+        [uaiso21-dev]
         SigLevel = PackageRequired
-        Server = http://repo-uaiso.uai21.com/stable/$arch' | tee -a /etc/pacman.conf
+        Server = http://repo-uaiso.uai21.com/dev/$arch' | tee -a /etc/pacman.conf
         
         echo '
         [uaiso21-testing]
@@ -192,9 +192,9 @@ runs:
         Server = http://repo-uaiso.uai21.com/testing/$arch' | tee -a /etc/pacman.conf
         
         echo '
-        [uaiso21-dev]
+        [uaiso21-stable]
         SigLevel = PackageRequired
-        Server = http://repo-uaiso.uai21.com/dev/$arch' | tee -a /etc/pacman.conf
+        Server = http://repo-uaiso.uai21.com/stable/$arch' | tee -a /etc/pacman.conf
         
         #add UaiSO21 key
         pacman-key --init
