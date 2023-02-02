@@ -10,3 +10,6 @@ Aqui temos todos os pacotes que são atualizados no repositório /dev do UaiSO.
 
 http://repo-uaiso.uai21.com/dev/x86_64/
 
+### list-packages-hour
+
+Essa é uma lista especial de pacotes que precisam de verificação de atualização de hora em hora.
