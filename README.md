@@ -8,5 +8,5 @@ Essa lista existe para inclusão manual de pacotes. Fazemos uma verificação de
 
 Aqui temos todos os pacotes que são atualizados no repositório /dev do UaiSO.
 
-[](http://repo-uaiso.uai21.com/dev/x86_64/)
+http://repo-uaiso.uai21.com/dev/x86_64/
 
