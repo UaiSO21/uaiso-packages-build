@@ -218,10 +218,10 @@ biglinux-noise-reduction-pipewire
 
 remmina-git
 remmina-plugin-rdesktop
-#remmina-plugin-rustdesk
-#remmina-plugin-anydesk-git
-#remmina-plugin-teamviewer
-#remmina-plugin-folder
+remmina-plugin-rustdesk
+remmina-plugin-anydesk-git
+remmina-plugin-teamviewer
+remmina-plugin-folder
 freerdp
 anydesk-bin
 
