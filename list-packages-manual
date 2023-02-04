@@ -10,3 +10,7 @@ audiotube-git
 kjournald
 krename
 ulauncher
+
+#big-store
+xsetprop
+xtermset
