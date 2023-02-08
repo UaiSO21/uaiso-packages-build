@@ -273,3 +273,9 @@ grub-customizer
 #JOGOS
 
 supertuxkart
+
+#KERNEL-BUILD
+xmlto
+python-sphinx
+python-sphinx_rtd_theme
+texlive-latexextra
