@@ -36,6 +36,11 @@ jobs:
           pacman-key --lsign-key 45EC44879815E2A6
           
           echo '
+          [biglinux-archlinux]
+          SigLevel = PackageRequired
+          Server = https://repo.biglinux.com.br/archlinux/$arch' | tee -a /etc/pacman.conf
+          
+          echo '
           [biglinux-stable]
           SigLevel = PackageRequired
           Server = https://repo.biglinux.com.br/stable/$arch' | tee -a /etc/pacman.conf
