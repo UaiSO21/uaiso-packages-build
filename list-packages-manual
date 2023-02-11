@@ -11,6 +11,8 @@ kjournald
 krename
 ulauncher
 
-#big-store
 xsetprop
 xtermset
+
+#drivers
+epson-inkjet-printer-escpr
