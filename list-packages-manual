@@ -16,3 +16,6 @@ xtermset
 
 #drivers
 epson-inkjet-printer-escpr
+
+#biglinux
+bigcontrolcenter
