@@ -262,7 +262,7 @@ android-tools
 #EXTRAS
 archiso
 audiotube-git
-binance-bin
+#binance-bin
 ghostwriter
 grub-customizer
 index-fm
