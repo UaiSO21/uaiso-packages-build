@@ -19,6 +19,12 @@ epson-inkjet-printer-escpr
 
 #biglinux
 bigcontrolcenter
-mhwd
-mhwd-biglinux
-biglinux-driver-manager
+
+#CODECS
+ffmpeg
+gst-plugins-ugly
+gst-plugins-good
+gst-plugins-base
+gst-plugins-bad
+gst-libav
+gstreamer
