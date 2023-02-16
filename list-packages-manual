@@ -17,9 +17,6 @@ xtermset
 #drivers
 epson-inkjet-printer-escpr
 
-#biglinux
-bigcontrolcenter
-
 #CODECS
 ffmpeg
 gst-plugins-ugly
