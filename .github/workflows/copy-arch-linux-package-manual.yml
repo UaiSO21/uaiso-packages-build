@@ -35,25 +35,25 @@ jobs:
           pacman-key --recv-key B545E9B7CD906FE3
           pacman-key --lsign-key B545E9B7CD906FE3
 
-          echo "
+          echo '
           [andontie-aur]
           SigLevel = PackageRequired
-          Server = https://aur.andontie.net/x86_64" | tee -a /etc/pacman.conf
+          Server = https://aur.andontie.net/$arch' | tee -a /etc/pacman.conf
 
 
           #add BigLinux
           pacman-key --recv-key 45EC44879815E2A6
           pacman-key --lsign-key 45EC44879815E2A6
           
-          echo "
+          echo '
           [biglinux-archlinux]
           SigLevel = PackageRequired
-          Server = https://repo.biglinux.com.br/archlinux/$arch" | tee -a /etc/pacman.conf
+          Server = https://repo.biglinux.com.br/archlinux/$arch' | tee -a /etc/pacman.conf
           
-          echo "
+          echo '
           [biglinux-stable]
           SigLevel = PackageRequired
-          Server = https://repo.biglinux.com.br/stable/$arch" | tee -a /etc/pacman.conf
+          Server = https://repo.biglinux.com.br/stable/$arch' | tee -a /etc/pacman.conf
           
           #add ALCI
           
