@@ -21,7 +21,7 @@ akonadi-mime
 akonadi-notes
 akonadi-search
 alci-calamares
-alci-calamares-config
+#alci-calamares-config
 alsa-firmware
 alsa-lib
 alsa-topology-conf
