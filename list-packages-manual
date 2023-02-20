@@ -6,7 +6,7 @@ pipewire-biglinux-config-git
 pipewire-jack
 pipewire-jack-dropin
 plasma-appsmenu-biglinux
-plasma-simplemenu
+#plasma-simplemenu
 plasma-vault
 plasma5-applet-tiledmenu-git
 plasma5-applets-resources-monitor
