@@ -15,7 +15,7 @@ big-first-boot
 big-mount-git
 big-preload
 big-skel
-bigcontrolcenter
+#bigcontrolcenter
 biglinux-changes-to-plasma-git
 biglinux-config
 biglinux-grub-restore
