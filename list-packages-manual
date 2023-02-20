@@ -46,7 +46,7 @@ chmlib
 compsize
 cryfs
 dbus-broker-enable
-debtap-mod
+#debtap-mod
 disable-fsync
 dolphin-plugins
 ds4-disable-led
