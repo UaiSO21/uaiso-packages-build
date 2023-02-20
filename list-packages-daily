@@ -1473,3 +1473,7 @@ zlib
 zsh
 zstd
 zxing-cpp
+
+#2023-02-20
+gnome-boxes
+snapd
