@@ -1353,7 +1353,7 @@ ttf-roboto
 ttf-ubuntu-font-family
 tts-biglinux
 tzdata
-uaiso-wordpress
+#uaiso-wordpress (repo-proprio)
 uchardet
 udftools
 udiskie
