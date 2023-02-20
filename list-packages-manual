@@ -26,7 +26,7 @@ rhvoice-brazilian-portuguese-complementary-dict-biglinux
 rhvoice-voice-evgeniy-eng
 rhvoice-voice-leticia-f123
 rootactions-servicemenu-biglinux
-rpmtoarch
+#rpmtoarch
 rustdesk-bin
 sane-airscan
 sddm-theme-biglinux
