@@ -32,16 +32,16 @@ jobs:
           [chaotic-aur]
           Include = /etc/pacman.d/chaotic-mirrorlist" | tee -a /etc/pacman.conf
           
-          #add AndonitaAUR
-          pacman-key --recv-key B545E9B7CD906FE3 --keyserver keyserver.ubuntu.com
+          #add AndoniteAUR
+          pacman-key --recv-key B545E9B7CD906FE3
           pacman-key --lsign-key B545E9B7CD906FE3
 
           echo '
           [andontie-aur]
-          Server = https://aur.andontie.net/$arch' | tee -a /etc/pacman.conf
+          Server = https://aur.andontie.net/$arch" | tee -a /etc/pacman.conf
 
           #add BigLinux
-          pacman-key -r 45EC44879815E2A6
+          pacman-key --recv-key 45EC44879815E2A6
           pacman-key --lsign-key 45EC44879815E2A6
           
           echo '
