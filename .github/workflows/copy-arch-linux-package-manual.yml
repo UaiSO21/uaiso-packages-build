@@ -37,7 +37,9 @@ jobs:
 
           echo "
           [andontie-aur]
-          Server = https://aur.andontie.net/$arch" | tee -a /etc/pacman.conf
+          SigLevel = PackageRequired
+          Server = https://aur.andontie.net/x86_64" | tee -a /etc/pacman.conf
+
 
           #add BigLinux
           pacman-key --recv-key 45EC44879815E2A6
