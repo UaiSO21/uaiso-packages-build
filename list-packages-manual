@@ -5,7 +5,7 @@ adobe-source-sans-pro-fonts
 alsa-firmware
 appimagelauncher
 appmenu-gtk-module
-archlinux32-keyring
+#archlinux32-keyring
 aspell-pt
 auto-rules-io
 auto-tweaks-browser
