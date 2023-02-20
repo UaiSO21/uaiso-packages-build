@@ -18,14 +18,14 @@ big-skel
 #bigcontrolcenter
 biglinux-changes-to-plasma-git
 biglinux-config
-biglinux-grub-restore
+#biglinux-grub-restore
 biglinux-improve-compatibility
 biglinux-key
 biglinux-keyring
 biglinux-l18n
 biglinux-livecd
 biglinux-meta-audio-config
-biglinux-mime
+#biglinux-mime
 biglinux-name
 biglinux-neofetch
 biglinux-session-and-themes
