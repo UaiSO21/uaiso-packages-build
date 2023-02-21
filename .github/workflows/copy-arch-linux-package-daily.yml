@@ -62,7 +62,7 @@ jobs:
           Server = https://arch-linux-calamares-installer.github.io/$repo/$arch' | tee -a /etc/pacman.conf
 
           #add ArcoLinux
-          pacman-key --r 74F5DE85A506BF64
+          pacman-key -r 74F5DE85A506BF64
           pacman-key --lsign-key 74F5DE85A506BF64
 
           echo '
