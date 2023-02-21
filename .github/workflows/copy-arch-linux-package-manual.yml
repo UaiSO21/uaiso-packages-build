@@ -174,4 +174,4 @@ jobs:
       - name: Telegram Alert Fail
         if: ${{ failure() }}
         run: |
-          curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "FALHA ao gerar ${{ github.event.action }}, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false, "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
+          curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "FALHA ao gerar ${{ github.workflow }}, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false, "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
