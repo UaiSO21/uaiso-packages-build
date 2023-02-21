@@ -1,3 +1,4 @@
 snapd
 polkit-gnome
-bigcontrolcenter
+#bigcontrolcenter
+cmake
