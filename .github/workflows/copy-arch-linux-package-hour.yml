@@ -25,14 +25,21 @@ jobs:
           #add ChaoticAUR
           pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
           pacman-key --lsign-key FBA220DFC880C036
-
-          pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
-                    'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-                    
+          
+          pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
           echo "
           [chaotic-aur]
           Include = /etc/pacman.d/chaotic-mirrorlist" | tee -a /etc/pacman.conf
           
+          #add AndontieAUR
+          pacman-key --recv-key B545E9B7CD906FE3
+          pacman-key --lsign-key B545E9B7CD906FE3
+
+          echo '
+          [andontie-aur]
+          SigLevel = PackageRequired
+          Server = https://aur.andontie.net/$arch' | tee -a /etc/pacman.conf
+
           #add BigLinux
           pacman-key -r 45EC44879815E2A6
           pacman-key --lsign-key 45EC44879815E2A6
@@ -48,12 +55,33 @@ jobs:
           Server = https://repo.biglinux.com.br/stable/$arch' | tee -a /etc/pacman.conf
           
           #add ALCI
+          
           echo '
           [alci_repo]
           SigLevel = Optional TrustAll
           Server = https://arch-linux-calamares-installer.github.io/$repo/$arch' | tee -a /etc/pacman.conf
-          
+
+          #add ArcoLinux
+          pacman-key --r 74F5DE85A506BF64
+          pacman-key --lsign-key 74F5DE85A506BF64
+
+          echo '
+          [arcolinux_repo]
+          SigLevel = Required DatabaseOptional
+          Server = https://gitlab.com/arcolinux/$repo/-/raw/main/$arch' | tee -a /etc/pacman.conf
+
+          echo '
+          [arcolinux_repo_3party]
+          SigLevel = Required DatabaseOptional
+          Server = https://gitlab.com/arcolinux/$repo/-/raw/main/$arch' | tee -a /etc/pacman.conf
+
+          echo '
+          [arcolinux_repo_xlarge]
+          SigLevel = Required DatabaseOptional
+          Server = https://gitlab.com/arcolinux/$repo/-/raw/main/$arch' | tee -a /etc/pacman.conf
+ 
           #add multilib
+          
           echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
           pacman -Syu --noconfirm --needed sudo git github-cli openssh gnupg coreutils rsync wget
           pacman -Scc --noconfirm

@@ -21,7 +21,6 @@ akonadi-mime
 akonadi-notes
 akonadi-search
 alci-calamares
-#alci-calamares-config
 alsa-firmware
 alsa-lib
 alsa-topology-conf
@@ -1474,6 +1473,9 @@ zsh
 zstd
 zxing-cpp
 
-#2023-02-20
+#20230220
 gnome-boxes
-#snapd
+snapd
+pamac-gtk
+archlinux-tweak-tool-git
+distrobox
