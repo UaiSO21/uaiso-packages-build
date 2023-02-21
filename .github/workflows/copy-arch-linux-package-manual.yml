@@ -40,7 +40,6 @@ jobs:
           SigLevel = PackageRequired
           Server = https://aur.andontie.net/$arch' | tee -a /etc/pacman.conf
 
-
           #add BigLinux
           pacman-key -r 45EC44879815E2A6
           pacman-key --lsign-key 45EC44879815E2A6
@@ -55,7 +54,6 @@ jobs:
           SigLevel = PackageRequired
           Server = https://repo.biglinux.com.br/stable/$arch' | tee -a /etc/pacman.conf
           
-          
           #add ALCI
           
           echo '
@@ -63,8 +61,10 @@ jobs:
           SigLevel = Optional TrustAll
           Server = https://arch-linux-calamares-installer.github.io/$repo/$arch' | tee -a /etc/pacman.conf
 
-          #add ARCOLINUX
-          
+          #add ArcoLinux
+          pacman-key --r 74F5DE85A506BF64
+          pacman-key --lsign-key 74F5DE85A506BF64
+
           echo '
           [arcolinux_repo]
           SigLevel = Required DatabaseOptional
@@ -79,8 +79,7 @@ jobs:
           [arcolinux_repo_xlarge]
           SigLevel = Required DatabaseOptional
           Server = https://gitlab.com/arcolinux/$repo/-/raw/main/$arch' | tee -a /etc/pacman.conf
-
-         
+ 
           #add multilib
           
           echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
