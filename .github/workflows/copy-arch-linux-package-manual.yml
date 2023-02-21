@@ -62,7 +62,25 @@ jobs:
           [alci_repo]
           SigLevel = Optional TrustAll
           Server = https://arch-linux-calamares-installer.github.io/$repo/$arch' | tee -a /etc/pacman.conf
+
+          #add ARCOLINUX
           
+          echo '
+          [arcolinux_repo]
+          SigLevel = Required DatabaseOptional
+          Server = https://gitlab.com/arcolinux/$repo/-/raw/main/$arch' | tee -a /etc/pacman.conf
+
+          echo '
+          [arcolinux_repo_3party]
+          SigLevel = Required DatabaseOptional
+          Server = https://gitlab.com/arcolinux/$repo/-/raw/main/$arch' | tee -a /etc/pacman.conf
+
+          echo '
+          [arcolinux_repo_xlarge]
+          SigLevel = Required DatabaseOptional
+          Server = https://gitlab.com/arcolinux/$repo/-/raw/main/$arch' | tee -a /etc/pacman.conf
+
+         
           #add multilib
           
           echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
