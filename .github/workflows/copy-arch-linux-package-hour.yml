@@ -62,7 +62,7 @@ jobs:
           Server = https://arch-linux-calamares-installer.github.io/$repo/$arch' | tee -a /etc/pacman.conf
 
           #add ArcoLinux
-          pacman-key --r 74F5DE85A506BF64
+          pacman-key -r 74F5DE85A506BF64
           pacman-key --lsign-key 74F5DE85A506BF64
 
           echo '
@@ -166,13 +166,11 @@ jobs:
           touch x86_64/zzz.txt
           rsync -vapzO -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 \
           ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}
-
-
-      
-      # - name: Telegram Alert Fail
-      #   if: ${{ failure() || cancelled() }}
-      #   run: |
-      #     curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.CHAT_ID }}", \
-      # "text": "FALHA ao criar Pacote: ${{ github.event.action }} a partir do branch ${{ github.ref_name }}, \
-      # link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",\
-      # "disable_notification": false}' ${{ secrets.MESSAGE_BOT_KEY }}
+          
+      - name: Telegram Alert Fail
+        if: ${{ failure() }}
+        run: |
+          curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", \
+          "text": "FALHA ao criar Pacote: ${{ github.event.action }} a partir do branch ${{ github.ref_name }}, \
+          link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",\
+          "disable_notification": false, "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
