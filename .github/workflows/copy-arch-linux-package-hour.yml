@@ -1,5 +1,7 @@
+### NÃO EDITAR ###
 name: Copy Arch, Chaotic, BigLinux HOUR
 
+### NÃO EDITAR ###
 on:
   # repository_dispatch:
     # types:
@@ -8,18 +10,28 @@ on:
   # schedule:
   #   - cron:  '0 */1 * * *'
   
+  ### NÃO EDITAR ###
   workflow_dispatch:
 
+### NÃO EDITAR ###
 jobs:
+  ### NÃO EDITAR ###
   build:
+    ### NÃO EDITAR ###
     runs-on: ubuntu-latest
+    ### NÃO EDITAR ###
     container: archlinux:latest
-
+    ### NÃO EDITAR ###
     steps:
+      ### NÃO EDITAR ###
       - uses: actions/checkout@v3
+      ### NÃO EDITAR ###
       - name: Install Dependencies
+      ### NÃO EDITAR ###
         shell: bash
+        ### NÃO EDITAR ###
         run: |
+          ### NÃO EDITAR ###
           pacman-key --init
                     
           #add ChaoticAUR
@@ -91,37 +103,54 @@ jobs:
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v3
       
+      ### NÃO EDITAR ###
       - name: Download
         shell: bash
         run: |
+          ### NÃO EDITAR ###
           mkdir x86_64
-          
+          ### NÃO EDITAR ###
           for i in $(cat list-packages-hour); do
+            ### NÃO EDITAR ###
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
+              ### NÃO EDITAR ###
               echo $i >> packages.txt
+            ### NÃO EDITAR ###
             fi
+          ### NÃO EDITAR ###
           done
-          
+          ### NÃO EDITAR ###
           mkdir -p /tmp/pacmandb
-          
+          ### NÃO EDITAR ###
           pacman -Syw --noconfirm $(cat packages.txt | sed ':a;$!N;s/\n/ /;ta;') --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
-          
+          ### NÃO EDITAR ###
           rm packages.txt
-          
+          ### NÃO EDITAR ###
           ls -lh
           
+      ### NÃO EDITAR ###
       - name: Sign Package
+        ### NÃO EDITAR ###
         shell: bash
+        ### NÃO EDITAR ###
         run: |
+          ### NÃO EDITAR ###
           #remover chaves
+          ### NÃO EDITAR ###
           cd x86_64
+          ### NÃO EDITAR ###
           rm *.sig
-            
+          ### NÃO EDITAR ###
           # "Assinar Pacote"
+          ### NÃO EDITAR ###
           cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
+          ### NÃO EDITAR ###
           for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
+            ### NÃO EDITAR ###
             gpg --pinentry-mode loopback --passphrase "${{ secrets.PASSPHRASE }}" --detach-sign ${p}
+          ### NÃO EDITAR ###
           done
+          ### NÃO EDITAR ###
           
           ls -lh
           
@@ -136,43 +165,91 @@ jobs:
       #     exit 0' > md5.sh
       #     bash md5.sh
       #     rm md5.sh
-          
-      - name: Push to Repo
-        shell: bash
-        run: |
-          echo "## ssh setup ##"
-          mkdir -p /home/runner/.ssh
-          touch /home/runner/.ssh/id_rsa
-          chmod 600 /home/runner/.ssh/id_rsa
-          ssh-agent -a /tmp/ssh_agent.sock > /dev/null
-          echo "${{ secrets.REPO_SSH_KEY }}" >> /home/runner/.ssh/id_rsa
-          eval `ssh-agent -s`
-          ssh-add /home/runner/.ssh/id_rsa
-          ssh-keyscan -t rsa -p ${{ secrets.REPO_PORT }} ${{ secrets.REPO_HOST }} >> /home/runner/.ssh/known_hosts
-          
-          # cd x86_64
-          # ls -lh x86_64
-          
-          # #select branch
-          # if [ -n "$(echo ${{ github.event.client_payload.branch }} | grep stable )" ];then
-          #   branch=stable
-          # elif [ -n "$(echo ${{ github.event.client_payload.branch }} | grep testing )" ];then
-          #   branch=testing
-          # else
-          #   branch=dev
-          # fi
-          
-          # mv x86_64 $branch
-          touch x86_64/zzz.txt
-          rsync -vapzO -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 \
-          ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}
-          
-      - name: Telegram Alert Success
-        shell: bash -O extglob {0}
-        run: |
-            curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "${{ github.workflow }} Gerado com Sucesso.", "disable_notification": false, "disable_web_page_preview": true, "is_topic_message": "true", "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
       
-      - name: Telegram Alert Fail
-        if: ${{ failure() }}
+      ### NÃO EDITAR ###
+      - name: Push to Repo
+        ### NÃO EDITAR ###
+        shell: bash
+        ### NÃO EDITAR ###
         run: |
+          ### NÃO EDITAR ###
+          echo "## ssh setup ##"
+          ### NÃO EDITAR ###
+          mkdir -p /home/runner/.ssh
+          ### NÃO EDITAR ###
+          touch /home/runner/.ssh/id_rsa
+          ### NÃO EDITAR ###
+          chmod 600 /home/runner/.ssh/id_rsa
+          ### NÃO EDITAR ###
+          ssh-agent -a /tmp/ssh_agent.sock > /dev/null
+          ### NÃO EDITAR ###
+          echo "${{ secrets.REPO_SSH_KEY }}" >> /home/runner/.ssh/id_rsa
+          ### NÃO EDITAR ###
+          eval `ssh-agent -s`
+          ### NÃO EDITAR ###
+          ssh-add /home/runner/.ssh/id_rsa
+          ### NÃO EDITAR ###
+          ssh-keyscan -t rsa -p ${{ secrets.REPO_PORT }} ${{ secrets.REPO_HOST }} >> /home/runner/.ssh/known_hosts
+          ### NÃO EDITAR ###
+          # cd x86_64
+          ### NÃO EDITAR ###
+          
+          ### NÃO EDITAR ###
+          # ls -lh x86_64
+          ### NÃO EDITAR ###
+          
+          ### NÃO EDITAR ###
+          # #select branch
+          ### NÃO EDITAR ###
+          # if [ -n "$(echo ${{ github.event.client_payload.branch }} | grep stable )" ];then
+          ### NÃO EDITAR ###
+          #   branch=stable
+          ### NÃO EDITAR ###
+          # elif [ -n "$(echo ${{ github.event.client_payload.branch }} | grep testing )" ];then
+          ### NÃO EDITAR ###
+          #   branch=testing
+          ### NÃO EDITAR ###
+          # else
+          ### NÃO EDITAR ###
+          #   branch=dev
+          ### NÃO EDITAR ###
+          # fi
+          ### NÃO EDITAR ###
+          
+          ### NÃO EDITAR ###
+          # mv x86_64 $branch
+          ### NÃO EDITAR ###
+          touch x86_64/zzz.txt
+          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
+          rsync -vapzO -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }}
+          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
+          
+      ### NÃO EDITAR ###
+      - name: Telegram Alert Success
+        ### NÃO EDITAR ###
+        shell: bash -O extglob {0}
+        ### NÃO EDITAR ###
+        run: |
+            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###
+            curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "${{ github.workflow }} Gerado com Sucesso.", "disable_notification": false, "disable_web_page_preview": true, "is_topic_message": "true", "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
+            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###
+      
+      ### NÃO EDITAR ###
+      - name: Telegram Alert Fail
+        ### NÃO EDITAR ###
+        if: ${{ failure() }}
+        ### NÃO EDITAR ###
+        run: |
+          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
           curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "FALHA ao gerar ${{ github.workflow }}, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false, "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
+          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
