@@ -156,7 +156,10 @@ jobs:
                   echo "verrepo"
                   #verrepo=
                   #verrepo=$(pacman -Ss $pkgname | grep $repo | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2)
-                  pacman -Ss $pkgname | grep $repo | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2
+                  #pacman -Ss $pkgname | grep $repo | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2
+                  echo "pacman -Ss $pkgname"
+                  pacman -Ss $pkgname
+                  
                   
                   echo "if diff"
                   #se versão do AUR foi maior que a versão do repo local
