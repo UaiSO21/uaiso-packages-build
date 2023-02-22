@@ -118,6 +118,7 @@ jobs:
         run: |
           sudo pacman -Sy
           ls -lha
+          cat list-packages-aur
           
           
           
