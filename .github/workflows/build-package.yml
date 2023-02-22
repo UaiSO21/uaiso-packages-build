@@ -87,15 +87,15 @@ jobs:
           sleep 10
           done
           
-#       - name: Telegram Alert Success
-#         shell: bash -O extglob {0}
-#         run: |
-#             curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "${{ github.event.action }} Gerado com Sucesso.", "disable_notification": false, "disable_web_page_preview": true, "is_topic_message": "true", "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
-#       
-#       - name: Telegram Alert Fail
-#         if: ${{ failure() }}
-#         run: |
-#           curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "FALHA ao gerar ${{ github.event.action }}, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false, "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
+      - name: Telegram Alert Success
+        shell: bash -O extglob {0}
+        run: |
+            curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "${{ github.event.action }} Gerado com Sucesso.", "disable_notification": false, "disable_web_page_preview": true, "is_topic_message": "true", "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
+      
+      - name: Telegram Alert Fail
+        if: ${{ failure() }}
+        run: |
+          curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "FALHA ao gerar ${{ github.event.action }}, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false, "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
           
         ## Tmate ##
       #- name: Setup tmate session
