@@ -158,8 +158,13 @@ jobs:
           #   branch=dev
           # fi
           
+          #lista local
           for i in $(cat list-packages-local); do echo "--exclude=$i*.* " >> listaExclude ; done
+          
+          #lista aur
+          for i in $(cat list-packages-aur); do echo "--exclude=$(echo $i | cut -d ":" -f1)*.* " >> listaExclude ; done
           listaExclude=$(cat listaExclude)
+          
           
           # mv x86_64 $branch
           touch x86_64/zzz.txt
