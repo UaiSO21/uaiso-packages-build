@@ -219,6 +219,7 @@ jobs:
           ### NÃO EDITAR ###
           listaExclude=$(cat listaExclude)
           ### NÃO EDITAR ###
+          cat listaExclude
           
           ### NÃO EDITAR ###
           # mv x86_64 $branch
