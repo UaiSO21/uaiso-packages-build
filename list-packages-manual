@@ -1,7 +1,4 @@
 snapd
 polkit-gnome
-#bigcontrolcenter
 cmake
-#mhwd-garuda
-#mhwd-db-garuda
 archlinux-tweak-tool-git
