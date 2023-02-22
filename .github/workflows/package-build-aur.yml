@@ -82,8 +82,6 @@ jobs:
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/stable/$arch' | sudo tee -a /etc/pacman.conf
           
-          cat /etc/pacman.conf
-          
       - name: install keyrings
         shell: bash
         run: |
@@ -112,6 +110,10 @@ jobs:
           sudo pacman-key --lsign-key FB39C5D54771F074
           sudo pacman-key --populate archlinux uaiso21
           
+      ## Tmate ##
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3 
+      
       - name: Send Hooks
         shell: bash
         env:
@@ -164,6 +166,3 @@ jobs:
               fi
           done 
           
-      # ## Tmate ##
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3 
