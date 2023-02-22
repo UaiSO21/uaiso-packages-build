@@ -117,9 +117,14 @@ jobs:
           REPO: stable
         run: |
           sudo pacman -Sy
-          #find -type f -iname "*.sh" -maxdepth 1 -exec bash {} \;
-          pacman -Ss konsole
-      
+          ls -lha
+          
+          
+          
+          
+          
+          
+          
       # ## Tmate ##
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v3 
