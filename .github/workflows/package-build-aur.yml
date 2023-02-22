@@ -110,9 +110,9 @@ jobs:
           sudo pacman-key --lsign-key FB39C5D54771F074
           sudo pacman-key --populate archlinux uaiso21
           
-      ## Tmate ##
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3 
+      # ## Tmate ##
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3 
       
       - name: Send Hooks
         shell: bash
@@ -144,16 +144,25 @@ jobs:
                   #versão do AUR
                   git clone ${url}
                   cd $(echo ${url} | rev | cut -d "/" -f1 | rev | cut -d "." -f1)
+                  
+                  echo "PKGBUILD"
                   source PKGBUILD
                   veraur=$pkgver-$pkgrel
                   cd ..
+                  
+                  echo "if pkgname"
                   if [ "$pkgname" != "$(echo $pkg | cut -d ":" -f1)" ]; then
                       pkgname=$(echo $pkg | cut -d ":" -f1)
                   fi
                   
-                  verrepo=
-                  verrepo=$(pacman -Ss $pkgname | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2)
+                  echo "repo"
+                  repo=uaiso21-dev
                   
+                  echo "verrepo"
+                  verrepo=
+                  verrepo=$(pacman -Ss $pkgname | grep $repo | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2)
+                  
+                  echo "if diff"
                   #se versão do AUR foi maior que a versão do repo local
                   if [ "$veraur" != "$verrepo" ]; then
                       echo -e "Enviando \033[01;31m$pkgname\033[0m para Package Build"
