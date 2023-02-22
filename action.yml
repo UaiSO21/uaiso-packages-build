@@ -1,54 +1,97 @@
 ### NÃO EDITAR ###
 name: 'UaiSO21 Package Action'
+### NÃO EDITAR ###
 description: 'Builds UaiSO21 Packages'
+### NÃO EDITAR ###
 
 ### NÃO EDITAR ###
 inputs:
+  ### NÃO EDITAR ###
   package:
+    ### NÃO EDITAR ###
     description: 'PKGBUILD repo name'
+    ### NÃO EDITAR ###
     required: true
+  ### NÃO EDITAR ###
   source:
+    ### NÃO EDITAR ###
     description: 'custom package repo source'
+    ### NÃO EDITAR ###
     required: false
+  ### NÃO EDITAR ###
   branch:
+    ### NÃO EDITAR ###
     description: 'branch to build against'
+    ### NÃO EDITAR ###
     default: stable
+    ### NÃO EDITAR ###
     required: false
+  ### NÃO EDITAR ###
   custom-repo:
+    ### NÃO EDITAR ###
     description: 'custom repo'
+    ### NÃO EDITAR ###
     required: false
+  ### NÃO EDITAR ###
   multilib:
+    ### NÃO EDITAR ###
     description: 'build multilib package'
+    ### NÃO EDITAR ###
     required: false
+    ### NÃO EDITAR ###
     default: false
+  ### NÃO EDITAR ###
   repo:
+    ### NÃO EDITAR ###
     description: 'package repo'
+    ### NÃO EDITAR ###
     required: true
+  ### NÃO EDITAR ###
   gpg-key:
+    ### NÃO EDITAR ###
     descriptio: 'gpg signing key'
+    ### NÃO EDITAR ###
     required: true
+  ### NÃO EDITAR ###
   gpg-passphrase:
+    ### NÃO EDITAR ###
     description: 'gpg passphrase'
+    ### NÃO EDITAR ###
     required: true
+  ### NÃO EDITAR ###
   ssh-key:
+    ### NÃO EDITAR ###
     description: 'boxit user ssh private key'
+    ### NÃO EDITAR ###
     required: false
+  ### NÃO EDITAR ###
   extrarepo:
+    ### NÃO EDITAR ###
     description: 'extra repository to buld package'
+    ### NÃO EDITAR ###
     required: false
+  ### NÃO EDITAR ###
   gitbranch:
+    ### NÃO EDITAR ###
     description: 'extra repository to buld package'
+    ### NÃO EDITAR ###
     required: false
 
 ### NÃO EDITAR ###
 runs:
+  ### NÃO EDITAR ###
   using: "composite"
+  ### NÃO EDITAR ###
   steps:
     ### NÃO EDITAR ###
     - name: install build-dependencies
+      ### NÃO EDITAR ###
       shell: bash
+      ### NÃO EDITAR ###
       run: |
+        ### NÃO EDITAR ###
         echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+        ### NÃO EDITAR ###
         pacman -Syu --noconfirm --needed \
         pacman \
         sudo \
@@ -163,6 +206,7 @@ runs:
         zram-generator \
         zstd
         #extra-cmakemodules \
+        ### NÃO EDITAR ###
         
     # # Tmate ##
     # - name: Setup tmate session
@@ -170,40 +214,54 @@ runs:
     
     ### NÃO EDITAR ###
     - name: Add UaiSO21 Repo and Key
+      ### NÃO EDITAR ###
       shell: bash
+      ### NÃO EDITAR ###
       run: |
+        ### NÃO EDITAR ###
         #add UaiSO21 archlinux repository
         sed -i '/Include = \/etc\/pacman.d\/mirrorlist/d' /etc/pacman.conf
+        ### NÃO EDITAR ###
         sed -i '/\[testing\]/d' /etc/pacman.conf
+        ### NÃO EDITAR ###
         sed -i '/\[core\]/d' /etc/pacman.conf
+        ### NÃO EDITAR ###
         sed -i '/\[extra\]/d' /etc/pacman.conf
+        ### NÃO EDITAR ###
         sed -i '/\[community-testing\]/d' /etc/pacman.conf
+        ### NÃO EDITAR ###
         sed -i '/\[community\]/d' /etc/pacman.conf
+        ### NÃO EDITAR ###
         sed -i '/\[multilib\]/d' /etc/pacman.conf
+        ### NÃO EDITAR ###
         
         ### NÃO EDITAR ###
         echo '
         [uaiso21-stable-update]
         SigLevel = PackageRequired
         Server = http://repo-uaiso.uai21.com/stable-update/$arch' | tee -a /etc/pacman.conf
+        ### NÃO EDITAR ###
         
         ### NÃO EDITAR ###
         echo '
         [uaiso21-dev]
         SigLevel = PackageRequired
         Server = http://repo-uaiso.uai21.com/dev/$arch' | tee -a /etc/pacman.conf
+        ### NÃO EDITAR ###
         
         ### NÃO EDITAR ###
         echo '
         [uaiso21-testing]
         SigLevel = PackageRequired
         Server = http://repo-uaiso.uai21.com/testing/$arch' | tee -a /etc/pacman.conf
+        ### NÃO EDITAR ###
         
         ### NÃO EDITAR ###
         echo '
         [uaiso21-stable]
         SigLevel = PackageRequired
         Server = http://repo-uaiso.uai21.com/stable/$arch' | tee -a /etc/pacman.conf
+        ### NÃO EDITAR ###
         
         ### NÃO EDITAR ###
         #add UaiSO21 key
@@ -215,58 +273,95 @@ runs:
         pacman -Sy
       
     ### NÃO EDITAR ###
-    - name: Makepkg Build    
+    - name: Makepkg Build   
+       ### NÃO EDITAR ###
       shell: bash
+      ### NÃO EDITAR ###
       run: |
         ### NÃO EDITAR ###
         useradd builduser -m 
+        ### NÃO EDITAR ###
         passwd -d builduser 
+        ### NÃO EDITAR ###
         printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
+        ### NÃO EDITAR ###
         
         ### NÃO EDITAR ###
         git clone ${{ github.event.client_payload.url }}
+        ### NÃO EDITAR ###
         gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+        ### NÃO EDITAR ###
         chmod 777 $gitfolder
+        ### NÃO EDITAR ###
         cd $gitfolder
+        ### NÃO EDITAR ###
         
         ### NÃO EDITAR ###
         sudo -u builduser bash -c 'makepkg -sc --noconfirm --skippgpcheck'
+        ### NÃO EDITAR ###
         
+        ### NÃO EDITAR ###
         ls -lh
+        ### NÃO EDITAR ###
     
     ### NÃO EDITAR ###
     - name: Rename Package
+      ### NÃO EDITAR ###
       shell: bash -O extglob {0}
+      ### NÃO EDITAR ###
       run: | 
         ### NÃO EDITAR ###
         # "Rename Package"
+        ### NÃO EDITAR ###
         gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+        ### NÃO EDITAR ###
         cd $gitfolder
+        ### NÃO EDITAR ###
         for i in *.zst; do if [ -n "$(ls $i | grep :)" ]; then mv $i $(echo $i | sed 's/:/-/'); fi; done
+        ### NÃO EDITAR ###
       
     ### NÃO EDITAR ###
     - name: sign package
+      ### NÃO EDITAR ###
       shell: bash -O extglob {0}
+      ### NÃO EDITAR ###
       run: |
         ### NÃO EDITAR ###
         # "Assinar Pacote"
+        ### NÃO EDITAR ###
         cat <(echo -e "${{ inputs.gpg-key }}") | gpg --batch --import &>/dev/null
+        ### NÃO EDITAR ###
         gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+        ### NÃO EDITAR ###
         cd $gitfolder
+        ### NÃO EDITAR ###
         for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
+          ### NÃO EDITAR ###
           gpg --pinentry-mode loopback --passphrase "${{ inputs.gpg-passphrase }}" --detach-sign ${p}
+        ### NÃO EDITAR ###
         done
+        ### NÃO EDITAR ###
     
     ### NÃO EDITAR ###
     - name: CheckSum
+      ### NÃO EDITAR ###
       shell: bash -O extglob {0}
+      ### NÃO EDITAR ###
       run: |
         ### NÃO EDITAR ###
         # "Checksum"
+        ### NÃO EDITAR ###
         gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+        ### NÃO EDITAR ###
         cd $gitfolder
+        ### NÃO EDITAR ###
         echo '#!/bin/bash
+        ### NÃO EDITAR ###
         for i in $(ls *.zst); do md5sum $i >> $i.md5; done
+        ### NÃO EDITAR ###
         for i in $(ls *.sig | sed 's/.sig//'); do md5sum $i.sig >> $i.md5; done
+        ### NÃO EDITAR ###
         exit 0' > md5.sh
+        ### NÃO EDITAR ###
         bash md5.sh
+        ### NÃO EDITAR ###
