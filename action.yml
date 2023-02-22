@@ -210,7 +210,7 @@ runs:
         passwd -d builduser 
         printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
         
-        git clone ${{ github.event.client_payload.url }}.git
+        git clone ${{ github.event.client_payload.url }}
         gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
         chmod 777 $gitfolder
         cd $gitfolder
