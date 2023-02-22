@@ -1,0 +1,125 @@
+name: Package Build AUR
+
+on:
+  schedule:
+    - cron:  '30 2 * * *'
+    
+  repository_dispatch:
+    types:
+      - '**'
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: install build-dependencies
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install \
+          build-essential \
+          cmake \
+          fakeroot \
+          git \
+          libarchive-dev \
+          libarchive-tools \
+          libcurl4-openssl-dev \
+          libgpgme-dev \
+          libssl-dev \
+          zip \
+          python3-pip
+          sudo pip3 install meson
+          sudo pip3 install ninja
+          
+      - name: install pacman
+        shell: bash
+        env:
+          PACMAN_VERSION: 6.0.1
+        run: |
+          sudo wget https://sources.archlinux.org/other/pacman/pacman-${PACMAN_VERSION}.tar.xz
+          sudo tar -xvf pacman-${PACMAN_VERSION}.tar.xz
+          pushd pacman-${PACMAN_VERSION}
+          # sudo patch -p1 -i ../pacman-sync-first-option.patch
+          sudo meson --prefix=/usr \
+                      --buildtype=plain \
+                      -Ddoc=disabled \
+                      -Ddoxygen=enabled \
+                      -Dscriptlet-shell=/usr/bin/bash \
+                      -Dldconfig=/usr/bin/ldconfig \
+                      build
+          sudo meson compile -C build
+          sudo meson install -C build
+          popd
+          # sudo install -m644 pacman.conf /etc/pacman.conf
+          # sudo install -m644 makepkg.conf /etc/
+          sudo mkdir -p /etc/pacman.d
+          sudo touch /etc/pacman.d/mirrorlist
+          # popd
+          sudo rm -rf pacman-${PACMAN_VERSION}*
+          
+          #add UaiSo repository
+          echo '
+          [uaiso21-stable-update]
+          SigLevel = PackageRequired
+          Server = http://repo-uaiso.uai21.com/stable-update/$arch' | sudo tee -a /etc/pacman.conf
+          
+          echo '
+          [uaiso21-dev]
+          SigLevel = PackageRequired
+          Server = http://repo-uaiso.uai21.com/dev/$arch' | sudo tee -a /etc/pacman.conf
+          
+          echo '
+          [uaiso21-testing]
+          SigLevel = PackageRequired
+          Server = http://repo-uaiso.uai21.com/testing/$arch' | sudo tee -a /etc/pacman.conf
+          
+          echo '
+          [uaiso21-stable]
+          SigLevel = PackageRequired
+          Server = http://repo-uaiso.uai21.com/stable/$arch' | sudo tee -a /etc/pacman.conf
+          
+      - name: install keyrings
+        shell: bash
+        run: |
+          sudo install -dm755 /usr/share/pacman/keyrings/
+          
+          mkdir -p archlinux-keyring
+          pushd archlinux-keyring
+            wget https://archlinux.org/packages/core/any/archlinux-keyring/download -O /tmp/archlinux-keyring.tar.zst
+            tar --use-compress-program=unzstd --strip-components=4 --wildcards -xvf /tmp/archlinux-keyring.tar.zst usr/share/pacman/keyrings/*
+            sudo install -m0644 archlinux.gpg /usr/share/pacman/keyrings/
+            sudo install -m0644 archlinux-trusted /usr/share/pacman/keyrings/
+            sudo install -m0644 archlinux-revoked /usr/share/pacman/keyrings/
+          popd
+          sudo rm -rf archlinux-keyring
+          
+          sudo git clone --depth 1 https://github.com/UaiSO21/uaiso-keyring.git
+          pushd uaiso-keyring
+            sudo install -m0644 uaiso21.gpg /usr/share/pacman/keyrings/
+            sudo install -m0644 uaiso21-trusted /usr/share/pacman/keyrings/
+            sudo install -m0644 uaiso21-revoked /usr/share/pacman/keyrings/
+          popd
+          sudo rm -rf uaiso-keyring
+                  
+          sudo pacman-key --init
+          sudo pacman-key -r FB39C5D54771F074
+          sudo pacman-key --lsign-key FB39C5D54771F074
+          sudo pacman-key --populate archlinux uaiso21
+          
+      - name: Send Hooks
+        shell: bash
+        env:
+          CHAVE: ${{ secrets.WEBHOOK_TOKEN }}
+          REPO: stable
+        run: |
+          sudo pacman -Sy
+          #find -type f -iname "*.sh" -maxdepth 1 -exec bash {} \;
+          pacman -Ss konsole
+      
+      # ## Tmate ##
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3 
