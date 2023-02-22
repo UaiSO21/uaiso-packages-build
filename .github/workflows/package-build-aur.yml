@@ -82,6 +82,8 @@ jobs:
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/stable/$arch' | sudo tee -a /etc/pacman.conf
           
+          cat /etc/pacman.conf
+          
       - name: install keyrings
         shell: bash
         run: |
@@ -114,17 +116,53 @@ jobs:
         shell: bash
         env:
           CHAVE: ${{ secrets.WEBHOOK_TOKEN }}
-          REPO: stable
         run: |
           sudo pacman -Sy
-          ls -lha
-          cat list-packages-aur
           
+          webhooks() {
+          echo '
+          curl -X POST \
+          -H "Accept: application/json" \
+          -H "Authorization: token '$CHAVE'" \
+          --data '"'{"'"event_type"'": "'"'AUR/$pkgname'"'", "'"client_payload"'": { "'"url"'": "'"'$url'"'"}}'"' \
+          'https://api.github.com/repos/BigLinux-Package-Build/build-package-archlinux/dispatches'' > run-webhooks-aur.sh
+
+          bash -x run-webhooks-aur.sh
+          rm run-webhooks-aur.sh
+          }
           
-          
-          
-          
-          
+          for i in $(cat list-packages-aur); do pkg=$i
+              pkgname=$(echo $pkg | cut -d ":" -f1)
+              url=$(echo $pkg | cut -d ":" -f2,3)
+              if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
+                  #limpa todos os $
+                  veraur=
+                  pkgver=
+                  pkgrel=
+                  #versão do AUR
+                  git clone ${url}
+                  cd $(echo ${url} | rev | cut -d "/" -f1 | rev | cut -d "." -f1)
+                  source PKGBUILD
+                  veraur=$pkgver-$pkgrel
+                  cd ..
+                  if [ "$pkgname" != "$(echo $pkg | cut -d ":" -f1)" ]; then
+                      pkgname=$(echo $pkg | cut -d ":" -f1)
+                  fi
+                  
+                  verrepo=
+                  verrepo=$(pacman -Ss $pkgname | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2)
+                  
+                  #se versão do AUR foi maior que a versão do repo local
+                  if [ "$veraur" != "$verrepo" ]; then
+                      echo -e "Enviando \033[01;31m$pkgname\033[0m para Package Build"
+                      echo " AUR ""$pkgname"="$veraur"
+                      echo "Repo ""$pkgname"="$verrepo"
+                      webhooks
+                  else
+                      echo "Versão do $pkgname é igual !"
+                  fi
+              fi
+          done 
           
       # ## Tmate ##
       # - name: Setup tmate session
