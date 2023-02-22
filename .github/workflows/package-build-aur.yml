@@ -4,10 +4,6 @@ on:
   schedule:
     - cron:  '30 2 * * *'
     
-  repository_dispatch:
-    types:
-      - '**'
-
   workflow_dispatch:
 
 jobs:
@@ -127,7 +123,7 @@ jobs:
           -H "Accept: application/json" \
           -H "Authorization: token '$CHAVE'" \
           --data '"'{"'"event_type"'": "'"'AUR/$pkgname'"'", "'"client_payload"'": { "'"url"'": "'"'$url'"'"}}'"' \
-          'https://api.github.com/repos/BigLinux-Package-Build/build-package-archlinux/dispatches'' > run-webhooks-aur.sh
+          'https://api.github.com/repos/UaiSO21/uaiso-packages-build/dispatches'' > run-webhooks-aur.sh
 
           bash -x run-webhooks-aur.sh
           rm run-webhooks-aur.sh
@@ -153,15 +149,9 @@ jobs:
                   
                   repo=uaiso21-dev
                   
-                  echo "verrepo"
-                  #verrepo=
-                  #verrepo=$(pacman -Ss $pkgname | grep $repo | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2)
-                  #pacman -Ss $pkgname | grep $repo | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2
-                  echo "pacman -Ss $pkgname"
-                  sudo pacman -Ss $pkgname
+                  verrepo=
+                  verrepo=$(pacman -Ss $pkgname | grep $repo | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2)
                   
-                  
-                  echo "if diff"
                   #se versão do AUR foi maior que a versão do repo local
                   if [ "$veraur" != "$verrepo" ]; then
                       echo -e "Enviando \033[01;31m$pkgname\033[0m para Package Build"
@@ -174,7 +164,3 @@ jobs:
               fi
           done 
           
-      ## Tmate ##
-      - name: Setup tmate session
-        if: ${{ failure() }}
-        uses: mxschmitt/action-tmate@v3 
