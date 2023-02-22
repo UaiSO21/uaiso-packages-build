@@ -1,4 +1,4 @@
-### NÃO EDITAR ###
+### NÃO EDITAR ###### NÃO EDITAR ###
 name: Copy Arch, Chaotic, BigLinux Manual
 
 ### NÃO EDITAR ###
@@ -106,9 +106,9 @@ jobs:
         run: |
           ### NÃO EDITAR ###
           mkdir x86_64
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           for i in $(cat list-packages-manual); do
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
               ### NÃO EDITAR ###
               echo $i >> packages.txt
@@ -120,7 +120,7 @@ jobs:
           ### NÃO EDITAR ###
           mkdir -p /tmp/pacmandb
           
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           pacman -Syw --noconfirm $(cat packages.txt | sed ':a;$!N;s/\n/ /;ta;') --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
           
           ### NÃO EDITAR ###
@@ -141,11 +141,11 @@ jobs:
           
           ### NÃO EDITAR ###
           # "Assinar Pacote"
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             gpg --pinentry-mode loopback --passphrase "${{ secrets.PASSPHRASE }}" --detach-sign ${p}
           ### NÃO EDITAR ###
           done
@@ -163,19 +163,19 @@ jobs:
           echo "## ssh setup ##"
           ### NÃO EDITAR ###
           mkdir -p /home/runner/.ssh
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           touch /home/runner/.ssh/id_rsa
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           chmod 600 /home/runner/.ssh/id_rsa
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           ssh-agent -a /tmp/ssh_agent.sock > /dev/null
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           echo "${{ secrets.REPO_SSH_KEY }}" >> /home/runner/.ssh/id_rsa
           ### NÃO EDITAR ###
           eval `ssh-agent -s`
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           ssh-add /home/runner/.ssh/id_rsa
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           ssh-keyscan -t rsa -p ${{ secrets.REPO_PORT }} ${{ secrets.REPO_HOST }} >> /home/runner/.ssh/known_hosts
           
           ### NÃO EDITAR ###
@@ -186,11 +186,11 @@ jobs:
           
           ### NÃO EDITAR ###
           # #select branch
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           # if [ -n "$(echo ${{ github.event.client_payload.branch }} | grep stable )" ];then
               ### NÃO EDITAR ###
           #   branch=stable
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           # elif [ -n "$(echo ${{ github.event.client_payload.branch }} | grep testing )" ];then
           ### NÃO EDITAR ###
           #   branch=testing
@@ -205,7 +205,7 @@ jobs:
           # mv x86_64 $branch
           ### NÃO EDITAR ###
           touch x86_64/zzz.txt
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           rsync -vapzO -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} 
           ### NÃO EDITAR ###
           
@@ -219,14 +219,9 @@ jobs:
         shell: bash -O extglob {0}
         ### NÃO EDITAR ###
         run: |
-            ### NÃO EDITAR ###
-            ### NÃO EDITAR ###
-            ### NÃO EDITAR ###
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "${{ github.workflow }} Gerado com Sucesso.", "disable_notification": false, "disable_web_page_preview": true, "is_topic_message": "true", "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
-            ### NÃO EDITAR ###
-            ### NÃO EDITAR ###
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR 
       
       ### NÃO EDITAR ###
       - name: Telegram Alert Fail
@@ -234,10 +229,8 @@ jobs:
         if: ${{ failure() }}
         ### NÃO EDITAR ###
         run: |
-          ### NÃO EDITAR ###
-          ### NÃO EDITAR ###
-          ### NÃO EDITAR ###
+
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "FALHA ao gerar ${{ github.workflow }}, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false, "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
-          ### NÃO EDITAR ###
-          ### NÃO EDITAR ###
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+

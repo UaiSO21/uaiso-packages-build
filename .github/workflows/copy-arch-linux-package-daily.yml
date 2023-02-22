@@ -1,4 +1,4 @@
-### NÃO EDITAR ###
+### NÃO EDITAR ###### NÃO EDITAR ###
 name: Copy Arch, Chaotic, BigLinux Daily
 ### NÃO EDITAR ###
 
@@ -97,7 +97,6 @@ jobs:
           Server = https://gitlab.com/arcolinux/$repo/-/raw/main/$arch' | tee -a /etc/pacman.conf
  
           #add multilib
-          
           echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
           pacman -Syu --noconfirm --needed sudo git github-cli openssh gnupg coreutils rsync wget
           pacman -Scc --noconfirm
@@ -110,11 +109,11 @@ jobs:
         run: |
           ### NÃO EDITAR ###
           mkdir x86_64
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for i in $(cat list-packages-daily list-packages-hour); do
           ### NÃO EDITAR ###
           #list-packages-manual
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
               ### NÃO EDITAR ###
               echo $i >> packages.txt
@@ -124,7 +123,7 @@ jobs:
           done
           ### NÃO EDITAR ###
           mkdir -p /tmp/pacmandb
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           pacman -Syw --noconfirm $(cat packages.txt | sed ':a;$!N;s/\n/ /;ta;') --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
           ### NÃO EDITAR ###
           rm packages.txt
@@ -145,11 +144,11 @@ jobs:
           rm *.sig
           ### NÃO EDITAR ###
           # "Assinar Pacote"
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             gpg --pinentry-mode loopback --passphrase "${{ secrets.PASSPHRASE }}" --detach-sign ${p}
           ### NÃO EDITAR ###
           done
@@ -166,19 +165,19 @@ jobs:
           echo "## ssh setup ##"
           ### NÃO EDITAR ###
           mkdir -p /home/runner/.ssh
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           touch /home/runner/.ssh/id_rsa
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           chmod 600 /home/runner/.ssh/id_rsa
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           ssh-agent -a /tmp/ssh_agent.sock > /dev/null
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           echo "${{ secrets.REPO_SSH_KEY }}" >> /home/runner/.ssh/id_rsa
           ### NÃO EDITAR ###
           eval `ssh-agent -s`
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           ssh-add /home/runner/.ssh/id_rsa
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           ssh-keyscan -t rsa -p ${{ secrets.REPO_PORT }} ${{ secrets.REPO_HOST }} >> /home/runner/.ssh/known_hosts
           ### NÃO EDITAR ###
           
@@ -190,11 +189,11 @@ jobs:
           
           ### NÃO EDITAR ###
           # #select branch
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           # if [ -n "$(echo ${{ github.event.client_payload.branch }} | grep stable )" ];then
           ### NÃO EDITAR ###
           #   branch=stable
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           # elif [ -n "$(echo ${{ github.event.client_payload.branch }} | grep testing )" ];then
           ### NÃO EDITAR ###
           #   branch=testing
@@ -208,13 +207,13 @@ jobs:
           
           ### NÃO EDITAR ###
           #lista local
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for i in $(cat list-packages-local); do echo "--exclude=$i*.* " >> listaExclude ; done
           ### NÃO EDITAR ###
           
           ### NÃO EDITAR ###
           #lista aur
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for i in $(cat list-packages-aur); do echo "--exclude=$(echo $i | cut -d ":" -f1)*.* " >> listaExclude ; done
           ### NÃO EDITAR ###
           listaExclude=$(cat listaExclude)

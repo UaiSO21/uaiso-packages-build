@@ -60,13 +60,13 @@ jobs:
           PACMAN_VERSION: 6.0.1
         ### NÃO EDITAR ###
         run: |
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           sudo wget https://sources.archlinux.org/other/pacman/pacman-${PACMAN_VERSION}.tar.xz
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           sudo tar -xvf pacman-${PACMAN_VERSION}.tar.xz
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           pushd pacman-${PACMAN_VERSION}
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           # sudo patch -p1 -i ../pacman-sync-first-option.patch
           ### NÃO EDITAR ###
           ### NÃO EDITAR ###
@@ -87,47 +87,47 @@ jobs:
           sudo meson install -C build
           ### NÃO EDITAR ###
           popd
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           # sudo install -m644 pacman.conf /etc/pacman.conf
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           # sudo install -m644 makepkg.conf /etc/
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           sudo mkdir -p /etc/pacman.d
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           sudo touch /etc/pacman.d/mirrorlist
           ### NÃO EDITAR ###
           # popd
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           sudo rm -rf pacman-${PACMAN_VERSION}*
           ### NÃO EDITAR ###
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           #add UaiSo repository
           echo '
           [uaiso21-stable-update]
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/stable-update/$arch' | sudo tee -a /etc/pacman.conf
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           echo '
           [uaiso21-dev]
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/dev/$arch' | sudo tee -a /etc/pacman.conf
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           echo '
           [uaiso21-testing]
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/testing/$arch' | sudo tee -a /etc/pacman.conf
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           echo '
           [uaiso21-stable]
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/stable/$arch' | sudo tee -a /etc/pacman.conf
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           
       ### NÃO EDITAR ###
       - name: install keyrings
@@ -135,21 +135,21 @@ jobs:
         shell: bash
         ### NÃO EDITAR ###
         run: |
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           sudo install -dm755 /usr/share/pacman/keyrings/
           ### NÃO EDITAR ###
           mkdir -p archlinux-keyring
           ### NÃO EDITAR ###
           pushd archlinux-keyring
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             wget https://archlinux.org/packages/core/any/archlinux-keyring/download -O /tmp/archlinux-keyring.tar.zst
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             tar --use-compress-program=unzstd --strip-components=4 --wildcards -xvf /tmp/archlinux-keyring.tar.zst usr/share/pacman/keyrings/*
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             sudo install -m0644 archlinux.gpg /usr/share/pacman/keyrings/
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             sudo install -m0644 archlinux-trusted /usr/share/pacman/keyrings/
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             sudo install -m0644 archlinux-revoked /usr/share/pacman/keyrings/
             ### NÃO EDITAR ###
           ### NÃO EDITAR ###
@@ -158,15 +158,15 @@ jobs:
           sudo rm -rf archlinux-keyring
           ### NÃO EDITAR ###
           
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           sudo git clone --depth 1 https://github.com/UaiSO21/uaiso-keyring.git
           ### NÃO EDITAR ###
           pushd uaiso-keyring
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             sudo install -m0644 uaiso21.gpg /usr/share/pacman/keyrings/
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             sudo install -m0644 uaiso21-trusted /usr/share/pacman/keyrings/
-            ### NÃO EDITAR ###
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             sudo install -m0644 uaiso21-revoked /usr/share/pacman/keyrings/
             ### NÃO EDITAR ###
           ### NÃO EDITAR ###
@@ -175,13 +175,13 @@ jobs:
           sudo rm -rf uaiso-keyring
           ### NÃO EDITAR ###
           
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           sudo pacman-key --init
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           sudo pacman-key -r FB39C5D54771F074
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           sudo pacman-key --lsign-key FB39C5D54771F074
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           sudo pacman-key --populate archlinux uaiso21
           ### NÃO EDITAR ###
           
@@ -207,7 +207,7 @@ jobs:
           ### NÃO EDITAR ###
           ### NÃO EDITAR ###
           webhooks() {
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           echo '
           curl -X POST \
           -H "Accept: application/json" \
@@ -216,19 +216,19 @@ jobs:
           'https://api.github.com/repos/UaiSO21/uaiso-packages-build/dispatches'' > run-webhooks-aur.sh
           bash -x run-webhooks-aur.sh
           rm run-webhooks-aur.sh
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           }
           ### NÃO EDITAR ###
           ### NÃO EDITAR ###
           ### NÃO EDITAR ###
           
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for i in $(cat list-packages-aur); do pkg=$i
-              ### NÃO EDITAR ###
+              ### NÃO EDITAR ###### NÃO EDITAR ###
               pkgname=$(echo $pkg | cut -d ":" -f1)
-              ### NÃO EDITAR ###
+              ### NÃO EDITAR ###### NÃO EDITAR ###
               pkgurl=$(echo $pkg | cut -d ":" -f2,3)
-              ### NÃO EDITAR ###
+              ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
               if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
                   ### NÃO EDITAR ###
                   #limpa todos os $
@@ -242,7 +242,7 @@ jobs:
                   #versão do AUR
                   ### NÃO EDITAR ###
                   git clone ${pkgurl}
-                  ### NÃO EDITAR ###
+                  ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
                   cd $(echo ${pkgurl} | rev | cut -d "/" -f1 | rev | cut -d "." -f1)
                   ### NÃO EDITAR ###
                   source PKGBUILD
@@ -250,9 +250,9 @@ jobs:
                   veraur=$pkgver-$pkgrel
                   ### NÃO EDITAR ###
                   cd ..
-                  ### NÃO EDITAR ###
+                  ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
                   if [ "$pkgname" != "$(echo $pkg | cut -d ":" -f1)" ]; then
-                      ### NÃO EDITAR ###
+                      ### NÃO EDITAR ###### NÃO EDITAR ###
                       pkgname=$(echo $pkg | cut -d ":" -f1)
                   ### NÃO EDITAR ###
                   fi
@@ -262,25 +262,25 @@ jobs:
                   
                   ### NÃO EDITAR ###
                   verrepo=
-                  ### NÃO EDITAR ###
+                  ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
                   verrepo=$(pacman -Ss $pkgname | grep $repo | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2)
                   
-                  ### NÃO EDITAR ###
+                  ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
                   #se versão do AUR foi maior que a versão do repo local
                   ### NÃO EDITAR ###
                   if [ "$veraur" != "$verrepo" ]; then
-                      ### NÃO EDITAR ###
+                      ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
                       echo -e "Enviando \033[01;31m$pkgname\033[0m para Package Build"
-                      ### NÃO EDITAR ###
+                      ### NÃO EDITAR ###### NÃO EDITAR ###
                       echo " AUR ""$pkgname"="$veraur"
-                      ### NÃO EDITAR ###
+                      ### NÃO EDITAR ###### NÃO EDITAR ###
                       echo "Repo ""$pkgname"="$verrepo"
                       ### NÃO EDITAR ###
                       webhooks
                       ### NÃO EDITAR ###
                   ### NÃO EDITAR ###
                   else
-                      ### NÃO EDITAR ###
+                      ### NÃO EDITAR ###### NÃO EDITAR ###
                       echo "Versão do $pkgname é igual !"
                   ### NÃO EDITAR ###
                   fi

@@ -1,101 +1,186 @@
+### NÃO EDITAR ###
 name: Package Build
 
 # Controls when the workflow will run
+### NÃO EDITAR ###
 on:
+  ### NÃO EDITAR ###
   repository_dispatch:
+    ### NÃO EDITAR ###
     types:
+      ### NÃO EDITAR ###
       - UaiSO/*
+      ### NÃO EDITAR ###
       - '**'
+      ### NÃO EDITAR ###
       
   # workflow_dispatch:
-
+### NÃO EDITAR ###
 jobs:
+  ### NÃO EDITAR ###
   build:
+    ### NÃO EDITAR ###
     runs-on: ubuntu-latest
+    ### NÃO EDITAR ###
     container: archlinux:latest
+    ### NÃO EDITAR ###
     steps:
+      ### NÃO EDITAR ###
       - uses: actions/checkout@v3
-      
+      ### NÃO EDITAR ###
       - name: echo PayLoads
+      ### NÃO EDITAR ###
         run: |
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           echo "url: ${{ github.event.client_payload.url }}"
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           echo "branch: ${{ github.event.client_payload.branch }}"
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           echo "extrarepo: ${{ github.event.client_payload.extrarepo }}"
           
+      ### NÃO EDITAR ###### NÃO EDITAR ###
       - name: Makepkg Build and Check
+        ### NÃO EDITAR ###
         id: makepkg
-        # You may pin to the exact commit or the version.
+        ### NÃO EDITAR ###### NÃO EDITAR ###
         uses: UaiSO21/package-build@main
+        ### NÃO EDITAR ###
         with:
+          ### NÃO EDITAR ###
           package: pkgbuild
+          ### NÃO EDITAR ###
           branch: stable
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           gitbranch: ${{ github.event.client_payload.branch }}
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           gpg-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           gpg-passphrase: ${{ secrets.PASSPHRASE }}
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           extrarepo: ${{ github.event.client_payload.extrarepo }}
             
+      ### NÃO EDITAR ###### NÃO EDITAR ###
       # - name: Publish Package on GitHub
+      ### NÃO EDITAR ###
       #   shell: bash
+      ### NÃO EDITAR ###
       #   run: |
+      ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
       #     gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+      ### NÃO EDITAR ###
       #     cd $gitfolder
+      ### NÃO EDITAR ###
       #     ls -lh
+      ### NÃO EDITAR ###
       #     #Release#
+      ### NÃO EDITAR ###
       #     source PKGBUILD
+      ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
       #     release=${pkgname}-${pkgver}-${pkgrel}
+      ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
       #     echo ${{ github.token }} | gh auth login --with-token
+      ### NÃO EDITAR ###### NÃO EDITAR ###
       #     repo=${{ github.repository }}
+      ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
       #     gh release create ${release} --title ${release} --repo ${repo} --notes "automated release from ${{ github.event.client_payload.url }}" || echo "release already exists"
+      ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
       #     GITHUB_LINK=https://github.com/${repo}/releases/download/${release}
+      ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
       #     for i in .zst .sig .tar .md5; do
+      ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
       #       find -iname "*$i" -exec gh release upload ${release} --repo ${repo} --clobber {} \;
+      ### NÃO EDITAR ###
       #     done
        
+       ### NÃO EDITAR ###
       - name: Push to Repo
+        ### NÃO EDITAR ###
         shell: bash
+        ### NÃO EDITAR ###
         run: |
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+          ### NÃO EDITAR ###
           cd $gitfolder
+          ### NÃO EDITAR ###
           ls -lh
+          ### NÃO EDITAR ###
           
+          ### NÃO EDITAR ###
           echo "## ssh setup ##"
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           mkdir -p /home/runner/.ssh
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           touch /home/runner/.ssh/id_rsa
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           chmod 600 /home/runner/.ssh/id_rsa
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           ssh-agent -a /tmp/ssh_agent.sock > /dev/null
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           echo "${{ secrets.REPO_SSH_KEY }}" >> /home/runner/.ssh/id_rsa
+          ### NÃO EDITAR ###
           eval `ssh-agent -s`
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           ssh-add /home/runner/.ssh/id_rsa
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           ssh-keyscan -t rsa -p ${{ secrets.REPO_PORT }} ${{ secrets.REPO_HOST }} >> /home/runner/.ssh/known_hosts
-          
+          ### NÃO EDITAR ###
           ls -lh
+          ### NÃO EDITAR ###
           
+          ### NÃO EDITAR ###
           ## select branch
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           if [ -n "$(echo ${{ github.event.client_payload.branch }} | grep stable )" ];then
+          ### NÃO EDITAR ###
             branch=stable
+            ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           elif [ -n "$(echo ${{ github.event.client_payload.branch }} | grep stable-update )" ];then
+            ### NÃO EDITAR ###
             branch=stable-update
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           elif [ -n "$(echo ${{ github.event.client_payload.branch }} | grep testing )" ];then
+            ### NÃO EDITAR ###
             branch=testing
+          ### NÃO EDITAR ###
           else
+            ### NÃO EDITAR ###
             branch=dev
+          ### NÃO EDITAR ###
           fi
           
+          ### NÃO EDITAR ###
           #send to Repo
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           for i in *.zst *.sig *.md5; do
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           test -e $i && rsync -vapzO -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" $i ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_CICD }}/$branch
+          ### NÃO EDITAR ###
           sleep 10
+          ### NÃO EDITAR ###
           done
+          ### NÃO EDITAR ###
           
+      ### NÃO EDITAR ###### NÃO EDITAR ###
       - name: Telegram Alert Success
+        ### NÃO EDITAR ###### NÃO EDITAR ###
         shell: bash -O extglob {0}
+        ### NÃO EDITAR ###
         run: |
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
             curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "${{ github.event.action }} Gerado com Sucesso.", "disable_notification": false, "disable_web_page_preview": true, "is_topic_message": "true", "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
+            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
       
+      ### NÃO EDITAR ###### NÃO EDITAR ###
       - name: Telegram Alert Fail
+        ### NÃO EDITAR ###
         if: ${{ failure() }}
+        ### NÃO EDITAR ###
         run: |
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "FALHA ao gerar ${{ github.event.action }}, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false, "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           
         ## Tmate ##
       #- name: Setup tmate session
