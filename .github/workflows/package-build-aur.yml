@@ -1,4 +1,6 @@
+### NÃO EDITAR ###
 name: Package Build AUR
+
 
 on:
   schedule:
@@ -6,15 +8,21 @@ on:
     
   workflow_dispatch:
 
+### NÃO EDITAR ###
 jobs:
+  ### NÃO EDITAR ###
   build:
+    ### NÃO EDITAR ###
     runs-on: ubuntu-latest
+    ### NÃO EDITAR ###
     steps:
+      ### NÃO EDITAR ###
       - uses: actions/checkout@v3
-      
+      ### NÃO EDITAR ###
       - name: install build-dependencies
         shell: bash
         run: |
+          ### NÃO EDITAR ###
           sudo apt-get update
           sudo apt-get install \
           build-essential \
@@ -31,11 +39,13 @@ jobs:
           sudo pip3 install meson
           sudo pip3 install ninja
           
+      ### NÃO EDITAR ###
       - name: install pacman
         shell: bash
         env:
           PACMAN_VERSION: 6.0.1
         run: |
+          ### NÃO EDITAR ###
           sudo wget https://sources.archlinux.org/other/pacman/pacman-${PACMAN_VERSION}.tar.xz
           sudo tar -xvf pacman-${PACMAN_VERSION}.tar.xz
           pushd pacman-${PACMAN_VERSION}
@@ -57,49 +67,39 @@ jobs:
           # popd
           sudo rm -rf pacman-${PACMAN_VERSION}*
           
+          ### NÃO EDITAR ###
           #add UaiSo repository
           echo '
           [uaiso21-stable-update]
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/stable-update/$arch' | sudo tee -a /etc/pacman.conf
           
+          ### NÃO EDITAR ###
           echo '
           [uaiso21-dev]
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/dev/$arch' | sudo tee -a /etc/pacman.conf
           
+          ### NÃO EDITAR ###
           echo '
           [uaiso21-testing]
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/testing/$arch' | sudo tee -a /etc/pacman.conf
           
+          ### NÃO EDITAR ###
           echo '
           [uaiso21-stable]
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/stable/$arch' | sudo tee -a /etc/pacman.conf
           
-          ##add Xerolinux
-          
-          echo '
-          [xerolinux_repo]
-          SigLevel = Optional TrustAll
-          Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | sudo tee -a /etc/pacman.conf
-          
-          echo '
-          [xerolinux_repo_xl]
-          SigLevel = Optional TrustAll
-          Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | sudo tee -a /etc/pacman.conf
-
-          echo '
-          [xerolinux_nvidia_repo]
-          SigLevel = Optional TrustAll
-          Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | sudo tee -a /etc/pacman.conf
-          
+      ### NÃO EDITAR ###
       - name: install keyrings
         shell: bash
         run: |
+          ### NÃO EDITAR ###
           sudo install -dm755 /usr/share/pacman/keyrings/
           
+          ### NÃO EDITAR ###
           mkdir -p archlinux-keyring
           pushd archlinux-keyring
             wget https://archlinux.org/packages/core/any/archlinux-keyring/download -O /tmp/archlinux-keyring.tar.zst
@@ -110,6 +110,7 @@ jobs:
           popd
           sudo rm -rf archlinux-keyring
           
+          ### NÃO EDITAR ###
           sudo git clone --depth 1 https://github.com/UaiSO21/uaiso-keyring.git
           pushd uaiso-keyring
             sudo install -m0644 uaiso21.gpg /usr/share/pacman/keyrings/
@@ -117,7 +118,8 @@ jobs:
             sudo install -m0644 uaiso21-revoked /usr/share/pacman/keyrings/
           popd
           sudo rm -rf uaiso-keyring
-                  
+          
+          ### NÃO EDITAR ###
           sudo pacman-key --init
           sudo pacman-key -r FB39C5D54771F074
           sudo pacman-key --lsign-key FB39C5D54771F074
@@ -127,13 +129,16 @@ jobs:
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v3 
       
+      ### NÃO EDITAR ###
       - name: Send Hooks
         shell: bash -O extglob {0}
         env:
           CHAVE: ${{ secrets.WEBHOOK_TOKEN }}
         run: |
+          ### NÃO EDITAR ###
           sudo pacman -Sy
           
+          ### NÃO EDITAR ###
           webhooks() {
           echo '
           curl -X POST \
@@ -141,43 +146,77 @@ jobs:
           -H "Authorization: token '$CHAVE'" \
           --data '"'{"'"event_type"'": "'"'AUR/$pkgname'"'", "'"client_payload"'": { "'"url"'": "'"'$pkgurl'"'"}}'"' \
           'https://api.github.com/repos/UaiSO21/uaiso-packages-build/dispatches'' > run-webhooks-aur.sh
-
           bash -x run-webhooks-aur.sh
           rm run-webhooks-aur.sh
+          ### NÃO EDITAR ###
           }
           
+          ### NÃO EDITAR ###
           for i in $(cat list-packages-aur); do pkg=$i
+              ### NÃO EDITAR ###
               pkgname=$(echo $pkg | cut -d ":" -f1)
+              ### NÃO EDITAR ###
               pkgurl=$(echo $pkg | cut -d ":" -f2,3)
+              ### NÃO EDITAR ###
               if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
+                  ### NÃO EDITAR ###
                   #limpa todos os $
+                  ### NÃO EDITAR ###
                   veraur=
+                  ### NÃO EDITAR ###
                   pkgver=
+                  ### NÃO EDITAR ###
                   pkgrel=
+                  ### NÃO EDITAR ###
                   #versão do AUR
+                  ### NÃO EDITAR ###
                   git clone ${pkgurl}
+                  ### NÃO EDITAR ###
                   cd $(echo ${pkgurl} | rev | cut -d "/" -f1 | rev | cut -d "." -f1)
+                  ### NÃO EDITAR ###
                   source PKGBUILD
+                  ### NÃO EDITAR ###
                   veraur=$pkgver-$pkgrel
+                  ### NÃO EDITAR ###
                   cd ..
+                  ### NÃO EDITAR ###
                   if [ "$pkgname" != "$(echo $pkg | cut -d ":" -f1)" ]; then
+                      ### NÃO EDITAR ###
                       pkgname=$(echo $pkg | cut -d ":" -f1)
+                  ### NÃO EDITAR ###
                   fi
                   
+                  ### NÃO EDITAR ###
                   repo=uaiso21-dev
                   
+                  ### NÃO EDITAR ###
                   verrepo=
+                  ### NÃO EDITAR ###
                   verrepo=$(pacman -Ss $pkgname | grep $repo | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2)
                   
+                  ### NÃO EDITAR ###
                   #se versão do AUR foi maior que a versão do repo local
+                  ### NÃO EDITAR ###
                   if [ "$veraur" != "$verrepo" ]; then
+                      ### NÃO EDITAR ###
                       echo -e "Enviando \033[01;31m$pkgname\033[0m para Package Build"
+                      ### NÃO EDITAR ###
                       echo " AUR ""$pkgname"="$veraur"
+                      ### NÃO EDITAR ###
                       echo "Repo ""$pkgname"="$verrepo"
+                      ### NÃO EDITAR ###
                       webhooks
+                      ### NÃO EDITAR ###
+                  ### NÃO EDITAR ###
                   else
+                      ### NÃO EDITAR ###
                       echo "Versão do $pkgname é igual !"
+                  ### NÃO EDITAR ###
                   fi
+              ### NÃO EDITAR ###
               fi
+          ### NÃO EDITAR ###
           done 
-          
+      ### NÃO EDITAR ###
+  ### NÃO EDITAR ###
+### NÃO EDITAR ###

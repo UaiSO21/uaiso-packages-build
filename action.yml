@@ -1,6 +1,8 @@
+### NÃO EDITAR ###
 name: 'UaiSO21 Package Action'
 description: 'Builds UaiSO21 Packages'
 
+### NÃO EDITAR ###
 inputs:
   package:
     description: 'PKGBUILD repo name'
@@ -38,9 +40,11 @@ inputs:
     description: 'extra repository to buld package'
     required: false
 
+### NÃO EDITAR ###
 runs:
   using: "composite"
   steps:
+    ### NÃO EDITAR ###
     - name: install build-dependencies
       shell: bash
       run: |
@@ -164,6 +168,7 @@ runs:
     # - name: Setup tmate session
     #   uses: mxschmitt/action-tmate@v3
     
+    ### NÃO EDITAR ###
     - name: Add UaiSO21 Repo and Key
       shell: bash
       run: |
@@ -176,61 +181,74 @@ runs:
         sed -i '/\[community\]/d' /etc/pacman.conf
         sed -i '/\[multilib\]/d' /etc/pacman.conf
         
+        ### NÃO EDITAR ###
         echo '
         [uaiso21-stable-update]
         SigLevel = PackageRequired
         Server = http://repo-uaiso.uai21.com/stable-update/$arch' | tee -a /etc/pacman.conf
         
+        ### NÃO EDITAR ###
         echo '
         [uaiso21-dev]
         SigLevel = PackageRequired
         Server = http://repo-uaiso.uai21.com/dev/$arch' | tee -a /etc/pacman.conf
         
+        ### NÃO EDITAR ###
         echo '
         [uaiso21-testing]
         SigLevel = PackageRequired
         Server = http://repo-uaiso.uai21.com/testing/$arch' | tee -a /etc/pacman.conf
         
+        ### NÃO EDITAR ###
         echo '
         [uaiso21-stable]
         SigLevel = PackageRequired
         Server = http://repo-uaiso.uai21.com/stable/$arch' | tee -a /etc/pacman.conf
         
+        ### NÃO EDITAR ###
         #add UaiSO21 key
         pacman-key --init
         pacman-key -r FB39C5D54771F074
         pacman-key --lsign-key FB39C5D54771F074
         
+        ### NÃO EDITAR ###
         pacman -Sy
       
+    ### NÃO EDITAR ###
     - name: Makepkg Build    
       shell: bash
       run: |
+        ### NÃO EDITAR ###
         useradd builduser -m 
         passwd -d builduser 
         printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
         
+        ### NÃO EDITAR ###
         git clone ${{ github.event.client_payload.url }}
         gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
         chmod 777 $gitfolder
         cd $gitfolder
         
+        ### NÃO EDITAR ###
         sudo -u builduser bash -c 'makepkg -sc --noconfirm --skippgpcheck'
         
         ls -lh
-        
+    
+    ### NÃO EDITAR ###
     - name: Rename Package
       shell: bash -O extglob {0}
       run: | 
+        ### NÃO EDITAR ###
         # "Rename Package"
         gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
         cd $gitfolder
         for i in *.zst; do if [ -n "$(ls $i | grep :)" ]; then mv $i $(echo $i | sed 's/:/-/'); fi; done
       
-        
+    ### NÃO EDITAR ###
     - name: sign package
       shell: bash -O extglob {0}
       run: |
+        ### NÃO EDITAR ###
         # "Assinar Pacote"
         cat <(echo -e "${{ inputs.gpg-key }}") | gpg --batch --import &>/dev/null
         gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
@@ -239,9 +257,11 @@ runs:
           gpg --pinentry-mode loopback --passphrase "${{ inputs.gpg-passphrase }}" --detach-sign ${p}
         done
     
+    ### NÃO EDITAR ###
     - name: CheckSum
       shell: bash -O extglob {0}
       run: |
+        ### NÃO EDITAR ###
         # "Checksum"
         gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
         cd $gitfolder
