@@ -122,7 +122,7 @@ jobs:
           curl -X POST \
           -H "Accept: application/json" \
           -H "Authorization: token '$CHAVE'" \
-          --data '"'{"'"event_type"'": "'"'AUR/$pkgname'"'", "'"client_payload"'": { "'"url"'": "'"'$url'"'"}}'"' \
+          --data '"'{"'"event_type"'": "'"'AUR/$pkgname'"'", "'"client_payload"'": { "'"url"'": "'"'$pkgurl'"'"}}'"' \
           'https://api.github.com/repos/UaiSO21/uaiso-packages-build/dispatches'' > run-webhooks-aur.sh
 
           bash -x run-webhooks-aur.sh
@@ -131,15 +131,15 @@ jobs:
           
           for i in $(cat list-packages-aur); do pkg=$i
               pkgname=$(echo $pkg | cut -d ":" -f1)
-              url=$(echo $pkg | cut -d ":" -f2,3)
+              pkgurl=$(echo $pkg | cut -d ":" -f2,3)
               if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
                   #limpa todos os $
                   veraur=
                   pkgver=
                   pkgrel=
                   #versão do AUR
-                  git clone ${url}
-                  cd $(echo ${url} | rev | cut -d "/" -f1 | rev | cut -d "." -f1)
+                  git clone ${pkgurl}
+                  cd $(echo ${pkgurl} | rev | cut -d "/" -f1 | rev | cut -d "." -f1)
                   source PKGBUILD
                   veraur=$pkgver-$pkgrel
                   cd ..
