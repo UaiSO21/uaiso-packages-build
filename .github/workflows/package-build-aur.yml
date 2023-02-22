@@ -115,7 +115,7 @@ jobs:
       #   uses: mxschmitt/action-tmate@v3 
       
       - name: Send Hooks
-        shell: bash
+        shell: bash -O extglob {0}
         env:
           CHAVE: ${{ secrets.WEBHOOK_TOKEN }}
         run: |
