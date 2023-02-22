@@ -144,23 +144,19 @@ jobs:
                   #versão do AUR
                   git clone ${url}
                   cd $(echo ${url} | rev | cut -d "/" -f1 | rev | cut -d "." -f1)
-                  
-                  echo "PKGBUILD"
                   source PKGBUILD
                   veraur=$pkgver-$pkgrel
                   cd ..
-                  
-                  echo "if pkgname"
                   if [ "$pkgname" != "$(echo $pkg | cut -d ":" -f1)" ]; then
                       pkgname=$(echo $pkg | cut -d ":" -f1)
                   fi
                   
-                  echo "repo"
                   repo=uaiso21-dev
                   
                   echo "verrepo"
-                  verrepo=
-                  verrepo=$(pacman -Ss $pkgname | grep $repo | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2)
+                  #verrepo=
+                  #verrepo=$(pacman -Ss $pkgname | grep $repo | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2)
+                  pacman -Ss $pkgname | grep $repo | grep -v "$pkgname-" | grep -v "\-$pkgname" | grep -w "$pkgname" | cut -d " " -f2 | cut -d ":" -f2
                   
                   echo "if diff"
                   #se versão do AUR foi maior que a versão do repo local
