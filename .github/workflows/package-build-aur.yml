@@ -2,7 +2,7 @@ name: Package Build AUR
 
 on:
   schedule:
-    - cron:  '30 2 * * *'
+    - cron:  '0 19 * * *'
     
   workflow_dispatch:
 
