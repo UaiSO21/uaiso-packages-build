@@ -1,9 +1,14 @@
 ### NÃO EDITAR ###
 name: Package Build AUR
+### NÃO EDITAR ###
 
-
+### NÃO EDITAR ###
 on:
+  ### NÃO EDITAR ###
   schedule:
+  ### NÃO EDITAR ###
+  
+  
     - cron:  '0 19 * * *'
     
   workflow_dispatch:
@@ -20,10 +25,13 @@ jobs:
       - uses: actions/checkout@v3
       ### NÃO EDITAR ###
       - name: install build-dependencies
+        ### NÃO EDITAR ###
         shell: bash
+        ### NÃO EDITAR ###
         run: |
           ### NÃO EDITAR ###
           sudo apt-get update
+          ### NÃO EDITAR ###
           sudo apt-get install \
           build-essential \
           cmake \
@@ -36,20 +44,33 @@ jobs:
           libssl-dev \
           zip \
           python3-pip
+          ### NÃO EDITAR ###
           sudo pip3 install meson
+          ### NÃO EDITAR ###
           sudo pip3 install ninja
+          ### NÃO EDITAR ###
           
       ### NÃO EDITAR ###
       - name: install pacman
+        ### NÃO EDITAR ###
         shell: bash
+        ### NÃO EDITAR ###
         env:
+          ### NÃO EDITAR ###
           PACMAN_VERSION: 6.0.1
+        ### NÃO EDITAR ###
         run: |
           ### NÃO EDITAR ###
           sudo wget https://sources.archlinux.org/other/pacman/pacman-${PACMAN_VERSION}.tar.xz
+          ### NÃO EDITAR ###
           sudo tar -xvf pacman-${PACMAN_VERSION}.tar.xz
+          ### NÃO EDITAR ###
           pushd pacman-${PACMAN_VERSION}
+          ### NÃO EDITAR ###
           # sudo patch -p1 -i ../pacman-sync-first-option.patch
+          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
           sudo meson --prefix=/usr \
                       --buildtype=plain \
                       -Ddoc=disabled \
@@ -57,73 +78,112 @@ jobs:
                       -Dscriptlet-shell=/usr/bin/bash \
                       -Dldconfig=/usr/bin/ldconfig \
                       build
+                      ### NÃO EDITAR ###
+                      ### NÃO EDITAR ###
+                      ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
           sudo meson compile -C build
+          ### NÃO EDITAR ###
           sudo meson install -C build
+          ### NÃO EDITAR ###
           popd
+          ### NÃO EDITAR ###
           # sudo install -m644 pacman.conf /etc/pacman.conf
+          ### NÃO EDITAR ###
           # sudo install -m644 makepkg.conf /etc/
+          ### NÃO EDITAR ###
           sudo mkdir -p /etc/pacman.d
+          ### NÃO EDITAR ###
           sudo touch /etc/pacman.d/mirrorlist
+          ### NÃO EDITAR ###
           # popd
+          ### NÃO EDITAR ###
           sudo rm -rf pacman-${PACMAN_VERSION}*
-          
+          ### NÃO EDITAR ###
           ### NÃO EDITAR ###
           #add UaiSo repository
           echo '
           [uaiso21-stable-update]
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/stable-update/$arch' | sudo tee -a /etc/pacman.conf
+          ### NÃO EDITAR ###
           
           ### NÃO EDITAR ###
           echo '
           [uaiso21-dev]
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/dev/$arch' | sudo tee -a /etc/pacman.conf
+          ### NÃO EDITAR ###
           
           ### NÃO EDITAR ###
           echo '
           [uaiso21-testing]
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/testing/$arch' | sudo tee -a /etc/pacman.conf
+          ### NÃO EDITAR ###
           
           ### NÃO EDITAR ###
           echo '
           [uaiso21-stable]
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/stable/$arch' | sudo tee -a /etc/pacman.conf
+          ### NÃO EDITAR ###
           
       ### NÃO EDITAR ###
       - name: install keyrings
+        ### NÃO EDITAR ###
         shell: bash
+        ### NÃO EDITAR ###
         run: |
           ### NÃO EDITAR ###
           sudo install -dm755 /usr/share/pacman/keyrings/
-          
           ### NÃO EDITAR ###
           mkdir -p archlinux-keyring
+          ### NÃO EDITAR ###
           pushd archlinux-keyring
+            ### NÃO EDITAR ###
             wget https://archlinux.org/packages/core/any/archlinux-keyring/download -O /tmp/archlinux-keyring.tar.zst
+            ### NÃO EDITAR ###
             tar --use-compress-program=unzstd --strip-components=4 --wildcards -xvf /tmp/archlinux-keyring.tar.zst usr/share/pacman/keyrings/*
+            ### NÃO EDITAR ###
             sudo install -m0644 archlinux.gpg /usr/share/pacman/keyrings/
+            ### NÃO EDITAR ###
             sudo install -m0644 archlinux-trusted /usr/share/pacman/keyrings/
+            ### NÃO EDITAR ###
             sudo install -m0644 archlinux-revoked /usr/share/pacman/keyrings/
+            ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
           popd
+          ### NÃO EDITAR ###
           sudo rm -rf archlinux-keyring
+          ### NÃO EDITAR ###
           
           ### NÃO EDITAR ###
           sudo git clone --depth 1 https://github.com/UaiSO21/uaiso-keyring.git
+          ### NÃO EDITAR ###
           pushd uaiso-keyring
+            ### NÃO EDITAR ###
             sudo install -m0644 uaiso21.gpg /usr/share/pacman/keyrings/
+            ### NÃO EDITAR ###
             sudo install -m0644 uaiso21-trusted /usr/share/pacman/keyrings/
+            ### NÃO EDITAR ###
             sudo install -m0644 uaiso21-revoked /usr/share/pacman/keyrings/
+            ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
           popd
+          ### NÃO EDITAR ###
           sudo rm -rf uaiso-keyring
+          ### NÃO EDITAR ###
           
           ### NÃO EDITAR ###
           sudo pacman-key --init
+          ### NÃO EDITAR ###
           sudo pacman-key -r FB39C5D54771F074
+          ### NÃO EDITAR ###
           sudo pacman-key --lsign-key FB39C5D54771F074
+          ### NÃO EDITAR ###
           sudo pacman-key --populate archlinux uaiso21
+          ### NÃO EDITAR ###
           
       # ## Tmate ##
       # - name: Setup tmate session
@@ -131,15 +191,23 @@ jobs:
       
       ### NÃO EDITAR ###
       - name: Send Hooks
+        ### NÃO EDITAR ###
         shell: bash -O extglob {0}
+        ### NÃO EDITAR ###
         env:
+          ### NÃO EDITAR ###
           CHAVE: ${{ secrets.WEBHOOK_TOKEN }}
+        ### NÃO EDITAR ###
         run: |
           ### NÃO EDITAR ###
           sudo pacman -Sy
+          ### NÃO EDITAR ###
           
           ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
           webhooks() {
+          ### NÃO EDITAR ###
           echo '
           curl -X POST \
           -H "Accept: application/json" \
@@ -150,6 +218,9 @@ jobs:
           rm run-webhooks-aur.sh
           ### NÃO EDITAR ###
           }
+          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###
           
           ### NÃO EDITAR ###
           for i in $(cat list-packages-aur); do pkg=$i
