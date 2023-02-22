@@ -1479,3 +1479,8 @@ snapd
 pamac-gtk
 archlinux-tweak-tool-git
 distrobox
+snapd
+polkit-gnome
+cmake
+archlinux-tweak-tool-git
+mhwd
