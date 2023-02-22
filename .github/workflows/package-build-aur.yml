@@ -78,6 +78,23 @@ jobs:
           SigLevel = PackageRequired
           Server = http://repo-uaiso.uai21.com/stable/$arch' | sudo tee -a /etc/pacman.conf
           
+          ##add Xerolinux
+          
+          echo '
+          [xerolinux_repo]
+          SigLevel = Optional TrustAll
+          Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | sudo tee -a /etc/pacman.conf
+          
+          echo '
+          [xerolinux_repo_xl]
+          SigLevel = Optional TrustAll
+          Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | sudo tee -a /etc/pacman.conf
+
+          echo '
+          [xerolinux_nvidia_repo]
+          SigLevel = Optional TrustAll
+          Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | sudo tee -a /etc/pacman.conf
+          
       - name: install keyrings
         shell: bash
         run: |
