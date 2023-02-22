@@ -2,3 +2,5 @@ snapd
 polkit-gnome
 #bigcontrolcenter
 cmake
+mhwd-garuda-git
+mhwd-db-garuda-git
