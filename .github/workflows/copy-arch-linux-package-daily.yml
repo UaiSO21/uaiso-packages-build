@@ -100,17 +100,17 @@ jobs:
           echo '
           [xerolinux_repo]
           SigLevel = Optional TrustAll
-          Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | sudo tee -a /etc/pacman.conf
+          Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | tee -a /etc/pacman.conf
           
           echo '
           [xerolinux_repo_xl]
           SigLevel = Optional TrustAll
-          Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | sudo tee -a /etc/pacman.conf
+          Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | tee -a /etc/pacman.conf
 
           echo '
           [xerolinux_nvidia_repo]
           SigLevel = Optional TrustAll
-          Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | sudo tee -a /etc/pacman.conf
+          Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | tee -a /etc/pacman.conf
  
           #add multilib
           echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
