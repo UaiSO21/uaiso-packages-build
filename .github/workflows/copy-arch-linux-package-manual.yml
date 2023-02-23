@@ -155,14 +155,14 @@ jobs:
           cd x86_64
           rm *.sig
           wget -O - "http://repo-uaiso.uai21.com/dev/x86_64" | grep href | cut -d"\"" -f8 | grep ".pkg" | grep -v ".sig" | sed 's|./||' > uaiso_repo_packages.txt
-          for i in $(cat uaiso_repo_packages.txt); do rm $i ;done
+          for i in $(cat uaiso_repo_packages.txt); do 
+            if [ -e "$i" ]; then
+              rm $i
+             fi
+          done
           ls -lha
           
           rm uaiso_repo_packages.txt
-          
-      ## Tmate ##
-      - name: Setup TMATE Session
-        uses: mxschmitt/action-tmate@v3  
           
       ### NÃO EDITAR ###
       - name: Sign Package
@@ -273,4 +273,9 @@ jobs:
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${{ secrets.TELEGRAM_TO }}", "text": "FALHA ao gerar ${{ github.workflow }}, link do erro: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}", "disable_notification": false, "message_thread_id": "6"}' ${{ secrets.TELEGRAM_TOKEN }}
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          
+      ## Tmate ##
+      - name: Setup TMATE Session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
 
