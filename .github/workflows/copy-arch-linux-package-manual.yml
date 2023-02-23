@@ -45,6 +45,7 @@ jobs:
           Server = https://br-mirror.chaotic.cx/$repo/$arch' | tee -a /etc/pacman.conf
 
           #add Garuda
+ 
           echo '
           [garuda]
           Server = https://br-mirror.chaotic.cx/$repo/$arch' | tee -a /etc/pacman.conf
