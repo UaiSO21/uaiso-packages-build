@@ -231,6 +231,8 @@ jobs:
           ### NÃO EDITAR ###
           # mv x86_64 $branch
           ### NÃO EDITAR ###
+          du -h x86_64
+          ### NÃO EDITAR ###
           touch x86_64/zzz.txt
           ### NÃO EDITAR ###
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
