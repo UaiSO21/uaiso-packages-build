@@ -43,6 +43,11 @@ jobs:
           echo '
           [chaotic-aur]
           Server = https://br-mirror.chaotic.cx/$repo/$arch' | tee -a /etc/pacman.conf
+
+          #add Garuda
+          echo '
+          [garuda]
+          Server = https://br-mirror.chaotic.cx/$repo/$arch' | tee -a /etc/pacman.conf
           
           #add AndontieAUR
           pacman-key --recv-key B545E9B7CD906FE3

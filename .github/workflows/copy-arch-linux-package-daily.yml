@@ -42,10 +42,16 @@ jobs:
           pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
           pacman-key --lsign-key FBA220DFC880C036
           
-          pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-          echo "
+          pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
+          
+          echo '
           [chaotic-aur]
-          Include = /etc/pacman.d/chaotic-mirrorlist" | tee -a /etc/pacman.conf
+          Server = https://br-mirror.chaotic.cx/$repo/$arch' | tee -a /etc/pacman.conf
+
+          #add Garuda
+          echo '
+          [garuda]
+          Server = https://br-mirror.chaotic.cx/$repo/$arch' | tee -a /etc/pacman.conf
           
           #add AndontieAUR
           pacman-key --recv-key B545E9B7CD906FE3
