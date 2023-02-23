@@ -149,6 +149,21 @@ jobs:
           ### NÃO EDITAR ###
           rm packages.txt
           
+      - name: Remove Existing Packages
+        shell: bash
+        run: |
+          cd x86_64
+          rm *.sig
+          wget -O - "http://repo-uaiso.uai21.com/dev/x86_64" | grep href | cut -d"\"" -f8 | grep ".pkg" | grep -v ".sig" | sed 's|./||' > uaiso_repo_packages.txt
+          for i in $(cat uaiso_repo_packages.txt); do rm $i ;done
+          ls -lha
+          
+          rm uaiso_repo_packages.txt
+          
+      ## Tmate ##
+      - name: Setup TMATE Session
+        uses: mxschmitt/action-tmate@v3  
+          
       ### NÃO EDITAR ###
       - name: Sign Package
         ### NÃO EDITAR ###

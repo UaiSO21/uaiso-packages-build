@@ -152,6 +152,7 @@ jobs:
           ### NÃO EDITAR ###
           ls -lh
           
+      
       ### NÃO EDITAR ###
       - name: Sign Package
         ### NÃO EDITAR ###
@@ -267,3 +268,7 @@ jobs:
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           ### NÃO EDITAR ###
           ### NÃO EDITAR ###
+          
+      - name: tmate Fail
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
