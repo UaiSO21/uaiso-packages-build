@@ -152,6 +152,32 @@ jobs:
           ### NÃO EDITAR ###
           ls -lh
           
+      ### NÃO EDITAR ####### NÃO EDITAR ####
+      - name: Remove Existing Packages
+        ### NÃO EDITAR ####
+        shell: bash
+        ### NÃO EDITAR ####
+        run: |
+          ### NÃO EDITAR ####
+          cd x86_64
+          ### NÃO EDITAR ####
+          rm *.sig
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          wget -O - "http://repo-uaiso.uai21.com/dev/x86_64" | grep href | cut -d"\"" -f8 | grep ".pkg" | grep -v ".sig" | sed 's|./||' > uaiso_repo_packages.txt
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          for i in $(cat uaiso_repo_packages.txt); do 
+            ### NÃO EDITAR ####
+            if [ -e "$i" ]; then
+              ### NÃO EDITAR ####
+              rm $i
+            ### NÃO EDITAR ####
+            fi
+          ### NÃO EDITAR ####
+          done
+          ### NÃO EDITAR ####
+          ls -lha
+          ### NÃO EDITAR ####
+          rm uaiso_repo_packages.txt
       
       ### NÃO EDITAR ###
       - name: Sign Package
@@ -160,11 +186,7 @@ jobs:
         ### NÃO EDITAR ###
         run: |
           ### NÃO EDITAR ###
-          #remover chaves
-          ### NÃO EDITAR ###
           cd x86_64
-          ### NÃO EDITAR ###
-          rm *.sig
           ### NÃO EDITAR ###
           # "Assinar Pacote"
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
@@ -176,7 +198,6 @@ jobs:
           ### NÃO EDITAR ###
           done
           ### NÃO EDITAR ###
-          
           ls -lh
       
       ### NÃO EDITAR ###
@@ -268,7 +289,4 @@ jobs:
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           ### NÃO EDITAR ###
           ### NÃO EDITAR ###
-          
-      # - name: tmate Fail
-      #   if: ${{ failure() }}
-      #   uses: mxschmitt/action-tmate@v3
+
