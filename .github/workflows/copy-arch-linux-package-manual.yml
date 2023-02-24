@@ -171,12 +171,7 @@ jobs:
         ### NÃO EDITAR ###
         run: |
           ### NÃO EDITAR ###
-          #remover chaves
-          ### NÃO EDITAR ###
           cd x86_64
-          ### NÃO EDITAR ###
-          rm *.sig
-          
           ### NÃO EDITAR ###
           # "Assinar Pacote"
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
@@ -187,7 +182,6 @@ jobs:
             gpg --pinentry-mode loopback --passphrase "${{ secrets.PASSPHRASE }}" --detach-sign ${p}
           ### NÃO EDITAR ###
           done
-          
           ### NÃO EDITAR ###
           ls -lh
       
