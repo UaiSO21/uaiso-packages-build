@@ -139,15 +139,16 @@ jobs:
             fi
           ### NÃO EDITAR ###
           done
-          
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          grep -v -f list-packages-local packages.txt > packages-download.txt
           ### NÃO EDITAR ###
           mkdir -p /tmp/pacmandb
-          
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-          pacman -Syw --noconfirm $(cat packages.txt | sed ':a;$!N;s/\n/ /;ta;') --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
-          
+          pacman -Syw --noconfirm $(cat packages-download.txt | sed ':a;$!N;s/\n/ /;ta;') --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
           ### NÃO EDITAR ###
           rm packages.txt
+          ### NÃO EDITAR ###
+          rm packages-download.txt
       
       ### NÃO EDITAR ####### NÃO EDITAR ####
       - name: Remove Existing Packages
