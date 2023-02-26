@@ -52,13 +52,13 @@ jobs:
           
           echo '
           [chaotic-aur]
-          Server = https://br-mirror.chaotic.cx/$repo/$arch' | tee -a /etc/pacman.conf
+          Server = https://us-fl-mirror.chaotic.cx/$repo/$arch' | tee -a /etc/pacman.conf
 
           #add Garuda
          
           echo '
           [garuda]
-          Server = https://br-mirror.chaotic.cx/$repo/$arch' | tee -a /etc/pacman.conf
+          Server = https://us-fl-mirror.chaotic.cx/$repo/$arch' | tee -a /etc/pacman.conf
           
           #add AndontieAUR
           pacman-key --recv-key B545E9B7CD906FE3
@@ -148,9 +148,9 @@ jobs:
           pacman -Scc --noconfirm
           ### NÃO EDITAR ###### NÃO EDITAR ####
           
-      # Tmate ##
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      # # Tmate ##
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
       
       ### NÃO EDITAR ####
       - name: Download
@@ -177,20 +177,22 @@ jobs:
           sed -i '/#/d' packages.txt
           ### NÃO EDITAR ####### NÃO EDITAR ####
           sed -i ':a;$!N;s/\n/ /;ta;' packages.txt
-          
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
           grep -v -f list-packages-local packages.txt > packages-download.txt
-          
-          
           ### NÃO EDITAR ###
           mkdir -p /tmp/pacmandb
-          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
           pacman -Syw --noconfirm $(cat packages-download.txt) --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
+          pacman -Syw --noconfirm --needed $(cat packages-download.txt) --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
+          pacman -Syw --noconfirm --needed $(cat packages-download.txt) --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
+          pacman -Syw --noconfirm --needed $(cat packages-download.txt) --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
           ### NÃO EDITAR ###
           rm packages.txt
           ### NÃO EDITAR ###
           rm packages-download.txt
-          
           
       ### NÃO EDITAR ####### NÃO EDITAR ####
       - name: Remove Existing Packages
@@ -202,8 +204,12 @@ jobs:
           cd x86_64
           ### NÃO EDITAR ####
           rm *.sig
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          ls *.pkg* | rev | cut -d "/" -f1 | rev > packages-local-download
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           wget http://repo-uaiso.uai21.com/dev/x86_64/packages
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          grep -f packages-local-download packages >> ../preListaExclude
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           for i in $(cat packages); do 
             ### NÃO EDITAR ####
@@ -216,6 +222,8 @@ jobs:
           done
           ### NÃO EDITAR ####
           rm packages
+          ### NÃO EDITAR ####
+          rm packages-local-download
           ### NÃO EDITAR ####
           ls -lha
       
@@ -293,12 +301,11 @@ jobs:
           ### NÃO EDITAR ###
           #lista local
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          for i in $(cat preListaExclude); do echo "--exclude=$i " >> listaExclude ; done
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for i in $(cat list-packages-local); do echo "--exclude=$i*.* " >> listaExclude ; done
-          ### NÃO EDITAR ###
-          
-          ### NÃO EDITAR ###
-          #lista aur
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          sed -i '/#/d' list-packages-aur
           for i in $(cat list-packages-aur); do echo "--exclude=$(echo $i | cut -d ":" -f1)*.* " >> listaExclude ; done
           ### NÃO EDITAR ###
           listaExclude=$(cat listaExclude)
@@ -312,7 +319,7 @@ jobs:
           du -h x86_64
           touch x86_64/zzz.txt
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-          rsync -vapzO --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db* --exclude=*.files* $(cat listaExclude)
+          #rsync -vapzO --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db* --exclude=*.files* $(cat listaExclude)
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           
       # # Tmate ##
