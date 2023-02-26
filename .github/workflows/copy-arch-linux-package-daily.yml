@@ -145,18 +145,38 @@ jobs:
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           grep -v -f list-packages-local packages.txt > packages-download.txt
           
+          echo ""
+          echo ""
+          echo ""
+          echo ""
           echo "list-packages-daily"
           cat list-packages-daily
-          
+
+          echo ""
+          echo ""
+          echo ""
+          echo ""          
           echo "list-packages-hour"
           cat list-packages-hour
           
+          echo ""
+          echo ""
+          echo ""
+          echo ""
           echo "list-packages-manual"
           cat list-packages-manual
           
+          echo ""
+          echo ""
+          echo ""
+          echo ""
           echo "packages.txt"
           cat packages.txt
           
+          echo ""
+          echo ""
+          echo ""
+          echo ""
           echo "packages-download.txt"
           cat packages-download.txt
           
