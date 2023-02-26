@@ -128,7 +128,7 @@ jobs:
           
           
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          sed -i '/ParallelDownloads/s/=.*/= 30/' /etc/pacman.conf
+          sed -i '/ParallelDownloads/s/=.*/= 10/' /etc/pacman.conf
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           sed -i '/NoProgressBar/s/^/#/' /etc/pacman.conf
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
@@ -183,12 +183,6 @@ jobs:
           mkdir -p /tmp/pacmandb
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
           pacman -Syw --noconfirm $(cat packages-download.txt) --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
-          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
-          pacman -Syw --noconfirm --needed $(cat packages-download.txt) --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
-          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
-          pacman -Syw --noconfirm --needed $(cat packages-download.txt) --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
-          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
-          pacman -Syw --noconfirm --needed $(cat packages-download.txt) --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
           ### NÃO EDITAR ###
           rm packages.txt
           ### NÃO EDITAR ###
