@@ -127,11 +127,30 @@ jobs:
           
           
           
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          sed -i '/ParallelDownloads/s/=.*/= 30/' /etc/pacman.conf
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          sed -i '/NoProgressBar/s/^/#/' /etc/pacman.conf
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          sed -i '/VerbosePkgLists/s/^/#/' /etc/pacman.conf
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          #reflector --sort rate -l 10 --save /etc/pacman.d/mirrorlist
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          echo 'Server = https://mirror.osbeck.com/archlinux/$repo/os/$arch
+          Server = https://arch.mirror.constant.com/$repo/os/$arch
+          Server = https://mirror.pseudoform.org/$repo/os/$arch
+          Server = https://mirror.theo546.fr/archlinux/$repo/os/$arch
+          Server = rsync://mirror.theo546.fr/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
           pacman -Syu --noconfirm --needed sudo git github-cli openssh gnupg coreutils rsync wget
           ### NÃO EDITAR ###### NÃO EDITAR ####
           pacman -Scc --noconfirm
           ### NÃO EDITAR ###### NÃO EDITAR ####
+          
+      # Tmate ##
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       
       ### NÃO EDITAR ####
       - name: Download
@@ -161,21 +180,7 @@ jobs:
           
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
           grep -v -f list-packages-local packages.txt > packages-download.txt
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          sed -i '/ParallelDownloads/s/=.*/= 30/' /etc/pacman.conf
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          sed -i '/NoProgressBar/s/^/#/' /etc/pacman.conf
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          sed -i '/VerbosePkgLists/s/^/#/' /etc/pacman.conf
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          #reflector --sort rate -l 10 --save /etc/pacman.d/mirrorlist
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          echo 'Server = https://mirror.osbeck.com/archlinux/$repo/os/$arch
-          Server = https://arch.mirror.constant.com/$repo/os/$arch
-          Server = https://mirror.pseudoform.org/$repo/os/$arch
-          Server = https://mirror.theo546.fr/archlinux/$repo/os/$arch
-          Server = rsync://mirror.theo546.fr/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          
           
           ### NÃO EDITAR ###
           mkdir -p /tmp/pacmandb
@@ -186,9 +191,6 @@ jobs:
           ### NÃO EDITAR ###
           rm packages-download.txt
           
-      # Tmate ##
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
           
       ### NÃO EDITAR ####### NÃO EDITAR ####
       - name: Remove Existing Packages
