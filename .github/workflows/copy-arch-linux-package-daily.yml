@@ -161,8 +161,9 @@ jobs:
           
           sed -i '/ParallelDownloads/s/=.*/= 30/' /etc/pacman.conf
           sed -i '/NoProgressBar/s/^/#/' /etc/pacman.conf
-          sed -i 'VerbosePkgLists/s/^/#/' /etc/pacman.conf
+          sed -i '/VerbosePkgLists/s/^/#/' /etc/pacman.conf
           
+          #reflector --sort rate -l 10 --save /etc/pacman.d/mirrorlist
           echo 'Server = https://mirror.osbeck.com/archlinux/$repo/os/$arch
           Server = https://arch.mirror.constant.com/$repo/os/$arch
           Server = https://mirror.pseudoform.org/$repo/os/$arch
