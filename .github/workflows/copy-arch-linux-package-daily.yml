@@ -136,7 +136,7 @@ jobs:
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           #reflector --sort rate -l 10 --save /etc/pacman.d/mirrorlist
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          echo 'Server = https://mirror.osbeck.com/archlinux/$repo/os/$arch
+          echo '#Server = https://mirror.osbeck.com/archlinux/$repo/os/$arch
           Server = https://arch.mirror.constant.com/$repo/os/$arch
           Server = https://mirror.pseudoform.org/$repo/os/$arch
           Server = https://mirror.theo546.fr/archlinux/$repo/os/$arch
