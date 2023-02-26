@@ -1483,3 +1483,14 @@ snapd
 polkit-gnome
 cmake
 archlinux-tweak-tool-git
+extra-cmake-modules
+xmlto
+python-sphinx
+python-sphinx_rtd_theme
+texlive-latexextra
+inkscape
+rxvt-unicode
+zenity
+qemu
+kdenlive
+dialog
