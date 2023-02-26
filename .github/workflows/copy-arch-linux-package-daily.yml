@@ -128,7 +128,7 @@ jobs:
           
           
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          sed -i '/ParallelDownloads/s/=.*/= 8/' /etc/pacman.conf
+          # sed -i '/ParallelDownloads/s/=.*/= 8/' /etc/pacman.conf
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           sed -i '/NoProgressBar/s/^/#/' /etc/pacman.conf
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
