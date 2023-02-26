@@ -198,28 +198,28 @@ jobs:
           cd x86_64
           ### NÃO EDITAR ####
           rm *.sig
-          # ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          # ls *.pkg* | rev | cut -d "/" -f1 | rev > packages-local-download
-          # ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          # wget http://repo-uaiso.uai21.com/dev/x86_64/packages
-          # ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          # grep -f packages-local-download packages >> ../preListaExclude
-          # ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          # for i in $(cat packages); do 
-          #   ### NÃO EDITAR ####
-          #   if [ -e "$i" ]; then
-          #     ### NÃO EDITAR ####
-          #     rm $i
-          #   ### NÃO EDITAR ####
-          #   fi
-          # ### NÃO EDITAR ####
-          # done
-          # ### NÃO EDITAR ####
-          # rm packages
-          # ### NÃO EDITAR ####
-          # rm packages-local-download
-          # ### NÃO EDITAR ####
-          # ls -lha
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          ls *.pkg* | rev | cut -d "/" -f1 | rev > packages-local-download
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          wget http://repo-uaiso.uai21.com/dev/x86_64/packages
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          grep -f packages-local-download packages >> ../preListaExclude
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          for i in $(cat packages); do 
+            ### NÃO EDITAR ####
+            if [ -e "$i" ]; then
+              ### NÃO EDITAR ####
+              rm $i
+            ### NÃO EDITAR ####
+            fi
+          ### NÃO EDITAR ####
+          done
+          ### NÃO EDITAR ####
+          rm packages
+          ### NÃO EDITAR ####
+          rm packages-local-download
+          ### NÃO EDITAR ####
+          ls -lha
       
       ### NÃO EDITAR ###
       - name: Sign Package
@@ -306,15 +306,14 @@ jobs:
           listaExclude=$(cat listaExclude)
           ### NÃO EDITAR ###
           cat listaExclude
-          
           ### NÃO EDITAR ###
           # mv x86_64 $branch
           ### NÃO EDITAR ###
-          ### NÃO EDITAR ###
           du -h x86_64
+          ### NÃO EDITAR ###
           touch x86_64/zzz.txt
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-          rsync --stats -vapzOh --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db* --exclude=*.files* $(cat listaExclude)
+          rsync --dry-run --stats -vapzOh --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db* --exclude=*.files* $(cat listaExclude)
           #--dry-run 
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           
