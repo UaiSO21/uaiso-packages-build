@@ -1494,3 +1494,5 @@ zenity
 qemu
 kdenlive
 dialog
+docker
+docker-compose
