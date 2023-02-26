@@ -37,6 +37,12 @@ jobs:
           ### NÃO EDITAR ###
           pacman-key --init
           ### NÃO EDITAR ###
+          #add multilib
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          
+          
           
           #add ChaoticAUR
           pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
@@ -118,11 +124,14 @@ jobs:
           [xerolinux_nvidia_repo]
           SigLevel = Optional TrustAll
           Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | tee -a /etc/pacman.conf
- 
-          #add multilib
-          echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+          
+          
+          
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
           pacman -Syu --noconfirm --needed sudo git github-cli openssh gnupg coreutils rsync wget
+          ### NÃO EDITAR ###### NÃO EDITAR ####
           pacman -Scc --noconfirm
+          ### NÃO EDITAR ###### NÃO EDITAR ####
       
       ### NÃO EDITAR ###
       - name: Download
@@ -132,62 +141,47 @@ jobs:
         run: |
           ### NÃO EDITAR ###
           mkdir x86_64
-          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-          for i in $(cat list-packages-daily list-packages-hour list-packages-manual); do
-            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-            if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
-              ### NÃO EDITAR ###
-              echo $i >> packages.txt
-            ### NÃO EDITAR ###
-            fi
-          ### NÃO EDITAR ###
-          done
+          # ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          # for i in $(cat list-packages-daily list-packages-hour list-packages-manual); do
+          #   ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          #   if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
+          #     ### NÃO EDITAR ###
+          #     echo $i >> packages.txt
+          #   ### NÃO EDITAR ###
+          #   fi
+          # ### NÃO EDITAR ###
+          # done
+          
+          cat list-packages-daily list-packages-hour list-packages-manual > packages.txt
+          sed -i '/#/d' packages.txt
+          sed -i ':a;$!N;s/\n/ /;ta;' packages.txt
+          
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           grep -v -f list-packages-local packages.txt > packages-download.txt
           
-          echo ""
-          echo ""
-          echo ""
-          echo ""
-          echo "list-packages-daily"
-          cat list-packages-daily
-
-          echo ""
-          echo ""
-          echo ""
-          echo ""          
-          echo "list-packages-hour"
-          cat list-packages-hour
+          sed -i '/ParallelDownloads/s/=.*/= 30/' /etc/pacman.conf
+          sed -i '/NoProgressBar/s/^/#/' /etc/pacman.conf
+          sed -i 'VerbosePkgLists/s/^/#/' /etc/pacman.conf
           
-          echo ""
-          echo ""
-          echo ""
-          echo ""
-          echo "list-packages-manual"
-          cat list-packages-manual
-          
-          echo ""
-          echo ""
-          echo ""
-          echo ""
-          echo "packages.txt"
-          cat packages.txt
-          
-          echo ""
-          echo ""
-          echo ""
-          echo ""
-          echo "packages-download.txt"
-          cat packages-download.txt
+          echo 'Server = https://mirror.osbeck.com/archlinux/$repo/os/$arch
+          Server = https://arch.mirror.constant.com/$repo/os/$arch
+          Server = https://mirror.pseudoform.org/$repo/os/$arch
+          Server = https://mirror.theo546.fr/archlinux/$repo/os/$arch
+          Server = rsync://mirror.theo546.fr/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
           
           ### NÃO EDITAR ###
           mkdir -p /tmp/pacmandb
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-          pacman -Syw --noconfirm $(cat packages-download.txt | sed ':a;$!N;s/\n/ /;ta;') --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
+          pacman -Syw --noconfirm $(cat packages-download.txt) --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
           ### NÃO EDITAR ###
           rm packages.txt
           ### NÃO EDITAR ###
           rm packages-download.txt
+          
+                
+      # Tmate ##
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
           
       ### NÃO EDITAR ####### NÃO EDITAR ####
       - name: Remove Existing Packages
@@ -200,9 +194,9 @@ jobs:
           ### NÃO EDITAR ####
           rm *.sig
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          wget -O - "http://repo-uaiso.uai21.com/dev/x86_64" | grep href | cut -d"\"" -f8 | grep ".pkg" | grep -v ".sig" | sed 's|./||' > uaiso_repo_packages.txt
+          wget http://repo-uaiso.uai21.com/dev/x86_64/packages
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          for i in $(cat uaiso_repo_packages.txt); do 
+          for i in $(cat packages); do 
             ### NÃO EDITAR ####
             if [ -e "$i" ]; then
               ### NÃO EDITAR ####
@@ -214,7 +208,7 @@ jobs:
           ### NÃO EDITAR ####
           ls -lha
           ### NÃO EDITAR ####
-          rm uaiso_repo_packages.txt
+          rm packages
       
       ### NÃO EDITAR ###
       - name: Sign Package

@@ -165,9 +165,9 @@ jobs:
           ### NÃO EDITAR ####
           rm *.sig
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          wget -O - "http://repo-uaiso.uai21.com/dev/x86_64" | grep href | cut -d"\"" -f8 | grep ".pkg" | grep -v ".sig" | sed 's|./||' > uaiso_repo_packages.txt
+          wget http://repo-uaiso.uai21.com/dev/x86_64/packages
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          for i in $(cat uaiso_repo_packages.txt); do 
+          for i in $(cat packages); do 
             ### NÃO EDITAR ####
             if [ -e "$i" ]; then
               ### NÃO EDITAR ####
@@ -179,7 +179,7 @@ jobs:
           ### NÃO EDITAR ####
           ls -lha
           ### NÃO EDITAR ####
-          rm uaiso_repo_packages.txt
+          rm packages
       
       ### NÃO EDITAR ###
       - name: Sign Package
