@@ -215,9 +215,9 @@ jobs:
           ### NÃO EDITAR ####
           done
           ### NÃO EDITAR ####
-          ls -lha
-          ### NÃO EDITAR ####
           rm packages
+          ### NÃO EDITAR ####
+          ls -lha
       
       ### NÃO EDITAR ###
       - name: Sign Package

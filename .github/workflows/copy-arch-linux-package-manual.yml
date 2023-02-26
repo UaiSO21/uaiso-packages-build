@@ -174,8 +174,8 @@ jobs:
           rm packages-download.txt
                 
       # Tmate ##
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      #- name: Setup tmate session
+      #  uses: mxschmitt/action-tmate@v3
       
       ### NÃO EDITAR ####### NÃO EDITAR ####
       - name: Remove Existing Packages
@@ -200,9 +200,9 @@ jobs:
           ### NÃO EDITAR ####
           done
           ### NÃO EDITAR ####
-          ls -lha
-          ### NÃO EDITAR ####
           rm packages
+          ### NÃO EDITAR ####
+          ls -lha
           
       ### NÃO EDITAR ####
       - name: Sign Package
