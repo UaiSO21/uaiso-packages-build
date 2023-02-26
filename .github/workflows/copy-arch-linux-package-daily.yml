@@ -160,17 +160,6 @@ jobs:
         run: |
           ### NÃO EDITAR ####
           mkdir x86_64
-          # #### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
-          # for i in $(cat list-packages-daily list-packages-hour list-packages-manual); do
-          #   #### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
-          #   if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
-          #     #### NÃO EDITAR ####
-          #     echo $i >> packages.txt
-          #   #### NÃO EDITAR ####
-          #   fi
-          # #### NÃO EDITAR ####
-          # done
-          
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           cat list-packages-daily list-packages-hour list-packages-manual > packages.txt
           ### NÃO EDITAR ####### NÃO EDITAR ####

@@ -124,6 +124,21 @@ jobs:
  
  
  
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          sed -i '/ParallelDownloads/s/=.*/= 8/' /etc/pacman.conf
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          sed -i '/NoProgressBar/s/^/#/' /etc/pacman.conf
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          sed -i '/VerbosePkgLists/s/^/#/' /etc/pacman.conf
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          #reflector --sort rate -l 10 --save /etc/pacman.d/mirrorlist
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          echo '#Server = https://mirror.osbeck.com/archlinux/$repo/os/$arch
+          #Server = https://arch.mirror.constant.com/$repo/os/$arch
+          Server = https://mirror.pseudoform.org/$repo/os/$arch
+          Server = https://mirror.theo546.fr/archlinux/$repo/os/$arch
+          Server = rsync://mirror.theo546.fr/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           pacman -Syu --noconfirm --needed sudo git github-cli openssh gnupg coreutils rsync wget
           ### NÃO EDITAR ####### NÃO EDITAR ####
@@ -138,32 +153,14 @@ jobs:
         run: |
           ### NÃO EDITAR ###
           mkdir x86_64
-          ### NÃO EDITAR ###### NÃO EDITAR ###
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          ### NÃO EDITAR ####### NÃO EDITAR ####
           cat list-packages-manual > packages.txt
           ### NÃO EDITAR ####### NÃO EDITAR ####
           sed -i '/#/d' packages.txt
           ### NÃO EDITAR ####### NÃO EDITAR ####
           sed -i ':a;$!N;s/\n/ /;ta;' packages.txt
-          
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
           grep -v -f list-packages-local packages.txt > packages-download.txt
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          sed -i '/ParallelDownloads/s/=.*/= 30/' /etc/pacman.conf
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          sed -i '/NoProgressBar/s/^/#/' /etc/pacman.conf
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          sed -i '/VerbosePkgLists/s/^/#/' /etc/pacman.conf
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          #reflector --sort rate -l 10 --save /etc/pacman.d/mirrorlist
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          echo 'Server = https://mirror.osbeck.com/archlinux/$repo/os/$arch
-          Server = https://arch.mirror.constant.com/$repo/os/$arch
-          Server = https://mirror.pseudoform.org/$repo/os/$arch
-          Server = https://mirror.theo546.fr/archlinux/$repo/os/$arch
-          Server = rsync://mirror.theo546.fr/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
-          
           ### NÃO EDITAR ###
           mkdir -p /tmp/pacmandb
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
@@ -187,7 +184,7 @@ jobs:
           cd x86_64
           ### NÃO EDITAR ####
           rm *.sig
-          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           wget http://repo-uaiso.uai21.com/dev/x86_64/packages
           ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           for i in $(cat packages); do 
@@ -280,7 +277,7 @@ jobs:
           ### NÃO EDITAR ###
           touch x86_64/zzz.txt
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-          rsync --stats -vapzO -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} 
+          rsync --stats -vapzOh -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} 
           ### NÃO EDITAR ###
       
       ### NÃO EDITAR ###
