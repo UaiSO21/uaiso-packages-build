@@ -133,42 +133,49 @@ jobs:
           pacman -Scc --noconfirm
           ### NÃO EDITAR ###### NÃO EDITAR ####
       
-      ### NÃO EDITAR ###
+      ### NÃO EDITAR ####
       - name: Download
-        ### NÃO EDITAR ###
+        ### NÃO EDITAR ####
         shell: bash
-        ### NÃO EDITAR ###
+        ### NÃO EDITAR ####
         run: |
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ####
           mkdir x86_64
-          # ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          # #### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
           # for i in $(cat list-packages-daily list-packages-hour list-packages-manual); do
-          #   ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          #   #### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
           #   if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
-          #     ### NÃO EDITAR ###
+          #     #### NÃO EDITAR ####
           #     echo $i >> packages.txt
-          #   ### NÃO EDITAR ###
+          #   #### NÃO EDITAR ####
           #   fi
-          # ### NÃO EDITAR ###
+          # #### NÃO EDITAR ####
           # done
           
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           cat list-packages-daily list-packages-hour list-packages-manual > packages.txt
+          ### NÃO EDITAR ####### NÃO EDITAR ####
           sed -i '/#/d' packages.txt
+          ### NÃO EDITAR ####### NÃO EDITAR ####
           sed -i ':a;$!N;s/\n/ /;ta;' packages.txt
           
-          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
           grep -v -f list-packages-local packages.txt > packages-download.txt
-          
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           sed -i '/ParallelDownloads/s/=.*/= 30/' /etc/pacman.conf
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           sed -i '/NoProgressBar/s/^/#/' /etc/pacman.conf
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           sed -i '/VerbosePkgLists/s/^/#/' /etc/pacman.conf
-          
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           #reflector --sort rate -l 10 --save /etc/pacman.d/mirrorlist
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           echo 'Server = https://mirror.osbeck.com/archlinux/$repo/os/$arch
           Server = https://arch.mirror.constant.com/$repo/os/$arch
           Server = https://mirror.pseudoform.org/$repo/os/$arch
           Server = https://mirror.theo546.fr/archlinux/$repo/os/$arch
           Server = rsync://mirror.theo546.fr/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           
           ### NÃO EDITAR ###
           mkdir -p /tmp/pacmandb
@@ -179,7 +186,6 @@ jobs:
           ### NÃO EDITAR ###
           rm packages-download.txt
           
-                
       # Tmate ##
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3

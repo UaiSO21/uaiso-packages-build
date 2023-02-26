@@ -33,6 +33,13 @@ jobs:
         run: |
           ### NÃO EDITAR ###
           pacman-key --init
+           ### NÃO EDITAR ###
+          #add multilib
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          
+          
           
           #add ChaoticAUR
           pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
@@ -115,13 +122,15 @@ jobs:
           SigLevel = Optional TrustAll
           Server = https://mirror.accum.se/mirror/xerolinux.xyz/$repo/$arch' | tee -a /etc/pacman.conf
  
-          #add multilib
-          
-          echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+ 
+ 
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
           pacman -Syu --noconfirm --needed sudo git github-cli openssh gnupg coreutils rsync wget
+          ### NÃO EDITAR ####### NÃO EDITAR ####
           pacman -Scc --noconfirm
+          ### NÃO EDITAR ####### NÃO EDITAR ####
       
-      ### NÃO EDITAR ###
+      ### NÃO EDITAR ####
       - name: Download
         ### NÃO EDITAR ###
         shell: bash
@@ -130,26 +139,39 @@ jobs:
           ### NÃO EDITAR ###
           mkdir x86_64
           ### NÃO EDITAR ###### NÃO EDITAR ###
-          for i in $(cat list-packages-manual); do
-            ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-            if [ -z "$(echo $i)" -o -z "$(echo $i | grep \#)" ];then
-              ### NÃO EDITAR ###
-              echo $i >> packages.txt
-            ### NÃO EDITAR ###
-            fi
-          ### NÃO EDITAR ###
-          done
-          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          cat list-packages-manual > packages.txt
+          ### NÃO EDITAR ####### NÃO EDITAR ####
+          sed -i '/#/d' packages.txt
+          ### NÃO EDITAR ####### NÃO EDITAR ####
+          sed -i ':a;$!N;s/\n/ /;ta;' packages.txt
+          
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ####
           grep -v -f list-packages-local packages.txt > packages-download.txt
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          sed -i '/ParallelDownloads/s/=.*/= 30/' /etc/pacman.conf
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          sed -i '/NoProgressBar/s/^/#/' /etc/pacman.conf
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          sed -i '/VerbosePkgLists/s/^/#/' /etc/pacman.conf
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          #reflector --sort rate -l 10 --save /etc/pacman.d/mirrorlist
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          echo 'Server = https://mirror.osbeck.com/archlinux/$repo/os/$arch
+          Server = https://arch.mirror.constant.com/$repo/os/$arch
+          Server = https://mirror.pseudoform.org/$repo/os/$arch
+          Server = https://mirror.theo546.fr/archlinux/$repo/os/$arch
+          Server = rsync://mirror.theo546.fr/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+          ### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####### NÃO EDITAR ####
+          
           ### NÃO EDITAR ###
           mkdir -p /tmp/pacmandb
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-          pacman -Syw --noconfirm $(cat packages-download.txt | sed ':a;$!N;s/\n/ /;ta;') --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
+          pacman -Syw --noconfirm $(cat packages-download.txt) --cachedir $PWD/x86_64 --dbpath /tmp/pacmandb
           ### NÃO EDITAR ###
           rm packages.txt
           ### NÃO EDITAR ###
           rm packages-download.txt
-          
                 
       # Tmate ##
       - name: Setup tmate session
