@@ -311,11 +311,13 @@ jobs:
                 if [ -n "$gitfolder" ]; then
                   cd $gitfolder
                   name=$(cat PKGBUILD | grep pkgname= | cut -d "=" -f2)
+                  popd
                   if [ -n "$name" ]; then
                     echo "--exclude=${name}*.* " >> listaExclude
                   fi
+                else
+                  popd
                 fi
-              popd
             fi
           done
           
