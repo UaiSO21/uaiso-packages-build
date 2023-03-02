@@ -308,9 +308,13 @@ jobs:
               gh repo clone UaiSO21/$i
               pushd $i
                 gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
-                cd $gitfolder
-                name=$(cat PKGBUILD | grep pkgname= | cut -d "=" -f2)
-                echo "--exclude=${name}*.* " >> listaExclude
+                if [ -n "$gitfolder" ]; then
+                  cd $gitfolder
+                  name=$(cat PKGBUILD | grep pkgname= | cut -d "=" -f2)
+                  if [ -n "$name" ]; then
+                    echo "--exclude=${name}*.* " >> listaExclude
+                  fi
+                fi
               popd
             fi
           done
