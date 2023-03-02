@@ -280,7 +280,7 @@ jobs:
           # fi
           ### NÃO EDITAR ###
           
-          echo "Inicia Excluse"
+          echo "Lista Excluse"
           ### NÃO EDITAR ###
           #lista local
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
@@ -289,45 +289,46 @@ jobs:
           for i in $(cat preListaExclude); do echo "--exclude=${i}.sig " >> listaExclude ; done
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for i in $(cat list-packages-local); do echo "--exclude=$i*.* " >> listaExclude ; done
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-          
-          
-          
-          echo "Parte Nova 01"
-          
           echo ${{ secrets.SYNK_TOKEN }} | gh auth login --with-token
-          
-          #for i in $(h repo list  UaiSO21 -L 100 | awk '{print $1}' | awk -F/ '{print $2}' | grep uaiso-); do echo "--exclude=$i*.* " >> listaExclude ; done
-          
-          echo "Parte Nova 02"
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           unlist=(uaiso-kernel-linux\|github)
-
-          echo "Parte Nova 03"
+          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for i in $(gh repo list --visibility public UaiSO21 | awk '{print $1}' | awk -F/ '{print $2}' | grep -Ev "$unlist"); do
-          echo "Parte Nova 04"
-             #if [ "$(echo $unlist | grep $i)" = "" ]; then
-              name=
-              gh repo clone UaiSO21/$i
-              pushd $i
-                gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
-                if [ -n "$gitfolder" ]; then
-                  cd $gitfolder
-                  name=$(cat PKGBUILD | grep pkgname= | cut -d "=" -f2)
-                  popd
-                  if [ -n "$name" ]; then
-                    echo "--exclude=${name}*.* " >> listaExclude
-                  fi
-                else
-                  popd
+            ### NÃO EDITAR ###
+            name=
+            ### NÃO EDITAR ###### NÃO EDITAR ###
+            gh repo clone UaiSO21/$i
+            ### NÃO EDITAR ###
+            pushd $i
+              ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+              gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+              ### NÃO EDITAR ###### NÃO EDITAR ###
+              if [ -n "$gitfolder" ]; then
+                ### NÃO EDITAR ###
+                cd $gitfolder
+                ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+                name=$(cat PKGBUILD | grep pkgname= | cut -d "=" -f2)
+                ### NÃO EDITAR ###
+                popd
+                ### NÃO EDITAR ###### NÃO EDITAR ###
+                if [ -n "$name" ]; then
+                  ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+                  echo "--exclude=${name}*.* " >> listaExclude
+                ### NÃO EDITAR ###
                 fi
-             #fi
+              ### NÃO EDITAR ###
+              else
+                ### NÃO EDITAR ###
+                popd
+              ### NÃO EDITAR ###
+              fi
+          ### NÃO EDITAR ###
           done
-          
-          
-          
-          
-          
+          ### NÃO EDITAR ###
           
           ### NÃO EDITAR ###### NÃO EDITAR ###
           sed -i '/#/d' list-packages-aur
@@ -338,13 +339,15 @@ jobs:
           ### NÃO EDITAR ###
           cat listaExclude
           ### NÃO EDITAR ###
+          echo "Push to Repo"
+          ### NÃO EDITAR ###
           # mv x86_64 $branch
           ### NÃO EDITAR ###
           du -h x86_64
           ### NÃO EDITAR ###
           touch x86_64/zzz.txt
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-          rsync --dry-run --stats -vapzOh --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db* --exclude=*.files* $(cat listaExclude)
+          rsync --stats -vapzOh --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db* --exclude=*.files* $(cat listaExclude)
           #--dry-run 
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           
