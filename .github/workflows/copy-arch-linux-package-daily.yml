@@ -235,7 +235,7 @@ jobs:
       ### NÃO EDITAR ###
       - name: Push to Repo
         ### NÃO EDITAR ###
-        shell: bash -O extglob {0}
+        shell: bash
         ### NÃO EDITAR ###
         run: | 
           echo "## Config SSH ##"
@@ -305,10 +305,8 @@ jobs:
 
           echo "Parte Nova 03"
           for i in $(gh repo list --visibility public UaiSO21 | awk '{print $1}' | awk -F/ '{print $2}'); do
-            
           echo "Parte Nova 04"
-            echo $unlist | grep $i
-            if [ -z "$(echo $unlist | grep $i)" ]; then
+            if [ "$(echo $unlist | grep $i)" = "" ]; then
               name=
               gh repo clone UaiSO21/$i
               pushd $i
