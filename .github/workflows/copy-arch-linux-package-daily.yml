@@ -303,6 +303,7 @@ jobs:
           unlist=(uaiso-kernel-linux github)
 
           for i in $(gh repo list --visibility public UaiSO21 | awk '{print $1}' | awk -F/ '{print $2}'); do
+            echo $unlist | grep $i
             if [ -z "$(echo $unlist | grep $i)" ]; then
               name=
               gh repo clone UaiSO21/$i
