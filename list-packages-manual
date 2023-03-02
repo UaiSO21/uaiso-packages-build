@@ -2,3 +2,16 @@
 #icones
 gtk-update-icon-cache
 zip
+
+#bluetooth
+bluedevil
+bluez
+bluez-cups
+bluez-libs
+bluez-plugins
+bluez-qt
+bluez-hid2hci
+bluez-tools
+bluez-utils
+blueman
+blueberry
