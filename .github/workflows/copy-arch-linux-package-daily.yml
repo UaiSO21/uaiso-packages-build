@@ -238,7 +238,7 @@ jobs:
         shell: bash
         ### NÃO EDITAR ###
         run: |
-          echo "## Push to Repo ##"
+          echo "## Config SSH ##"
           ### NÃO EDITAR ###
           mkdir -p /home/runner/.ssh
           ### NÃO EDITAR ###### NÃO EDITAR ###
@@ -256,7 +256,6 @@ jobs:
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           ssh-keyscan -t rsa -p ${{ secrets.REPO_PORT }} ${{ secrets.REPO_HOST }} >> /home/runner/.ssh/known_hosts
           ### NÃO EDITAR ###
-          
           ### NÃO EDITAR ###
           # cd x86_64
           ### NÃO EDITAR ###
@@ -281,6 +280,7 @@ jobs:
           # fi
           ### NÃO EDITAR ###
           
+          echo "Inicia Excluse"
           ### NÃO EDITAR ###
           #lista local
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
@@ -294,7 +294,7 @@ jobs:
           
           
           
-          
+          echo "Parte Nova"
           
           echo ${{ secrets.SYNK_TOKEN }} | gh auth login --with-token
           
