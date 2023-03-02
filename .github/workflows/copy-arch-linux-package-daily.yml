@@ -235,9 +235,9 @@ jobs:
       ### NÃO EDITAR ###
       - name: Push to Repo
         ### NÃO EDITAR ###
-        shell: bash
+        shell: bash -O extglob {0}
         ### NÃO EDITAR ###
-        run: |
+        run: | 
           echo "## Config SSH ##"
           ### NÃO EDITAR ###
           mkdir -p /home/runner/.ssh
