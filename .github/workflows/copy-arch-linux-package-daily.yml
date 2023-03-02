@@ -294,15 +294,19 @@ jobs:
           
           
           
-          echo "Parte Nova"
+          echo "Parte Nova 01"
           
           echo ${{ secrets.SYNK_TOKEN }} | gh auth login --with-token
           
           #for i in $(h repo list  UaiSO21 -L 100 | awk '{print $1}' | awk -F/ '{print $2}' | grep uaiso-); do echo "--exclude=$i*.* " >> listaExclude ; done
           
+          echo "Parte Nova 02"
           unlist=(uaiso-kernel-linux github)
 
+          echo "Parte Nova 03"
           for i in $(gh repo list --visibility public UaiSO21 | awk '{print $1}' | awk -F/ '{print $2}'); do
+            
+          echo "Parte Nova 04"
             echo $unlist | grep $i
             if [ -z "$(echo $unlist | grep $i)" ]; then
               name=
