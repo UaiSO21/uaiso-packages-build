@@ -216,6 +216,7 @@ jobs:
         shell: bash
         ### NÃO EDITAR ###
         run: |
+          echo ### Sign Package ###
           ### NÃO EDITAR ###
           cd x86_64
           ### NÃO EDITAR ###
@@ -237,8 +238,7 @@ jobs:
         shell: bash
         ### NÃO EDITAR ###
         run: |
-          ### NÃO EDITAR ###
-          echo "## ssh setup ##"
+          echo "## Push to Repo ##"
           ### NÃO EDITAR ###
           mkdir -p /home/runner/.ssh
           ### NÃO EDITAR ###### NÃO EDITAR ###
@@ -285,13 +285,46 @@ jobs:
           #lista local
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for i in $(cat preListaExclude); do echo "--exclude=${i} " >> listaExclude ; done
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for i in $(cat preListaExclude); do echo "--exclude=${i}.sig " >> listaExclude ; done
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for i in $(cat list-packages-local); do echo "--exclude=$i*.* " >> listaExclude ; done
-          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
+          
+          
+          
+          
+          
+          echo ${{ secrets.SYNK_TOKEN }} | gh auth login --with-token
+          
+          #for i in $(h repo list  UaiSO21 -L 100 | awk '{print $1}' | awk -F/ '{print $2}' | grep uaiso-); do echo "--exclude=$i*.* " >> listaExclude ; done
+          
+          unlist=(uaiso-kernel-linux)
+
+          for i in $(gh repo list --visibility public UaiSO21 | awk '{print $1}' | awk -F/ '{print $2}'); do
+            if [ -z "$(echo $unlist | grep $i)"  ]; then
+              name=
+              gh repo clone UaiSO21/$i
+              pushd $i
+                gitfolder=$(find -type f -name PKGBUILD | sed 's/PKGBUILD//')
+                cd $gitfolder
+                name=$(cat PKGBUILD | grep pkgname= | cut -d "=" -f2)
+                echo "--exclude=${name}*.* " >> listaExclude
+              popd
+            fi
+          done
+          
+          
+          
+          
+          
+          
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           sed -i '/#/d' list-packages-aur
+          ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           for i in $(cat list-packages-aur); do echo "--exclude=$(echo $i | cut -d ":" -f1)*.* " >> listaExclude ; done
-          ### NÃO EDITAR ###
+          ### NÃO EDITAR ###### NÃO EDITAR ###
           listaExclude=$(cat listaExclude)
           ### NÃO EDITAR ###
           cat listaExclude
@@ -302,7 +335,7 @@ jobs:
           ### NÃO EDITAR ###
           touch x86_64/zzz.txt
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-          rsync --stats -vapzOh --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db* --exclude=*.files* $(cat listaExclude)
+          rsync --dry-run --stats -vapzOh --delete -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.REPO_PORT }}" x86_64 ${{ secrets.REPO_USER }}@${{ secrets.REPO_HOST }}:${{ secrets.REPO_DIR_PACKAGE }} --exclude=*.html --exclude=*.db* --exclude=*.files* $(cat listaExclude)
           #--dry-run 
           ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
           
