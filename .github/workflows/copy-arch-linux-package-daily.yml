@@ -306,7 +306,7 @@ jobs:
           echo "Parte Nova 03"
           for i in $(gh repo list --visibility public UaiSO21 | awk '{print $1}' | awk -F/ '{print $2}' | grep -Ev "$unlist"); do
           echo "Parte Nova 04"
-#             if [ "$(echo $unlist | grep $i)" = "" ]; then
+             #if [ "$(echo $unlist | grep $i)" = "" ]; then
               name=
               gh repo clone UaiSO21/$i
               pushd $i
@@ -321,7 +321,7 @@ jobs:
                 else
                   popd
                 fi
-#             fi
+             #fi
           done
           
           
