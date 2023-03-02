@@ -1,5 +1,6 @@
 uaiso21-keyring
 uaiso-evolve-orion
+uaiso-wallpapers-orion
 big-store
 uaiso-calamares-config
 uaiso-rename-apps
@@ -13,3 +14,6 @@ uaiso-grub-themes
 uaiso-icon-theme-orion
 uaiso-kwin-hide-title
 org.kde.plasma.dittomenu
+org.kde.plasma.confsaver
+uaiso-bluetooth
+uaiso-kwin-hide-title
