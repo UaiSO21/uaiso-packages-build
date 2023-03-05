@@ -12,3 +12,5 @@ plasma5-applets-simplemenu-git:https://aur.archlinux.org/plasma5-applets-simplem
 klassy-git:https://aur.archlinux.org/klassy-git.git
 ocs-url:https://aur.archlinux.org/ocs-url.git
 #bluez-hciconfig:https://aur.archlinux.org/bluez-hciconfig.git
+mkinitcpio-openswap:https://aur.archlinux.org/mkinitcpio-openswap.git
+ckbcomp-bin:https://aur.archlinux.org/ckbcomp-bin.git
