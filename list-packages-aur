@@ -11,4 +11,4 @@ grub-theme-arco:https://aur.archlinux.org/distro-grub-themes.git
 plasma5-applets-simplemenu-git:https://aur.archlinux.org/plasma5-applets-simplemenu-git.git
 klassy-git:https://aur.archlinux.org/klassy-git.git
 ocs-url:https://aur.archlinux.org/ocs-url.git
-bluez-hciconfig:https://aur.archlinux.org/bluez-hciconfig.git
+#bluez-hciconfig:https://aur.archlinux.org/bluez-hciconfig.git
