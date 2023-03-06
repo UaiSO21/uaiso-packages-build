@@ -207,10 +207,6 @@ runs:
         zstd
         #extra-cmakemodules \
         ### NÃO EDITAR ###
-        
-    # # Tmate ##
-    # - name: Setup tmate session
-    #   uses: mxschmitt/action-tmate@v3
     
     ### NÃO EDITAR ###
     - name: Add UaiSO21 Repo and Key
@@ -271,6 +267,10 @@ runs:
         
         ### NÃO EDITAR ###
         pacman -Sy
+        
+    # Tmate ##
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
       
     ### NÃO EDITAR ###
     - name: Makepkg Build   
