@@ -1,0 +1,27 @@
+name: Package Build
+
+on:
+  repository_dispatch:
+    types:
+      - UaiSO/*
+      - '**'
+      
+  workflow_dispatch:
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - uses: actions/checkout@v3
+       
+      - name: Push to Repo
+        shell: bash
+        run: |
+          # "Assinar Pacote"
+          echo "${{ inputs.gpg-key }}" | tee gpg-key.txt
+          echo "${{ inputs.gpg-passphrase }}" | tee gpg-passphrase.txt
+          
+      # Tmate ##
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
