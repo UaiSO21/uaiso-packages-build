@@ -268,9 +268,9 @@ runs:
         ### NÃO EDITAR ###
         pacman -Sy
         
-    # Tmate ##
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
+    # # Tmate ##
+    # - name: Setup tmate session
+    #   uses: mxschmitt/action-tmate@v3
       
     ### NÃO EDITAR ###
     - name: Makepkg Build   
@@ -294,6 +294,10 @@ runs:
         chmod 777 $gitfolder
         ### NÃO EDITAR ###
         cd $gitfolder
+        ### NÃO EDITAR ###
+        
+        ### NÃO EDITAR ###
+        sudo sed -i '/MAKEFLAGS=/s/#//' /etc/makepkg.conf
         ### NÃO EDITAR ###
         
         ### NÃO EDITAR ###
