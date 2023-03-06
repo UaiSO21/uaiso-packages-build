@@ -311,7 +311,7 @@ jobs:
                 ### NÃO EDITAR ###
                 cd $gitfolder
                 ### NÃO EDITAR ###### NÃO EDITAR ###### NÃO EDITAR ###
-                name=$(cat PKGBUILD | grep pkgname= | cut -d "=" -f2)
+                name=$(cat PKGBUILD | grep pkgname= | grep -v _ | cut -d "=" -f2)
                 ### NÃO EDITAR ###
                 popd
                 ### NÃO EDITAR ###### NÃO EDITAR ###
