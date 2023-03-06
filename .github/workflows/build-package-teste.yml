@@ -19,8 +19,7 @@ jobs:
         shell: bash
         run: |
           # "Assinar Pacote"
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" > gpg-key.txt
-          echo "${{ secrets.PASSPHRASE }}" > gpg-passphrase.txt
+          cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import &>/dev/null
           
       # Tmate ##
       - name: Setup tmate session
