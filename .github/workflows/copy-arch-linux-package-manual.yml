@@ -80,6 +80,11 @@ jobs:
           SigLevel = PackageRequired
           Server = https://repo.biglinux.com.br/stable/$arch' | tee -a /etc/pacman.conf
           
+          echo '
+          [biglinux-testing]
+          SigLevel = PackageRequired
+          Server = https://repo.biglinux.com.br/testing/$arch' | tee -a /etc/pacman.conf
+          
           #add ALCI
           
           echo '
