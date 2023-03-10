@@ -37,4 +37,10 @@ boost
 seahorse
 
 #biglinux
-biglinux-plasma-saver
+#biglinux-plasma-saver
+
+#drivers
+xf86-video-ati
+xf86-video-intel
+xf86-video-nouveau
+xf86-video-vesa
