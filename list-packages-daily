@@ -870,13 +870,11 @@ libyuv
 libzip
 licenses
 lilv
-linux
 linux-api-headers
 linux-atm
 linux-firmware
 linux-firmware-marvell
 linux-firmware-whence
-linux-headers
 livecd-sounds
 llvm-libs
 lm_sensors
