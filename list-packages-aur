@@ -12,3 +12,6 @@ klassy-git:https://aur.archlinux.org/klassy-git.git
 ocs-url:https://aur.archlinux.org/ocs-url.git
 mkinitcpio-openswap:https://aur.archlinux.org/mkinitcpio-openswap.git
 inxi-git:https://aur.archlinux.org/inxi-git.git
+
+#navegadores
+ungoogled-chromium-bin:https://aur.archlinux.org/ungoogled-chromium-bin.git
