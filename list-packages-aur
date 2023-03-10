@@ -14,3 +14,4 @@ ocs-url:https://aur.archlinux.org/ocs-url.git
 #bluez-hciconfig:https://aur.archlinux.org/bluez-hciconfig.git
 mkinitcpio-openswap:https://aur.archlinux.org/mkinitcpio-openswap.git
 ckbcomp-bin:https://aur.archlinux.org/ckbcomp-bin.git
+inxi-git:https://aur.archlinux.org/inxi-git.git
