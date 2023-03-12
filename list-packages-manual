@@ -47,6 +47,7 @@ xf86-video-vesa
 
 #installcli
 zram-generator
+pacman-contrib
 
 #uaiso-evolve-orion
 kcron
