@@ -16,3 +16,6 @@ inxi-git:https://aur.archlinux.org/inxi-git.git
 #navegadores
 ungoogled-chromium-bin:https://aur.archlinux.org/ungoogled-chromium-bin.git
 chromium-extension-web-store:https://aur.archlinux.org/chromium-extension-web-store.git
+
+#sddm-themes
+sddm-sugar-dark:https://aur.archlinux.org/sddm-sugar-dark.git
