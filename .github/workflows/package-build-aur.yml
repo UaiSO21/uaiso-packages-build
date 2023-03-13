@@ -6,10 +6,8 @@ name: Package Build AUR
 on:
   ### NÃO EDITAR ###
   push:
-    ### NÃO EDITAR ###
-    #branches: [ "master", "main", "*" ]
-    ### NÃO EDITAR ###
-    branches: [ "*" ]
+    paths:
+      - 'list-packages-aur'
   ### NÃO EDITAR ###
   schedule:
   ### NÃO EDITAR ###

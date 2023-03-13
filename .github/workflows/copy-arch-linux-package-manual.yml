@@ -5,10 +5,9 @@ name: Copy Arch, Chaotic, BigLinux Manual
 on:
   ### NÃO EDITAR ###
   push:
-    ### NÃO EDITAR ###### NÃO EDITAR ###
-    #branches: [ "master", "main", "*" ]
-    ### NÃO EDITAR ###
-    branches: [ "*" ]
+    paths:
+      - 'list-packages-manual'
+    
     ### NÃO EDITAR ###
   ### NÃO EDITAR ###
   # repository_dispatch:
