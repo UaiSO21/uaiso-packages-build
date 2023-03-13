@@ -6,7 +6,9 @@ name: Package Build AUR
 on:
   ### NÃO EDITAR ###
   push:
+    ### NÃO EDITAR ###
     paths:
+      ### NÃO EDITAR ###
       - 'list-packages-aur'
   ### NÃO EDITAR ###
   schedule:
