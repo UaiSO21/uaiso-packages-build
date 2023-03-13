@@ -51,3 +51,6 @@ pacman-contrib
 
 #uaiso-evolve-orion
 kcron
+
+#plasma-uaiso-evolve-orion
+kde-gtk-config 
