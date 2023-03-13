@@ -5,13 +5,22 @@ name: Package Build AUR
 ### NÃO EDITAR ###
 on:
   ### NÃO EDITAR ###
+  push:
+    ### NÃO EDITAR ###
+    #branches: [ "master", "main", "*" ]
+    ### NÃO EDITAR ###
+    branches: [ "*" ]
+  ### NÃO EDITAR ###
   schedule:
   ### NÃO EDITAR ###
   
   
     - cron:  '0 19 * * *'
     
+    
+  ### NÃO EDITAR ###
   workflow_dispatch:
+  ### NÃO EDITAR ###
 
 ### NÃO EDITAR ###
 jobs:

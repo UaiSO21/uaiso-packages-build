@@ -3,14 +3,27 @@ name: Copy Arch, Chaotic, BigLinux Manual
 
 ### NÃO EDITAR ###
 on:
+  ### NÃO EDITAR ###
+  push:
+    ### NÃO EDITAR ###### NÃO EDITAR ###
+    #branches: [ "master", "main", "*" ]
+    ### NÃO EDITAR ###
+    branches: [ "*" ]
+    ### NÃO EDITAR ###
+  ### NÃO EDITAR ###
   # repository_dispatch:
+    ### NÃO EDITAR ###
     # types:
+    ### NÃO EDITAR ###
     #   - '*'
-    
+    ### NÃO EDITAR ###
+  ### NÃO EDITAR ###
   # schedule:
+  ### NÃO EDITAR ###### NÃO EDITAR ###
   #   - cron:  '0 */1 * * *'
-  
+  ### NÃO EDITAR ###
   workflow_dispatch:
+  ### NÃO EDITAR ###
 
 ### NÃO EDITAR ###
 jobs:
